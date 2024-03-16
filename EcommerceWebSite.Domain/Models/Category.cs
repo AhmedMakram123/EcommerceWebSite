@@ -9,9 +9,15 @@ namespace EcommerceWebSite.Domain.Models
 {
     public class Category : BaseEntity
     {
-        [MaxLength(50)]
-        [Required]
-        String? Name { get; set; }
+        [Required(ErrorMessage = " Arabic name is required.")]
+        [MaxLength(50, ErrorMessage = "Category name cannot exceed 50 characters.")]
+        public string ArName { get; set; }
+
+        [Required(ErrorMessage = " English name is required.")]
+        [MaxLength(50, ErrorMessage = "Category name cannot exceed 50 characters.")]
+        public string EnName { get; set; }
+
+        public virtual ICollection<SubCategory> SubCategorys { get; set; }
 
     }
 }
