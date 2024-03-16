@@ -1,3 +1,4 @@
+*.vs
 # Compiled output
 /dist
 /tmp
