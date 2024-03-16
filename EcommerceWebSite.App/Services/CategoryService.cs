@@ -45,7 +45,7 @@ namespace EcommerceWebSite.App.Services
         public async Task<ResultView<CreateOrUpdateCategoryDTO>> Create(CreateOrUpdateCategoryDTO category)
         {
             var query = await CategoryRepository.GetAllAsync();
-            var OldCat = query.Where(p => p.Name == category.Name).FirstOrDefault();
+            var OldCat = query.Where(p => p.EnName == category.Name).FirstOrDefault();
             if (OldCat != null)
             {
                 return new ResultView<CreateOrUpdateCategoryDTO> { Entity = null, IsSuccess = false, msg = "Already Exists" };
