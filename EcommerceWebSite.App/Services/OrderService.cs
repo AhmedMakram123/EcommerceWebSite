@@ -18,10 +18,10 @@ namespace EcommerceWebSite.App.Services
 			_mapper = mapper;
 		}
 
-		public async Task<OrderDTO> GetAll()
+		public async Task<ResultDataList<OrderDTO>> GetAll()
 		{
 			var orders = await _orderRepository.GetAllAsync();
-			return _mapper.Map<OrderDTO>(orders);
+			return _mapper.Map< ResultDataList<OrderDTO>>(orders);
 		}
 
 		public async Task<OrderDTO> GetOne(int id)
@@ -38,12 +38,12 @@ namespace EcommerceWebSite.App.Services
 			return new ResultView<OrderDTO> { Entity = _mapper.Map<OrderDTO>(createdOrder), IsSuccess = true, msg = "Created Successful" };
 		}
 
-		public async Task<OrderDTO> Update(OrderDTO orderDto)
+		public async Task<ResultView<OrderDTO>> Update(OrderDTO orderDto)
 		{
 			var order = _mapper.Map<Order>(orderDto);
 			var updatedOrder = await _orderRepository.UpdateAsync(order);
-			return _mapper.Map<OrderDTO>(updatedOrder);
-		}
+			return new ResultView<OrderDTO> { Entity = _mapper.Map<OrderDTO>(updatedOrder), IsSuccess = true, msg = "updated Successful" };
+        }
 
 		public async Task<ResultView<OrderDTO>> Delete(OrderDTO orderDto)
 		{
@@ -53,10 +53,10 @@ namespace EcommerceWebSite.App.Services
 			return new ResultView<OrderDTO> { Entity = _mapper.Map<OrderDTO>(deletedOrder), IsSuccess = true, msg = "Deleted Successful" };
 		}
 
-		public async Task<OrderDTO> Save()
+		public async Task<int> Save()
 		{
 			var result = await _orderRepository.SaveChangesAsync();
-			return _mapper.Map<OrderDTO>(result);
+			return result;
 		}
 	}
 }
