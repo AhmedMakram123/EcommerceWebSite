@@ -34,7 +34,7 @@ namespace ProjectAPI.Controllers
         }
 
         [HttpPost]
-       [Authorize(Roles = "Admin")]
+      // [Authorize(Roles = "Admin")]
         public async Task PostAsync([FromBody] CreateOrUpdateCategoryDTO category)
         {
             CreateOrUpdateCategoryDTO category1 = new CreateOrUpdateCategoryDTO();

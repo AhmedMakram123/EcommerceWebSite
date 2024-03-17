@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace ProjectAPI.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class CartItemController : Controller
     {
 

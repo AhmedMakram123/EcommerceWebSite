@@ -51,6 +51,10 @@ namespace ProjectAPI
             services.AddScoped<ISubCategoryService, SubCategoryService>();
             services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
 
+            //regester Category 
+            services.AddScoped<ICartItemService, CartItemService>();
+            services.AddScoped<ICartItemRepository, CartItemRepository>();
+
             //[Authoriz] used JWT Token in Chck Authantiaction
             services.AddAuthentication(options =>
             {
