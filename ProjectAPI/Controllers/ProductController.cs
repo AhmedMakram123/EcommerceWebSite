@@ -97,7 +97,7 @@ namespace ProjectAPI.Controllers
                 var location = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}");
                 var uri = location.AbsoluteUri;
                 /* this needs to change, waiting they make up thier mind and choose a model to follow */
-                return Created(uri + ele.Entity.Name, " Created");
+                return Created(uri + ele.Entity.EnName, " Created");
             }
             return BadRequest(ModelState);
         }
@@ -113,7 +113,7 @@ namespace ProjectAPI.Controllers
 
                 var location = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}/");
                 var uri = location.AbsoluteUri;
-                return Ok($"{uri + product.Name} is Updated");
+                return Ok($"{uri + product.EnName} is Updated");
             }
             return BadRequest(ModelState);
         }
@@ -136,7 +136,7 @@ namespace ProjectAPI.Controllers
 
             var ele = await productService.Delete(prd);
 
-            return Ok($"{ele.Entity.Name} is deleted");
+            return Ok($"{ele.Entity.EnName} is deleted");
         }
     }
 }

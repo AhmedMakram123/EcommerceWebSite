@@ -11,8 +11,7 @@ namespace EcommerceWebSite.Domain.Models
 {
     public class CartItem : BaseEntity
     {
-        [Required(ErrorMessage = "Product Id Required")]
-        public int cartId { get; set; }
+       
         [ForeignKey("Product")]
         [Required(ErrorMessage = "Product Id Required")]
         public int ProductId { get; set; }
