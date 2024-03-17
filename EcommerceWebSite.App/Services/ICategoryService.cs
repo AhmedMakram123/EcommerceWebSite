@@ -9,11 +9,12 @@ namespace EcommerceWebSite.App.Services
 {
     public interface ICategoryService
     {
-        public Task<CreateOrUpdateCategoryDTO> GetAll();
+       
+        public Task<List<CreateOrUpdateCategoryDTO>> GetAll();
         public Task<CreateOrUpdateCategoryDTO> GetOne(int id);
-        public Task<ResultView<CreateOrUpdateCategoryDTO>> Create(CreateOrUpdateCategoryDTO product);
-        public Task<CreateOrUpdateCategoryDTO> Update(CreateOrUpdateCategoryDTO product);
-        public Task<ResultView<CreateOrUpdateCategoryDTO>> Delete(CreateOrUpdateCategoryDTO product);
+        public Task<ResultView<CreateOrUpdateCategoryDTO>> Create(CreateOrUpdateCategoryDTO category);
+        public Task<CreateOrUpdateCategoryDTO> Update(CreateOrUpdateCategoryDTO category);
+        public Task<ResultView<CreateOrUpdateCategoryDTO>> Delete(CreateOrUpdateCategoryDTO category);
         public Task<CreateOrUpdateCategoryDTO> Save();
     }
 }

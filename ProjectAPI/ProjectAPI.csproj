@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EcommerceWebSite.App\EcommerceWebSite.App.csproj" />
     <ProjectReference Include="..\EcommerceWebSite.Context\EcommerceWebSite.Context.csproj" />
     <ProjectReference Include="..\EcommerceWebSite.Domain\EcommerceWebSite.Domain.csproj" />
   </ItemGroup>

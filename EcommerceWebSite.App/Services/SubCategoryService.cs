@@ -20,10 +20,10 @@ namespace EcommerceWebSite.App.Services
             this.subCategoryRepository = _SubCategory;
             this.mapper = _mapper;
         }
-        public async Task<CreateOrUpdateSubCategoryDTO> GetAll()
+        public async Task<List<CreateOrUpdateSubCategoryDTO>> GetAll()
         {
             var Subcat = await subCategoryRepository.GetAllAsync();
-            return mapper.Map<CreateOrUpdateSubCategoryDTO>(Subcat);
+            return mapper.Map<List<CreateOrUpdateSubCategoryDTO>>(Subcat);
         }
         public async Task<CreateOrUpdateSubCategoryDTO> Save()
         {

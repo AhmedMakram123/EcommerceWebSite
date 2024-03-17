@@ -20,10 +20,10 @@ namespace EcommerceWebSite.App.Services
             this.CategoryRepository = _Category;
             this.mapper = _mapper;
         }
-        public async Task<CreateOrUpdateCategoryDTO> GetAll()
+        public async Task<List<CreateOrUpdateCategoryDTO>> GetAll()
         {
             var cat = await CategoryRepository.GetAllAsync();
-            return mapper.Map<CreateOrUpdateCategoryDTO>(cat);
+            return mapper.Map <List<CreateOrUpdateCategoryDTO>>(cat);
         }
         public async Task<CreateOrUpdateCategoryDTO> Save()
         {
@@ -45,7 +45,7 @@ namespace EcommerceWebSite.App.Services
         public async Task<ResultView<CreateOrUpdateCategoryDTO>> Create(CreateOrUpdateCategoryDTO category)
         {
             var query = await CategoryRepository.GetAllAsync();
-            var OldCat = query.Where(p => p.EnName == category.Name).FirstOrDefault();
+            var OldCat = query.Where(p => p.Name == category.Name).FirstOrDefault();
             if (OldCat != null)
             {
                 return new ResultView<CreateOrUpdateCategoryDTO> { Entity = null, IsSuccess = false, msg = "Already Exists" };
