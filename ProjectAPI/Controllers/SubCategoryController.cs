@@ -34,11 +34,12 @@ namespace ProjectAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task PostAsync([FromBody] CreateOrUpdateSubCategoryDTO subcategory)
         {
             CreateOrUpdateSubCategoryDTO subcategory1 = new CreateOrUpdateSubCategoryDTO();
             subcategory1.Name = subcategory.Name;
+            subcategory1.CategoryId= subcategory.CategoryId;
             _ = await subcategoryService.Create(subcategory1);
         }
 
@@ -58,7 +59,7 @@ namespace ProjectAPI.Controllers
 
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         public async Task Put(int id, [FromBody] CreateOrUpdateSubCategoryDTO category)
         {
             CreateOrUpdateSubCategoryDTO category1 = await subcategoryService.GetOne(id);
