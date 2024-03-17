@@ -1,5 +1,9 @@
+using EcommerceWebSite.App.Contract;
+using EcommerceWebSite.App.Mapper;
+using EcommerceWebSite.App.Services;
 using EcommerceWebSite.Context;
 using EcommerceWebSite.Domain.Models;
+using EcommerceWebSite.Infrastractions.Repositores;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,7 +41,15 @@ namespace ProjectAPI
             });
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<EcommerceContext>();
+            //regester AutoMapper
+            services.AddAutoMapper(typeof(AutoMapperProfile));
+            //regester Category 
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
+            //regester SubCategory
+            services.AddScoped<ISubCategoryService, SubCategoryService>();
+            services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
 
             //[Authoriz] used JWT Token in Chck Authantiaction
             services.AddAuthentication(options =>

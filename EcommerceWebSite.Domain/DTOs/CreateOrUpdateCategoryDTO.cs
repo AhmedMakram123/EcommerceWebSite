@@ -8,8 +8,8 @@ namespace EcommerceWebSite.Domain.DTOs
 {
     public class CreateOrUpdateCategoryDTO
     {
+       
         public string? Name { get; set; }
 
-   
     }
 }

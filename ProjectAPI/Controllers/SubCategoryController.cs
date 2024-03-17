@@ -43,22 +43,44 @@ namespace ProjectAPI.Controllers
         }
 
 
+        //[HttpPut("{id}")]
+        //[Authorize(Roles = "Admin")]
+        //public async Task Put(int id, [FromBody] CreateOrUpdateSubCategoryDTO subcategory)
+        //{
+        //    CreateOrUpdateSubCategoryDTO subcategory1 = await subcategoryService.GetOne(id);
+
+        //    subcategory1.Name = subcategory.Name;
+        //    subcategory1.CategoryId= subcategory.CategoryId;
+
+
+        //    await subcategoryService.Update(subcategory1);
+        //}
+
+
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task Put(int id, [FromBody] CreateOrUpdateSubCategoryDTO subcategory)
+        public async Task Put(int id, [FromBody] CreateOrUpdateSubCategoryDTO category)
         {
             CreateOrUpdateSubCategoryDTO category1 = await subcategoryService.GetOne(id);
 
-            category1.Name = subcategory.Name;
+            category1.Name = category.Name;
 
-            await subcategoryService.Update(category1);
+            await subcategoryService.Update(id, category1);
         }
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteAsync([FromBody] CreateOrUpdateSubCategoryDTO subcategory)
-        {
-            await subcategoryService.Delete(subcategory);
-            return Ok();
+        //[HttpDelete("{id}")]
+        //public async Task<ActionResult> DeleteAsync([FromBody] CreateOrUpdateSubCategoryDTO subcategory)
+        //{
+        //    await subcategoryService.Delete(subcategory);
+        //    return Ok();
 
+        //}
+
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteAsync(int id)
+        {
+            await subcategoryService.Delete(id);
+            return Ok();
         }
     }
 }

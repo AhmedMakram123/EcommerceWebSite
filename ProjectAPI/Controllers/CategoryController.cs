@@ -34,11 +34,12 @@ namespace ProjectAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+       [Authorize(Roles = "Admin")]
         public async Task PostAsync([FromBody] CreateOrUpdateCategoryDTO category)
         {
             CreateOrUpdateCategoryDTO category1 = new CreateOrUpdateCategoryDTO();
             category1.Name = category.Name;
+            
             _ = await categoryService.Create(category1);
         }
 
@@ -48,17 +49,16 @@ namespace ProjectAPI.Controllers
         public async Task Put(int id, [FromBody] CreateOrUpdateCategoryDTO category)
         {
             CreateOrUpdateCategoryDTO category1 = await categoryService.GetOne(id);
-
+            
             category1.Name = category.Name;
            
-            await categoryService.Update(category1);
+            await categoryService.Update(id,category1);
         }
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteAsync([FromBody] CreateOrUpdateCategoryDTO category)
+        public async Task<ActionResult> DeleteAsync(int id)
         {
-            await categoryService.Delete(category);
+            await categoryService.Delete(id);
             return Ok();
-
         }
     }
 }

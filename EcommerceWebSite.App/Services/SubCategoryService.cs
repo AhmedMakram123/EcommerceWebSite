@@ -30,12 +30,27 @@ namespace EcommerceWebSite.App.Services
             var res = await subCategoryRepository.SaveChangesAsync();
             return mapper.Map<CreateOrUpdateSubCategoryDTO>(res);
         }
-        public async Task<CreateOrUpdateSubCategoryDTO> Update(CreateOrUpdateSubCategoryDTO Subcategory)
+
+        public async Task<CreateOrUpdateSubCategoryDTO> Update(int id, CreateOrUpdateSubCategoryDTO category)
         {
-            var Subcat = mapper.Map<SubCategory>(Subcategory);
-            var Newcat = await subCategoryRepository.UpdateAsync(Subcat);
-            return mapper.Map<CreateOrUpdateSubCategoryDTO>(Newcat);
+
+            var existingCategory = await subCategoryRepository.GetByIdAsync(id);
+            if (existingCategory == null)
+            {
+
+                return null;
+            }
+            existingCategory.Name = category.Name;
+            var updatedCategory = await subCategoryRepository.UpdateAsync(existingCategory);
+            await subCategoryRepository.SaveChangesAsync();
+            return mapper.Map<CreateOrUpdateSubCategoryDTO>(updatedCategory);
         }
+        //public async Task<CreateOrUpdateSubCategoryDTO> Update(CreateOrUpdateSubCategoryDTO Subcategory)
+        //{
+        //    var Subcat = mapper.Map<SubCategory>(Subcategory);
+        //    var Newcat = await subCategoryRepository.UpdateAsync(Subcat);
+        //    return mapper.Map<CreateOrUpdateSubCategoryDTO>(Newcat);
+        //}
         public async Task<CreateOrUpdateSubCategoryDTO> GetOne(int id)
         {
             var Subcat = await subCategoryRepository.GetByIdAsync(id);
@@ -59,13 +74,39 @@ namespace EcommerceWebSite.App.Services
                 return new ResultView<CreateOrUpdateSubCategoryDTO> { Entity = p, IsSuccess = true, msg = "Created Successful" };
             }
         }
-        public async Task<ResultView<CreateOrUpdateSubCategoryDTO>> Delete(CreateOrUpdateSubCategoryDTO Subcategory)
+        //public async Task<ResultView<CreateOrUpdateSubCategoryDTO>> Delete(CreateOrUpdateSubCategoryDTO Subcategory)
+        //{
+        //    var Subcat = mapper.Map<SubCategory>(Subcategory);
+        //    var OldCat = subCategoryRepository.DeleteAsync(Subcat);
+        //    await subCategoryRepository.SaveChangesAsync();
+        //    var p = mapper.Map<CreateOrUpdateSubCategoryDTO>(OldCat);
+        //    return new ResultView<CreateOrUpdateSubCategoryDTO> { Entity = p, IsSuccess = true, msg = "Deleted Successful" };
+        //}
+
+        public async Task<ResultView<CreateOrUpdateSubCategoryDTO>> Delete(int SubcategoryId)
         {
-            var Subcat = mapper.Map<SubCategory>(Subcategory);
-            var OldCat = subCategoryRepository.DeleteAsync(Subcat);
+
+            var category = await subCategoryRepository.GetByIdAsync(SubcategoryId);
+
+            if (category == null)
+            {
+                return new ResultView<CreateOrUpdateSubCategoryDTO>
+                {
+                    IsSuccess = false,
+                    msg = "Category not found"
+                };
+            }
+            var deletedCategory = await subCategoryRepository.DeleteAsync(category);
             await subCategoryRepository.SaveChangesAsync();
-            var p = mapper.Map<CreateOrUpdateSubCategoryDTO>(OldCat);
-            return new ResultView<CreateOrUpdateSubCategoryDTO> { Entity = p, IsSuccess = true, msg = "Deleted Successful" };
+
+            var deletedCategoryDTO = mapper.Map<CreateOrUpdateSubCategoryDTO>(deletedCategory);
+
+            return new ResultView<CreateOrUpdateSubCategoryDTO>
+            {
+                Entity = deletedCategoryDTO,
+                IsSuccess = true,
+                msg = "Deleted Successfully"
+            };
         }
     }
 }
