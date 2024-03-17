@@ -12,10 +12,14 @@ namespace EcommerceWebSite.Domain.Models
     {
         [MaxLength(50)]
         [Required]
-       public String? Name { get; set; }
+        String? Name { get; set; }
 
+        //Relations
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
+
+        public virtual ICollection<Product> Products { get; set; }
+
     }
 }
