@@ -37,9 +37,9 @@ namespace ProjectAPI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task PostAsync([FromBody] CreateOrUpdateCategoryDTO category)
         {
-            Category category1 = new Category();
+            CreateOrUpdateCategoryDTO category1 = new CreateOrUpdateCategoryDTO();
             category1.Name = category.Name;
-            _ = await categoryService.Create(category);
+            _ = await categoryService.Create(category1);
         }
 
         
