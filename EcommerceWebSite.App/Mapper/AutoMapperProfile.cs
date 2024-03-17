@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using EcommerceWebSite.Domain.DTOs;
 using EcommerceWebSite.Domain.Models;
-
+using EcommerceWebSite.Domain.DTOs.CartItem;
 namespace EcommerceWebSite.App.Mapper
 {
     public class AutoMapperProfile : Profile
@@ -10,6 +10,9 @@ namespace EcommerceWebSite.App.Mapper
         {
             CreateMap<CreateOrUpdateProductDTO, Product>().ReverseMap();
             CreateMap<GetAllProductDTO, Product>().ReverseMap();
+            CreateMap<CreateOrUpdateCartItemDto, CartItem>().ReverseMap();
+            CreateMap<GetCartItemDto, CartItem>().ReverseMap();
         }
+    }
     }
 }
