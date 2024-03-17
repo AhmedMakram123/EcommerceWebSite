@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 //using System.Linq;
 
-namespace api.Controllers
+namespace ProjectAPI.Controllers
 {
     /* 
     infrastructure should handle if database,fields,records dont not exist.
