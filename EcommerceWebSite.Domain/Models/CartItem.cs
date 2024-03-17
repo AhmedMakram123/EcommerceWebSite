@@ -13,8 +13,6 @@ namespace EcommerceWebSite.Domain.Models
     {
         [Required(ErrorMessage = "Product Id Required")]
         public int ProductId { get; set; }
-        [Required(ErrorMessage = "Customer Id Required")]
-        public string CustId { get; set; }
        
         [Range(1, int.MaxValue, ErrorMessage = "Quantity must be a positive number.")]
         public int Quantity { get; set; }
@@ -22,9 +20,12 @@ namespace EcommerceWebSite.Domain.Models
         public decimal TotalPrice { get; set; }
         //relation 
         [ForeignKey("Product")]
+        [NotMapped]
         public Product Product { get; set; }
         [ForeignKey("Customer")]
-       
+        [Required(ErrorMessage = "Customer Id Required")]
+        public string CustId { get; set; }
+        [NotMapped]
         public Customer Customer { get; set; } 
 
     }
