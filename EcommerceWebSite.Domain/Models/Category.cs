@@ -11,7 +11,7 @@ namespace EcommerceWebSite.Domain.Models
     {
         [MaxLength(50)]
         [Required]
-        String? Name { get; set; }
+        public String? Name { get; set; }
 
     }
 }

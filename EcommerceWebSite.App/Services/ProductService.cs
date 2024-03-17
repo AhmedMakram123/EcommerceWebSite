@@ -42,7 +42,7 @@ namespace EcommerceWebSite.App.Services
         public async Task<ResultView<CreateOrUpdateProductDTO>> Create(CreateOrUpdateProductDTO product)
         {
             var query = await productRepository.GetAllAsync();
-            var OldProduct = query.Where(p => p.Name == product.Name).FirstOrDefault();
+            var OldProduct = query.Where(p => p.EnName == product.Name).FirstOrDefault();
             if (OldProduct != null)
             {
                 return new ResultView<CreateOrUpdateProductDTO> { Entity = null, IsSuccess = false, msg = "Already Exists" };

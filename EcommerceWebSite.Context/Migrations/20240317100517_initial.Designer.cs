@@ -4,14 +4,16 @@ using EcommerceWebSite.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EcommerceWebSite.Context.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    partial class EcommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20240317100517_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,7 +92,7 @@ namespace EcommerceWebSite.Context.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
                 });
 
-            modelBuilder.Entity("EcommerceWebSite.Domain.Models.CartItem", b =>
+            modelBuilder.Entity("EcommerceWebSite.Domain.Models.Cart", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -98,8 +100,7 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CustId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -113,9 +114,6 @@ namespace EcommerceWebSite.Context.Migrations
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("cartId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("createdAt")
                         .HasColumnType("datetime2");
 
@@ -126,6 +124,12 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustId")
+                        .IsUnique()
+                        .HasFilter("[CustId] IS NOT NULL");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("carts");
                 });
@@ -458,11 +462,6 @@ namespace EcommerceWebSite.Context.Migrations
                 {
                     b.HasBaseType("EcommerceWebSite.Domain.Models.ApplicationUser");
 
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("CartId");
-
                     b.HasDiscriminator().HasValue("Customer");
                 });
 
@@ -471,6 +470,23 @@ namespace EcommerceWebSite.Context.Migrations
                     b.HasBaseType("EcommerceWebSite.Domain.Models.ApplicationUser");
 
                     b.HasDiscriminator().HasValue("User");
+                });
+
+            modelBuilder.Entity("EcommerceWebSite.Domain.Models.Cart", b =>
+                {
+                    b.HasOne("EcommerceWebSite.Domain.Models.Customer", "Customer")
+                        .WithOne("Cart")
+                        .HasForeignKey("EcommerceWebSite.Domain.Models.Cart", "CustId");
+
+                    b.HasOne("EcommerceWebSite.Domain.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Order", b =>
@@ -574,15 +590,6 @@ namespace EcommerceWebSite.Context.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EcommerceWebSite.Domain.Models.Customer", b =>
-                {
-                    b.HasOne("EcommerceWebSite.Domain.Models.CartItem", "Cart")
-                        .WithMany()
-                        .HasForeignKey("CartId");
-
-                    b.Navigation("Cart");
-                });
-
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Order", b =>
                 {
                     b.Navigation("OrderDetails");
@@ -600,6 +607,8 @@ namespace EcommerceWebSite.Context.Migrations
 
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Customer", b =>
                 {
+                    b.Navigation("Cart");
+
                     b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618

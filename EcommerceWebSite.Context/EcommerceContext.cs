@@ -8,6 +8,12 @@ namespace EcommerceWebSite.Context
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<SubCategory> SubCategores { get; set; }
+        public DbSet<CartItem> carts { get; set; }
+        public DbSet<Category> categories { get; set; }
+        public DbSet<Order> orders { get; set; }
+        public DbSet<OrderDetails> orderDetails { get; set; }
+        public DbSet<Product> products { get; set; }
         public EcommerceContext()
         {
         }

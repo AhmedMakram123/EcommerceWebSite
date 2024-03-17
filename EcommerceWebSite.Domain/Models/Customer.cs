@@ -10,7 +10,7 @@ namespace EcommerceWebSite.Domain.Models
 {
     public class Customer: ApplicationUser
     {
-        public Cart Cart { get; set; }
+        public CartItem Cart { get; set; }
 
         public List<Order> Orders { get; set; } = new List<Order>();
     }
