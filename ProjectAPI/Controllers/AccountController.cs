@@ -37,7 +37,7 @@ namespace ProjectAPI.Controllers
             if (ModelState.IsValid)
             {
                 //save
-                User user = new User();
+                ApplicationUser user = new ApplicationUser();
                 user.UserName = userDto.Name;
                 user.PasswordHash = userDto.password;
                 user.PhoneNumber = userDto.PhoneNumber;
@@ -60,7 +60,7 @@ namespace ProjectAPI.Controllers
             if (ModelState.IsValid)
             {
                 //save
-                User user = new User();
+                ApplicationUser user = new ApplicationUser();
                 user.UserName = userDto.Name;
                 user.PasswordHash = userDto.password;
                 user.PhoneNumber = userDto.PhoneNumber;
@@ -88,7 +88,7 @@ namespace ProjectAPI.Controllers
             if (ModelState.IsValid)
             {
                 //save
-                Customer user = new Customer();
+                ApplicationUser user = new ApplicationUser();
                 user.UserName = userDto.Name;
                 user.PasswordHash = userDto.password;
                 user.PhoneNumber = userDto.PhoneNumber;

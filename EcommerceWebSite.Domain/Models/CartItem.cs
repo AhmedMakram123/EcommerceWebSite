@@ -28,8 +28,7 @@ namespace EcommerceWebSite.Domain.Models
         [NotMapped]
         public Product Product { get; set; }
         
-        [NotMapped]
-        public Customer Customer { get; set; } 
+        public ApplicationUser Customer { get; set; } 
 
     }
 }

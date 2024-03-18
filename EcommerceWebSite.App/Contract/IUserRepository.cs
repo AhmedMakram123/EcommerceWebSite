@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace EcommerceWebSite.App.Contract
 {
-    public interface IUserRepository : IBaseRepository<User,int>
+    public interface IUserRepository : IBaseRepository<ApplicationUser, int>
     {
-        User GetByEmail(string email);
-        User Login(string email, string password);
+        ApplicationUser GetByEmail(string email);
+        ApplicationUser Login(string email, string password);
 
     }
 }

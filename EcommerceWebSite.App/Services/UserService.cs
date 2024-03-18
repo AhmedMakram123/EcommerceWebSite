@@ -15,7 +15,7 @@ namespace EcommerceWebSite.App.Services
         {
             _userService = userService;
         }
-        public Task<User> UserRegister(User user)
+        public Task<ApplicationUser> UserRegister(ApplicationUser user)
         {
             if (user is not null && _userService.GetByEmail(user.Email) is null)
             {
@@ -24,7 +24,7 @@ namespace EcommerceWebSite.App.Services
             }
             return null;
         }
-        public Task<User> UpdateUser(User user)
+        public Task<ApplicationUser> UpdateUser(ApplicationUser user)
         {
             if (user is not null)
             {
@@ -32,17 +32,17 @@ namespace EcommerceWebSite.App.Services
             }
             return null;
         }
-        public Task<User> DeleteUser(User user)
+        public Task<ApplicationUser> DeleteUser(ApplicationUser user)
         {
             if (user is not null)
             {
-                Task<User> _user = _userService.DeleteAsync(user);
+                Task<ApplicationUser> _user = _userService.DeleteAsync(user);
                 _userService.SaveChangesAsync();
                 return _user;
             }
             return null;
         }
-        public Task<User> GetUser(int id)
+        public Task<ApplicationUser> GetUser(int id)
         {
             if (id != 0)
             {
@@ -50,7 +50,7 @@ namespace EcommerceWebSite.App.Services
             }
             return null;
         }
-        public User Login(string Email, string passwrd)
+        public ApplicationUser Login(string Email, string passwrd)
         {
             return _userService.Login(Email, passwrd);
         }

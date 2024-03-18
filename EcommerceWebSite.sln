@@ -1,17 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.34601.136
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcommerceWebSite.App", "EcommerceWebSite.App\EcommerceWebSite.App.csproj", "{BDEE5540-911B-470E-8CD4-5BB01E4B1DAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceWebSite.App", "EcommerceWebSite.App\EcommerceWebSite.App.csproj", "{BDEE5540-911B-470E-8CD4-5BB01E4B1DAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcommerceWebSite.Context", "EcommerceWebSite.Context\EcommerceWebSite.Context.csproj", "{D0D6D792-5537-4BA8-8F0F-DAE93952954C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceWebSite.Context", "EcommerceWebSite.Context\EcommerceWebSite.Context.csproj", "{D0D6D792-5537-4BA8-8F0F-DAE93952954C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectAPI", "ProjectAPI\ProjectAPI.csproj", "{112DA1C8-2E6B-44B5-9AC4-A94BCB90DCD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectAPI", "ProjectAPI\ProjectAPI.csproj", "{112DA1C8-2E6B-44B5-9AC4-A94BCB90DCD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcommerceWebSite.Domain", "EcommerceWebSite.Domain\EcommerceWebSite.Domain.csproj", "{C17E1B54-79BC-4EEC-B975-C3C09DBE2B54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceWebSite.Domain", "EcommerceWebSite.Domain\EcommerceWebSite.Domain.csproj", "{C17E1B54-79BC-4EEC-B975-C3C09DBE2B54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcommerceWebSite.Infrastractions", "EcommerceWebSite.Infrastractions\EcommerceWebSite.Infrastractions.csproj", "{A015B636-0748-4B59-B16F-E6032B8F1477}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceWebSite.Infrastractions", "EcommerceWebSite.Infrastractions\EcommerceWebSite.Infrastractions.csproj", "{A015B636-0748-4B59-B16F-E6032B8F1477}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceWebSite.Dashboard", "EcommerceWebSite.Dashboard\EcommerceWebSite.Dashboard.csproj", "{7671D06B-FC4F-493C-9CBA-B37FF92E8017}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{A015B636-0748-4B59-B16F-E6032B8F1477}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A015B636-0748-4B59-B16F-E6032B8F1477}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A015B636-0748-4B59-B16F-E6032B8F1477}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7671D06B-FC4F-493C-9CBA-B37FF92E8017}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7671D06B-FC4F-493C-9CBA-B37FF92E8017}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7671D06B-FC4F-493C-9CBA-B37FF92E8017}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7671D06B-FC4F-493C-9CBA-B37FF92E8017}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -31,10 +31,6 @@ namespace EcommerceWebSite.Context.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -86,8 +82,6 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.CartItem", b =>
@@ -99,7 +93,7 @@ namespace EcommerceWebSite.Context.Migrations
 
                     b.Property<string>("CustId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -113,9 +107,6 @@ namespace EcommerceWebSite.Context.Migrations
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("cartId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("createdAt")
                         .HasColumnType("datetime2");
 
@@ -126,6 +117,9 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustId")
+                        .IsUnique();
 
                     b.HasIndex("ProductId");
 
@@ -456,37 +450,26 @@ namespace EcommerceWebSite.Context.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("EcommerceWebSite.Domain.Models.Customer", b =>
-                {
-                    b.HasBaseType("EcommerceWebSite.Domain.Models.ApplicationUser");
-
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("CartId");
-
-                    b.HasDiscriminator().HasValue("Customer");
-                });
-
-            modelBuilder.Entity("EcommerceWebSite.Domain.Models.User", b =>
-                {
-                    b.HasBaseType("EcommerceWebSite.Domain.Models.ApplicationUser");
-
-                    b.HasDiscriminator().HasValue("User");
-                });
-
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.CartItem", b =>
                 {
+                    b.HasOne("EcommerceWebSite.Domain.Models.ApplicationUser", "Customer")
+                        .WithOne("Cart")
+                        .HasForeignKey("EcommerceWebSite.Domain.Models.CartItem", "CustId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("EcommerceWebSite.Domain.Models.Product", null)
                         .WithMany("CartItem")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Order", b =>
                 {
-                    b.HasOne("EcommerceWebSite.Domain.Models.Customer", "User")
+                    b.HasOne("EcommerceWebSite.Domain.Models.ApplicationUser", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserID");
 
@@ -585,13 +568,11 @@ namespace EcommerceWebSite.Context.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EcommerceWebSite.Domain.Models.Customer", b =>
+            modelBuilder.Entity("EcommerceWebSite.Domain.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("EcommerceWebSite.Domain.Models.CartItem", "Cart")
-                        .WithMany()
-                        .HasForeignKey("CartId");
-
                     b.Navigation("Cart");
+
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Order", b =>
@@ -609,11 +590,6 @@ namespace EcommerceWebSite.Context.Migrations
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.SubCategory", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("EcommerceWebSite.Domain.Models.Customer", b =>
-                {
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }
