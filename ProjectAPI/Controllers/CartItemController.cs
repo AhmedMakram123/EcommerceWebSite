@@ -39,7 +39,9 @@ namespace ProjectAPI.Controllers
         public async Task PostAsync([FromBody] CreateOrUpdateCartItemDto CartItemDto)
         {
             CreateOrUpdateCartItemDto CartItemDto1 = new CreateOrUpdateCartItemDto();
-            CartItemDto1.Quantity = CartItemDto.Quantity;
+            CartItemDto1.CustId = CartItemDto.CustId;
+            CartItemDto1.ProductId = CartItemDto.ProductId;
+           CartItemDto1.Quantity = CartItemDto.Quantity;
             CartItemDto1.TotalPrice = CartItemDto.TotalPrice;
             _ = await CartItemService.Create(CartItemDto1);
         }
@@ -48,9 +50,10 @@ namespace ProjectAPI.Controllers
         public async Task Put(int id, [FromBody] CreateOrUpdateCartItemDto CartItemDto)
         {
             CreateOrUpdateCartItemDto c1 = await CartItemService.GetOne(id);
-
+            c1.CustId = CartItemDto.CustId;
+            c1.ProductId = CartItemDto.ProductId;
             c1.Quantity = CartItemDto.Quantity;
-            c1.TotalPrice= CartItemDto.TotalPrice;
+            c1.TotalPrice = CartItemDto.TotalPrice;
 
             await CartItemService.Update(c1);
         }

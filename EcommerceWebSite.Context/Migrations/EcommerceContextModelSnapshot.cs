@@ -127,6 +127,8 @@ namespace EcommerceWebSite.Context.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("carts");
                 });
 
@@ -473,6 +475,15 @@ namespace EcommerceWebSite.Context.Migrations
                     b.HasDiscriminator().HasValue("User");
                 });
 
+            modelBuilder.Entity("EcommerceWebSite.Domain.Models.CartItem", b =>
+                {
+                    b.HasOne("EcommerceWebSite.Domain.Models.Product", null)
+                        .WithMany("CartItem")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Order", b =>
                 {
                     b.HasOne("EcommerceWebSite.Domain.Models.Customer", "User")
@@ -590,6 +601,8 @@ namespace EcommerceWebSite.Context.Migrations
 
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Product", b =>
                 {
+                    b.Navigation("CartItem");
+
                     b.Navigation("OrderDetails");
                 });
 
