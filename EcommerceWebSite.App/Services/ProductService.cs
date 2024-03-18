@@ -2,6 +2,7 @@
 using EcommerceWebSite.App.Contract;
 using EcommerceWebSite.Domain.DTOs;
 using EcommerceWebSite.Domain.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,15 +18,15 @@ namespace EcommerceWebSite.App.Services
             this.productRepository = _product;
             this.mapper = _mapper;
         }
-        public async Task<CreateOrUpdateProductDTO> GetAll()
+        public async Task<List<CreateOrUpdateProductDTO>> GetAll()
         {
             var prd = await productRepository.GetAllAsync();
-            return mapper.Map<CreateOrUpdateProductDTO>(prd);
+            return mapper.Map<List<CreateOrUpdateProductDTO>>(prd);
         }
-        public async Task<CreateOrUpdateProductDTO> Save()
+        public async Task<int> Save()
         {
             var res = await productRepository.SaveChangesAsync();
-            return mapper.Map<CreateOrUpdateProductDTO>(res);
+            return res;
         }
         public async Task<CreateOrUpdateProductDTO> Update(CreateOrUpdateProductDTO product)
         {
@@ -33,6 +34,7 @@ namespace EcommerceWebSite.App.Services
             var NewProd = await productRepository.UpdateAsync(prd);
             return mapper.Map<CreateOrUpdateProductDTO>(NewProd);
         }
+      
         public async Task<CreateOrUpdateProductDTO> GetOne(int id)
         {
             var prd = await productRepository.GetByIdAsync(id);
@@ -42,7 +44,7 @@ namespace EcommerceWebSite.App.Services
         public async Task<ResultView<CreateOrUpdateProductDTO>> Create(CreateOrUpdateProductDTO product)
         {
             var query = await productRepository.GetAllAsync();
-            var OldProduct = query.Where(p => p.EnName == product.Name).FirstOrDefault();
+            var OldProduct = query.Where(p => p.EnName == product.EnName).FirstOrDefault();
             if (OldProduct != null)
             {
                 return new ResultView<CreateOrUpdateProductDTO> { Entity = null, IsSuccess = false, msg = "Already Exists" };
