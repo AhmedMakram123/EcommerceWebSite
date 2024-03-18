@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EcommerceWebSite.App.Contract;
 using EcommerceWebSite.Domain.DTOs;
+using EcommerceWebSite.Domain.Enum;
 using EcommerceWebSite.Domain.Models;
 using System.Linq;
 using System.Threading.Tasks;
@@ -52,6 +53,48 @@ namespace EcommerceWebSite.App.Services
 			await _orderRepository.SaveChangesAsync();
 			return new ResultView<OrderDTO> { Entity = _mapper.Map<OrderDTO>(deletedOrder), IsSuccess = true, msg = "Deleted Successful" };
 		}
+
+
+		public async Task<ResultView<OrderDTO>> ConfirmOrder(int orderId)
+		{
+			var order = await _orderRepository.GetByIdAsync(orderId);
+			if (order == null)
+			{
+				return new ResultView<OrderDTO> { IsSuccess = false, msg = "Order is not found" };
+			}
+
+			// Check if the order is in a state that allows confirmation
+			if (order.State != OrderState.Pending)
+			{
+				return new ResultView<OrderDTO> { IsSuccess = false, msg = "Order cannot be confirmed" };
+			}
+
+			order.State = OrderState.Confirmed;
+			var updatedOrder = await _orderRepository.UpdateAsync(order);
+			await _orderRepository.SaveChangesAsync();
+			return new ResultView<OrderDTO> { Entity = _mapper.Map<OrderDTO>(updatedOrder), IsSuccess = true, msg = "Order confirmed successfully" };
+		}
+
+		public async Task<ResultView<OrderDTO>> CancelOrder(int orderId)
+		{
+			var order = await _orderRepository.GetByIdAsync(orderId);
+			if (order == null)
+			{
+				return new ResultView<OrderDTO> { IsSuccess = false, msg = "Order is not found" };
+			}
+
+			// Check if the order is in a state that allows cancellation
+			if (order.State != OrderState.Pending && order.State != OrderState.Confirmed)
+			{
+				return new ResultView<OrderDTO> { IsSuccess = false, msg = "Order cannot be canceled" };
+			}
+
+			order.State = OrderState.Canceled;
+			var updatedOrder = await _orderRepository.UpdateAsync(order);
+			await _orderRepository.SaveChangesAsync();
+			return new ResultView<OrderDTO> { Entity = _mapper.Map<OrderDTO>(updatedOrder), IsSuccess = true, msg = "Order canceled successfully" };
+		}
+
 
 		public async Task<int> Save()
 		{
