@@ -19,7 +19,8 @@ namespace EcommerceWebSite.Domain.Models
         //Relation
         [ForeignKey("User")]
         public string UserID { get; set; }
-        public Customer User { get; set; }
+       
+        public ApplicationUser User { get; set; }
         public List<OrderDetails> OrderDetails { get; set; }
     }
 

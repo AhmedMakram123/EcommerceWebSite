@@ -6,8 +6,6 @@ namespace EcommerceWebSite.Context
 {
     public class EcommerceContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<Customer> Customers { get; set; }
         public DbSet<SubCategory> SubCategores { get; set; }
         public DbSet<CartItem> carts { get; set; }
         public DbSet<Category> categories { get; set; }
