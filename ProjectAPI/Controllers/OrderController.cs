@@ -1,5 +1,6 @@
 ﻿using EcommerceWebSite.App.Services;
 using EcommerceWebSite.Domain.DTOs;
+using EcommerceWebSite.Domain.DTOs.CartItem;
 using EcommerceWebSite.Domain.Enum;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,38 +22,46 @@ namespace ProjectAPI.Controllers
 		[HttpGet]
 		public async Task<ActionResult> GetAllOrders()
 		{
-			var orders = await _orderService.GetAll();
-			return Ok(orders);
+			ResultDataList<OrderDTO> orders = await _orderService.GetAll();
+			return Ok(orders.Entities);
 		}
 
 		[HttpGet("{id}")]
 		public async Task<ActionResult> GetOrderById(int id)
 		{
-			var order = await _orderService.GetOne(id);
+			OrderDTO order = await _orderService.GetOne(id);
 			return Ok(order);
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CreateOrder([FromBody] OrderDTO orderDTO)
+		public async Task CreateOrder([FromBody] OrderDTO orderDTO)
 		{
+			OrderDTO orderDto1 = new OrderDTO();
 			// Set initial state for a new order
-			orderDTO.State = OrderState.Pending;
+			orderDto1.State = OrderState.Pending;
+			orderDto1.FinalPrice=orderDTO.FinalPrice;
+			orderDto1.Date=orderDTO.Date;
+			orderDto1.UserID=orderDTO.UserID;
+			orderDto1.OrderDetails = orderDTO.OrderDetails;
 
-			var result = await _orderService.Create(orderDTO);
-			return Ok(result);
+			_ = await _orderService.Create(orderDto1);
+			
 		}
 
 		[HttpPut("{id}")]
-		public async Task<IActionResult> UpdateOrder(int id, [FromBody] OrderDTO orderDTO)
+		public async Task UpdateOrder(int id, [FromBody] OrderDTO orderDTO)
 		{
-			var order = await _orderService.GetOne(id);
-			if (order == null)
-			{
-				return NotFound();
-			}
+			OrderDTO order = await _orderService.GetOne(id);
+			
+			order.State = orderDTO.State;
+			order.FinalPrice = orderDTO.FinalPrice;
+			order.Date = orderDTO.Date;
+			order.UserID = orderDTO.UserID;
+			order.OrderDetails = orderDTO.OrderDetails;
 
-			var updatedOrder = await _orderService.Update(orderDTO);
-			return Ok(updatedOrder);
+
+			 await _orderService.Update(id,order);
+			
 		}
 
 		[HttpDelete("{id}")]
@@ -64,8 +73,8 @@ namespace ProjectAPI.Controllers
 				return NotFound();
 			}
 
-			var result = await _orderService.Delete(order);
-			return Ok(result);
+			 await _orderService.Delete(order);
+			return Ok();
 		}
 
 		//[HttpPut("{id}/confirm")]

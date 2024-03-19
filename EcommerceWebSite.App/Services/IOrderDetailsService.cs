@@ -5,11 +5,11 @@ namespace EcommerceWebSite.App.Services
 {
 	public interface IOrderDetailsService
 	{
-		Task<ResultDataList<OrderDetailsDTO>> GetAll();
-		Task<OrderDetailsDTO> GetOne(int id);
-		Task<ResultView<OrderDetailsDTO>> Create(OrderDetailsDTO orderDetails);
-		Task<ResultView<OrderDetailsDTO>> Update(OrderDetailsDTO orderDetails);
-		Task<ResultView<OrderDetailsDTO>> Delete(OrderDetailsDTO orderDetails);
-		Task<int> Save();
+		public Task<ResultDataList<OrderDetailsDTO>> GetAll();
+		public Task<OrderDetailsDTO> GetOne(int id);
+		public Task<ResultView<OrderDetailsDTO>> Create(OrderDetailsDTO orderDetails);
+		public Task<OrderDetailsDTO> Update(int id ,OrderDetailsDTO orderDetails);
+		public Task<ResultView<OrderDetailsDTO>> Delete(OrderDetailsDTO orderDetails);
+		public Task<int> Save();
 	}
 }
