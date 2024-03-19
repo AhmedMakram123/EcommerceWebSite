@@ -32,23 +32,27 @@ namespace ProjectAPI.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CreateOrderDetails([FromBody] OrderDetailsDTO orderDetailsDTO)
+		public async Task CreateOrderDetails([FromBody] OrderDetailsDTO orderDetailsDTO)
 		{
-			var result = await _orderDetailsService.Create(orderDetailsDTO);
-			return Ok(result);
+			OrderDetailsDTO orderDetailsDTO1 = new OrderDetailsDTO();
+			orderDetailsDTO1.Quantity = orderDetailsDTO.Quantity;
+			orderDetailsDTO1.TotalPrice = orderDetailsDTO.TotalPrice;
+			orderDetailsDTO1.ProductId = orderDetailsDTO.ProductId;
+			_ = await _orderDetailsService.Create(orderDetailsDTO1);
+
+			
 		}
 
 		[HttpPut("{id}")]
-		public async Task<IActionResult> UpdateOrderDetails(int id, [FromBody] OrderDetailsDTO orderDetailsDTO)
+		public async Task UpdateOrderDetails(int id, [FromBody] OrderDetailsDTO orderDetailsDTO)
 		{
-			var orderDetail = await _orderDetailsService.GetOne(id);
-			if (orderDetail == null)
-			{
-				return NotFound();
-			}
+			OrderDetailsDTO orderDetails = await _orderDetailsService.GetOne(id);
+			orderDetails.Quantity = orderDetailsDTO.Quantity;
+			orderDetails.TotalPrice = orderDetailsDTO.TotalPrice;
+			orderDetails.ProductId = orderDetailsDTO.ProductId;
+			_ = await _orderDetailsService.Create(orderDetails);
 
-			var updatedOrderDetail = await _orderDetailsService.Update(orderDetailsDTO);
-			return Ok(updatedOrderDetail);
+			
 		}
 
 		[HttpDelete("{id}")]

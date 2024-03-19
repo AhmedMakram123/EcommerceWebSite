@@ -10,22 +10,7 @@ namespace EcommerceWebSite.App.Mapper
         {
             CreateMap<CreateOrUpdateProductDTO, Product>().ReverseMap();
             CreateMap<GetAllProductDTO, Product>().ReverseMap();
-
-<<<<<<< HEAD
-            CreateMap<CreateOrUpdateCategoryDTO, Category>().ReverseMap();
-            CreateMap<GetAllCategoryDTO, Category>().ReverseMap();
-
-            CreateMap<CreateOrUpdateCartItemDto, CartItem>().ReverseMap();
-            CreateMap<GetCartItemDto, CartItem>().ReverseMap();
-
-
-            CreateMap<CreateOrUpdateSubCategoryDTO, SubCategory>().ReverseMap();
-            CreateMap<GetAllSubCategoryDTO, SubCategory>().ReverseMap();
-
-          
         }
-            
-
     }
     
 }

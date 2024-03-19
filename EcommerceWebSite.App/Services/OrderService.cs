@@ -39,12 +39,28 @@ namespace EcommerceWebSite.App.Services
 			return new ResultView<OrderDTO> { Entity = _mapper.Map<OrderDTO>(createdOrder), IsSuccess = true, msg = "Created Successful" };
 		}
 
-		public async Task<ResultView<OrderDTO>> Update(OrderDTO orderDto)
+		public async Task<OrderDTO> Update(int id, OrderDTO orderDto)
 		{
-			var order = _mapper.Map<Order>(orderDto);
-			var updatedOrder = await _orderRepository.UpdateAsync(order);
-			return new ResultView<OrderDTO> { Entity = _mapper.Map<OrderDTO>(updatedOrder), IsSuccess = true, msg = "updated Successful" };
-        }
+			var oldOrder = await _orderRepository.GetByIdAsync(id);
+			if (oldOrder == null)
+			{
+
+				return null;
+			}
+			var newOrder = _mapper.Map<Order>(orderDto);
+			oldOrder.State = newOrder.State;
+			oldOrder.FinalPrice = newOrder.FinalPrice;
+			oldOrder.Date = newOrder.Date;
+			oldOrder.UserID = newOrder.UserID;
+			oldOrder.OrderDetails = newOrder.OrderDetails;
+
+
+			
+			var updatedOrder = await _orderRepository.UpdateAsync(oldOrder);
+			await _orderRepository.SaveChangesAsync();
+			return _mapper.Map<OrderDTO>(updatedOrder);
+			
+		}
 
 		public async Task<ResultView<OrderDTO>> Delete(OrderDTO orderDto)
 		{
