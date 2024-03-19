@@ -30,7 +30,7 @@ namespace ProjectAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             //if (HttpContext.User.Identity.IsAuthenticated == false) return Ok("Not Authenticated");
-            List<CreateOrUpdateProductDTO>? ele = null;
+            List<CreateOrUpdateProductDTO> ele = null;
             try
             {
 
@@ -48,7 +48,7 @@ namespace ProjectAPI.Controllers
         [HttpGet, Route("{id:long}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
-            CreateOrUpdateProductDTO? ele = null;
+            CreateOrUpdateProductDTO ele = null;
             try
             {
                 ele = await productService.GetOne(id);
@@ -122,7 +122,7 @@ namespace ProjectAPI.Controllers
         public async Task<IActionResult> Delete([FromBody] int id)
         {
             if (id <= 0) return BadRequest("invalid id");
-            CreateOrUpdateProductDTO? prd = null;
+            CreateOrUpdateProductDTO prd = null;
             try
             {
                 prd = await productService.GetOne(id);

@@ -9,6 +9,9 @@ namespace EcommerceWebSite.Domain.Models
 {
     public class ApplicationUser : IdentityUser
     {
+
+        public string fName { get; set; } 
+        public string lName { get; set; }   
         public CartItem Cart { get; set; }
 
         public List<Order> Orders { get; set; } = new List<Order>();

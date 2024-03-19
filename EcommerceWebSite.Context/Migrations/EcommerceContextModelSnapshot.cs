@@ -71,6 +71,12 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("fName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("lName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")

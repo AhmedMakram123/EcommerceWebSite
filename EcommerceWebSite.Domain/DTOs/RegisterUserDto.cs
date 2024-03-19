@@ -11,8 +11,10 @@ namespace EcommerceWebSite.Domain.DTOs
     {
         [Required]
 
-        [Display(Name = "Full Name")]
-        public string Name { set; get; }
+        [Display(Name = "First Name")]
+        public string fName { set; get; }
+        [Display(Name = "Last Name")]
+        public string lName { set; get; }
 
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email")]

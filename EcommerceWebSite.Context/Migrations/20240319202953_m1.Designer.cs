@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceWebSite.Context.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    [Migration("20240318140344_Migrations")]
-    partial class Migrations
+    [Migration("20240319202953_m1")]
+    partial class m1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,10 +31,6 @@ namespace EcommerceWebSite.Context.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -77,6 +73,12 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("fName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("lName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -88,8 +90,6 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.CartItem", b =>
@@ -101,7 +101,7 @@ namespace EcommerceWebSite.Context.Migrations
 
                     b.Property<string>("CustId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -115,9 +115,6 @@ namespace EcommerceWebSite.Context.Migrations
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("cartId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("createdAt")
                         .HasColumnType("datetime2");
 
@@ -128,6 +125,11 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustId")
+                        .IsUnique();
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("carts");
                 });
@@ -456,28 +458,26 @@ namespace EcommerceWebSite.Context.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("EcommerceWebSite.Domain.Models.Customer", b =>
+            modelBuilder.Entity("EcommerceWebSite.Domain.Models.CartItem", b =>
                 {
-                    b.HasBaseType("EcommerceWebSite.Domain.Models.ApplicationUser");
+                    b.HasOne("EcommerceWebSite.Domain.Models.ApplicationUser", "Customer")
+                        .WithOne("Cart")
+                        .HasForeignKey("EcommerceWebSite.Domain.Models.CartItem", "CustId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
+                    b.HasOne("EcommerceWebSite.Domain.Models.Product", null)
+                        .WithMany("CartItem")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasIndex("CartId");
-
-                    b.HasDiscriminator().HasValue("Customer");
-                });
-
-            modelBuilder.Entity("EcommerceWebSite.Domain.Models.User", b =>
-                {
-                    b.HasBaseType("EcommerceWebSite.Domain.Models.ApplicationUser");
-
-                    b.HasDiscriminator().HasValue("User");
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Order", b =>
                 {
-                    b.HasOne("EcommerceWebSite.Domain.Models.Customer", "User")
+                    b.HasOne("EcommerceWebSite.Domain.Models.ApplicationUser", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserID");
 
@@ -576,13 +576,11 @@ namespace EcommerceWebSite.Context.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EcommerceWebSite.Domain.Models.Customer", b =>
+            modelBuilder.Entity("EcommerceWebSite.Domain.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("EcommerceWebSite.Domain.Models.CartItem", "Cart")
-                        .WithMany()
-                        .HasForeignKey("CartId");
-
                     b.Navigation("Cart");
+
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Order", b =>
@@ -592,17 +590,14 @@ namespace EcommerceWebSite.Context.Migrations
 
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Product", b =>
                 {
+                    b.Navigation("CartItem");
+
                     b.Navigation("OrderDetails");
                 });
 
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.SubCategory", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("EcommerceWebSite.Domain.Models.Customer", b =>
-                {
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

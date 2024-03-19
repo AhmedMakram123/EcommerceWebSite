@@ -68,28 +68,28 @@ namespace ProjectAPI.Controllers
 			return Ok(result);
 		}
 
-		[HttpPut("{id}/confirm")]
-		public async Task<IActionResult> ConfirmOrder(int id)
-		{
-			var result = await _orderService.ConfirmOrder(id);
-			if (!result.IsSuccess)
-			{
-				return BadRequest(result.msg);
-			}
+		//[HttpPut("{id}/confirm")]
+		//public async Task<IActionResult> ConfirmOrder(int id)
+		//{
+		//	//var result = await _orderService.ConfirmOrder(id);
+		//	if (!result.IsSuccess)
+		//	{
+		//		return BadRequest(result.msg);
+		//	}
 
-			return Ok(result.Entity);
-		}
+		//	return Ok(result.Entity);
+		//}
 
-		[HttpPut("{id}/cancel")]
-		public async Task<IActionResult> CancelOrder(int id)
-		{
-			var result = await _orderService.CancelOrder(id);
-			if (!result.IsSuccess)
-			{
-				return BadRequest(result.msg);
-			}
+		//[HttpPut("{id}/cancel")]
+		//public async Task<IActionResult> CancelOrder(int id)
+		//{
+		//	var result = await _orderService.CancelOrder(id);
+		//	if (!result.IsSuccess)
+		//	{
+		//		return BadRequest(result.msg);
+		//	}
 
-			return Ok(result.Entity);
-		}
+		//	return Ok(result.Entity);
+		//}
 	}
 }

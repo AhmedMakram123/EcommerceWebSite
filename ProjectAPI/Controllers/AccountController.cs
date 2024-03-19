@@ -38,7 +38,9 @@ namespace ProjectAPI.Controllers
             {
                 //save
                 ApplicationUser user = new ApplicationUser();
-                user.UserName = userDto.Name;
+                user.UserName = Guid.NewGuid().ToString();
+                user.fName = userDto.fName;
+                user.lName = userDto.lName; 
                 user.PasswordHash = userDto.password;
                 user.PhoneNumber = userDto.PhoneNumber;
                 user.Email = userDto.email;
@@ -61,7 +63,9 @@ namespace ProjectAPI.Controllers
             {
                 //save
                 ApplicationUser user = new ApplicationUser();
-                user.UserName = userDto.Name;
+                user.UserName = Guid.NewGuid().ToString();
+                user.fName = userDto.fName;
+                user.lName = userDto.lName; 
                 user.PasswordHash = userDto.password;
                 user.PhoneNumber = userDto.PhoneNumber;
                 user.Email = userDto.email;
@@ -89,7 +93,9 @@ namespace ProjectAPI.Controllers
             {
                 //save
                 ApplicationUser user = new ApplicationUser();
-                user.UserName = userDto.Name;
+                user.UserName = Guid.NewGuid().ToString();
+                user.fName= userDto.fName;
+                user.lName= userDto.lName;
                 user.PasswordHash = userDto.password;
                 user.PhoneNumber = userDto.PhoneNumber;
                 user.Email = userDto.email;

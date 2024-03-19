@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace ProjectAPI
 {
@@ -42,6 +43,7 @@ namespace ProjectAPI
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<EcommerceContext>();
             //regester AutoMapper
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddAutoMapper(typeof(AutoMapperProfile));
             //regester Category 
             services.AddScoped<ICategoryService, CategoryService>();
