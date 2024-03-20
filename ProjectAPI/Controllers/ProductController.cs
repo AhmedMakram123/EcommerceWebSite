@@ -1,11 +1,11 @@
 ﻿using EcommerceWebSite.App.Services;
 using System;
 using System.Collections.Generic;
-using EcommerceWebSite.Domain.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
+using EcommerceWebSite.Domain.DTOs.Product;
 //using System.Linq;
 
 namespace ProjectAPI.Controllers
@@ -30,10 +30,9 @@ namespace ProjectAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             //if (HttpContext.User.Identity.IsAuthenticated == false) return Ok("Not Authenticated");
-            List<CreateOrUpdateProductDTO> ele = null;
+            List<GetAllProductDTO> ele = null;
             try
             {
-
                 ele = await productService.GetAll();
             }
             catch
@@ -48,7 +47,7 @@ namespace ProjectAPI.Controllers
         [HttpGet, Route("{id:long}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
-            CreateOrUpdateProductDTO ele = null;
+            GetAllProductDTO ele = null;
             try
             {
                 ele = await productService.GetOne(id);
@@ -85,25 +84,25 @@ namespace ProjectAPI.Controllers
         // return Ok("ok");
         //}
 
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] CreateOrUpdateProductDTO product)
         {
             if (ModelState.IsValid)
             {
                 var ele = await productService.Create(product);
 
-                if (ele is null) return NotFound("A weird error happened during creation");
+                if (ele is null || ele.Entity is null) return NotFound("Make sure you inserted all data correctly");
 
                 var location = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}");
                 var uri = location.AbsoluteUri;
                 /* this needs to change, waiting they make up thier mind and choose a model to follow */
-                return Created(uri + ele.Entity.EnName, " Created");
+                return Created(uri + ele.Entity.id, " Created");
             }
             return BadRequest(ModelState);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] CreateOrUpdateProductDTO product)
+        [HttpPut("Update")]
+        public async Task<IActionResult> Update([FromBody] GetAllProductDTO product)
         {
             if (ModelState.IsValid)
             {
@@ -113,19 +112,19 @@ namespace ProjectAPI.Controllers
 
                 var location = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}/");
                 var uri = location.AbsoluteUri;
-                return Ok($"{uri + product.EnName} is Updated");
+                return Ok($"{uri + product.enName} is Updated");
             }
             return BadRequest(ModelState);
         }
 
-        [HttpDelete, Authorize]
+        [HttpDelete("Delete")]
         public async Task<IActionResult> Delete([FromBody] int id)
         {
             if (id <= 0) return BadRequest("invalid id");
-            CreateOrUpdateProductDTO prd = null;
+            GetAllProductDTO prd = null;
             try
             {
-                prd = await productService.GetOne(id);
+                prd = (await productService.Delete(id))?.Entity;
             }
             catch
             {
@@ -134,9 +133,7 @@ namespace ProjectAPI.Controllers
 
             if (prd is null) return BadRequest("ID doesn't exist");
 
-            var ele = await productService.Delete(prd);
-
-            return Ok($"{ele.Entity.EnName} is deleted");
+            return Ok($"{prd.id} is deleted");
         }
     }
 }
