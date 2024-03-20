@@ -14,7 +14,6 @@ namespace EcommerceWebSite.Context
         public DbSet<Order> orders { get; set; }
         public DbSet<OrderDetails> orderDetails { get; set; }
         public DbSet<Product> products { get; set; }
-        public DbSet<ProductImages> productimges { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public EcommerceContext()
         {
