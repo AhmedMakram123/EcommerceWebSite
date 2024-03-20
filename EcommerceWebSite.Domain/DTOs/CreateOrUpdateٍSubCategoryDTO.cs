@@ -9,6 +9,7 @@ namespace EcommerceWebSite.Domain.DTOs
     public class CreateOrUpdateSubCategoryDTO
     {
       
+        public Guid Id { get; set; }
         public string? Name { get; set; }
        
         public int CategoryId { get; set; }

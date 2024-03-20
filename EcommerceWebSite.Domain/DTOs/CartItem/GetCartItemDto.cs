@@ -8,7 +8,7 @@ namespace EcommerceWebSite.Domain.DTOs.CartItem
 {
     public class GetCartItemDto
     {
-      public int Id { get; set; }
+        public int Id { get; set; }
         public int ProductId { get; set; }
         public string CustId { get; set; }
 

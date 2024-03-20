@@ -11,8 +11,11 @@ namespace EcommerceWebSite.Domain.Models
     {
 
         public string fName { get; set; } 
-        public string lName { get; set; }   
+        public string lName { get; set; }  
+        
+        //public string Paypal { get; set; }
         public CartItem Cart { get; set; }
+
 
         public List<Order> Orders { get; set; } = new List<Order>();
     }
