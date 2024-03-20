@@ -2,6 +2,7 @@
 using EcommerceWebSite.Domain.DTOs;
 using EcommerceWebSite.Domain.Models;
 using EcommerceWebSite.Domain.DTOs.CartItem;
+using EcommerceWebSite.Domain.DTOs.Product;
 namespace EcommerceWebSite.App.Mapper
 {
     public class AutoMapperProfile : Profile
