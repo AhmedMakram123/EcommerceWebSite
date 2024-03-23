@@ -15,7 +15,7 @@ namespace EcommerceWebSite.App.Services
         public Task<CreateOrUpdateCartItemDto> GetOne(int id);
         public Task<ResultView<CreateOrUpdateCartItemDto>> Create(CreateOrUpdateCartItemDto CartItemDto);
         public Task<ResultView<CreateOrUpdateCartItemDto>> Update(CreateOrUpdateCartItemDto CartItemDto);
-        public Task<ResultView<CreateOrUpdateCartItemDto>> Delete(CreateOrUpdateCartItemDto CartItemDto);
+        public Task<ResultView<CreateOrUpdateCartItemDto>> Delete(int Id);
         public Task<int> Save();
 
 

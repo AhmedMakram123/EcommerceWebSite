@@ -38,6 +38,7 @@ namespace ProjectAPI.Controllers
 			orderDetailsDTO1.Quantity = orderDetailsDTO.Quantity;
 			orderDetailsDTO1.TotalPrice = orderDetailsDTO.TotalPrice;
 			orderDetailsDTO1.ProductId = orderDetailsDTO.ProductId;
+			orderDetailsDTO1.OrderId = orderDetailsDTO.OrderId;
 			_ = await _orderDetailsService.Create(orderDetailsDTO1);
 
 			
@@ -50,7 +51,8 @@ namespace ProjectAPI.Controllers
 			orderDetails.Quantity = orderDetailsDTO.Quantity;
 			orderDetails.TotalPrice = orderDetailsDTO.TotalPrice;
 			orderDetails.ProductId = orderDetailsDTO.ProductId;
-			_ = await _orderDetailsService.Create(orderDetails);
+            orderDetails.OrderId = orderDetailsDTO.OrderId;
+            _ = await _orderDetailsService.Update(id,orderDetails);
 
 			
 		}
@@ -64,7 +66,7 @@ namespace ProjectAPI.Controllers
 				return NotFound();
 			}
 
-			var result = await _orderDetailsService.Delete(orderDetail);
+			var result = await _orderDetailsService.Delete(id);
 			return Ok(result);
 		}
 	}

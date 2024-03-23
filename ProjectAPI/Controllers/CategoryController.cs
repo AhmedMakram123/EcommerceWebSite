@@ -45,7 +45,7 @@ namespace ProjectAPI.Controllers
 
         
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         public async Task Put(int id, [FromBody] CreateOrUpdateCategoryDTO category)
         {
             CreateOrUpdateCategoryDTO category1 = await categoryService.GetOne(id);

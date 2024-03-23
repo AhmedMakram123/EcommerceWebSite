@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using EcommerceWebSite.Infrastractions.Repositories;
 
 namespace ProjectAPI
 {
@@ -54,10 +55,20 @@ namespace ProjectAPI
             services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
 
 
-            //regester Category 
+            //regester CartItem 
             services.AddScoped<ICartItemService, CartItemService>();
             services.AddScoped<ICartItemRepository, CartItemRepository>();
 
+            //regester OrderDetails
+            services.AddScoped<IOrderDetailsService, OrderDetailsService>();
+            services.AddScoped<IOrderDetailsRepository,OrderDetailsRepository>();
+            //regester Order
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+
+            //regester CartItem 
+            services.AddScoped<ICartItemService, CartItemService>();
+            services.AddScoped<ICartItemRepository, CartItemRepository>();
 
             //regester Product
             services.AddScoped<IProductService, ProductService>();

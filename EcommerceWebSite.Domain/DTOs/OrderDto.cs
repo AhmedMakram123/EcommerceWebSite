@@ -6,10 +6,10 @@ namespace EcommerceWebSite.Domain.DTOs
 {
 	public class OrderDTO
 	{
+		public int Id {  get; set; } 
 		public decimal FinalPrice { get; set; }
 		public DateTime Date { get; set; }
 		public OrderState State { get; set; }
 		public string UserID { get; set; }
-		public List<OrderDetailsDTO> OrderDetails { get; set; }
 	}
 }

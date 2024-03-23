@@ -4,6 +4,7 @@ using EcommerceWebSite.Domain.DTOs.CartItem;
 using EcommerceWebSite.Domain.Enum;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ProjectAPI.Controllers
@@ -16,14 +17,14 @@ namespace ProjectAPI.Controllers
 
 		public OrderController(IOrderService orderService)
 		{
-			_orderService = orderService;
+            this._orderService = orderService;
 		}
 
 		[HttpGet]
 		public async Task<ActionResult> GetAllOrders()
 		{
-			ResultDataList<OrderDTO> orders = await _orderService.GetAll();
-			return Ok(orders.Entities);
+			List<OrderDTO> orders = await _orderService.GetAll();
+			return Ok(orders);
 		}
 
 		[HttpGet("{id}")]
@@ -42,8 +43,7 @@ namespace ProjectAPI.Controllers
 			orderDto1.FinalPrice=orderDTO.FinalPrice;
 			orderDto1.Date=orderDTO.Date;
 			orderDto1.UserID=orderDTO.UserID;
-			orderDto1.OrderDetails = orderDTO.OrderDetails;
-
+			
 			_ = await _orderService.Create(orderDto1);
 			
 		}
@@ -57,8 +57,7 @@ namespace ProjectAPI.Controllers
 			order.FinalPrice = orderDTO.FinalPrice;
 			order.Date = orderDTO.Date;
 			order.UserID = orderDTO.UserID;
-			order.OrderDetails = orderDTO.OrderDetails;
-
+		
 
 			 await _orderService.Update(id,order);
 			
@@ -73,7 +72,7 @@ namespace ProjectAPI.Controllers
 				return NotFound();
 			}
 
-			 await _orderService.Delete(order);
+			 await _orderService.Delete(id);
 			return Ok();
 		}
 

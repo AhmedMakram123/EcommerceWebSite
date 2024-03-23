@@ -43,6 +43,8 @@ namespace EcommerceWebSite.App.Services
             else
             {
                 var prd = mapper.Map<Product>(product);
+                // Set ImgURL property
+                prd.Image = product.imgURL;
                 var NewProd = await productRepository.CreateAsync(prd);
                 try
                 {

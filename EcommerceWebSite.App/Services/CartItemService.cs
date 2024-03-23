@@ -39,14 +39,24 @@ namespace EcommerceWebSite.App.Services
             }
         }
 
-        public async Task<ResultView<CreateOrUpdateCartItemDto>> Delete(CreateOrUpdateCartItemDto CartItemDto)
+        public async Task<ResultView<CreateOrUpdateCartItemDto>> Delete(int Id)
         {
-            var cat = mapper.Map<CartItem>(CartItemDto);
+            var cat = await cartItemService.GetByIdAsync(Id);
+            if (cat == null)
+            {
+                return new ResultView<CreateOrUpdateCartItemDto> 
+
+                {
+                    IsSuccess = false,
+                    msg = "CartItem not found"
+                };
+            }
+            else { 
             var OldCat = cartItemService.DeleteAsync(cat);
             await cartItemService.SaveChangesAsync();
             var p = mapper.Map<CreateOrUpdateCartItemDto>(OldCat);
             return new ResultView<CreateOrUpdateCartItemDto> { Entity = p, IsSuccess = true, msg = "Deleted Successful" };
-
+            }
         }
 
         public async Task<ResultDataList<CreateOrUpdateCartItemDto>> GetAll()

@@ -100,8 +100,7 @@ namespace ProjectAPI.Controllers
             }
             return BadRequest(ModelState);
         }
-
-        [HttpPut("Update")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromBody] GetAllProductDTO product)
         {
             if (ModelState.IsValid)
@@ -117,7 +116,7 @@ namespace ProjectAPI.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpDelete("Delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromBody] int id)
         {
             if (id <= 0) return BadRequest("invalid id");

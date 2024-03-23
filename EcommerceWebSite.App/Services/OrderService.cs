@@ -3,6 +3,7 @@ using EcommerceWebSite.App.Contract;
 using EcommerceWebSite.Domain.DTOs;
 using EcommerceWebSite.Domain.Enum;
 using EcommerceWebSite.Domain.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,10 +20,10 @@ namespace EcommerceWebSite.App.Services
 			_mapper = mapper;
 		}
 
-		public async Task<ResultDataList<OrderDTO>> GetAll()
+		public async Task<List<OrderDTO>> GetAll()
 		{
 			var orders = await _orderRepository.GetAllAsync();
-			return _mapper.Map< ResultDataList<OrderDTO>>(orders);
+			return _mapper.Map<List<OrderDTO>>(orders);
 		}
 
 		public async Task<OrderDTO> GetOne(int id)
@@ -42,34 +43,39 @@ namespace EcommerceWebSite.App.Services
 		public async Task<OrderDTO> Update(int id, OrderDTO orderDto)
 		{
 			var oldOrder = await _orderRepository.GetByIdAsync(id);
-			if (oldOrder == null)
+			if (oldOrder != null)
 			{
-
-				return null;
+                var newOrder = _mapper.Map<Order>(orderDto);
+                oldOrder.State = newOrder.State;
+                oldOrder.FinalPrice = newOrder.FinalPrice;
+                oldOrder.Date = newOrder.Date;
+                oldOrder.UserID = newOrder.UserID;
+                var updatedOrder = await _orderRepository.UpdateAsync(oldOrder);
+                await _orderRepository.SaveChangesAsync();
+                return _mapper.Map<OrderDTO>(updatedOrder);
+            }
+			else
+			{
+				return null; 
 			}
-			var newOrder = _mapper.Map<Order>(orderDto);
-			oldOrder.State = newOrder.State;
-			oldOrder.FinalPrice = newOrder.FinalPrice;
-			oldOrder.Date = newOrder.Date;
-			oldOrder.UserID = newOrder.UserID;
-			oldOrder.OrderDetails = newOrder.OrderDetails;
 
+        }
 
-			
-			var updatedOrder = await _orderRepository.UpdateAsync(oldOrder);
-			await _orderRepository.SaveChangesAsync();
-			return _mapper.Map<OrderDTO>(updatedOrder);
-			
-		}
-
-		public async Task<ResultView<OrderDTO>> Delete(OrderDTO orderDto)
+		public async Task<ResultView<OrderDTO>> Delete(int Id)
 		{
-			var order = _mapper.Map<Order>(orderDto);
-			var deletedOrder = await _orderRepository.DeleteAsync(order);
-			await _orderRepository.SaveChangesAsync();
-			return new ResultView<OrderDTO> { Entity = _mapper.Map<OrderDTO>(deletedOrder), IsSuccess = true, msg = "Deleted Successful" };
-		}
-
+			var oldOrder = await _orderRepository.GetByIdAsync(Id);
+			if (oldOrder != null)
+			{
+				var deletedOrder = await _orderRepository.DeleteAsync(oldOrder);
+                await _orderRepository.SaveChangesAsync();
+				return new ResultView<OrderDTO> { Entity = _mapper.Map<OrderDTO>(deletedOrder), IsSuccess = true, msg = "Deleted Successful" };
+			}
+            return new ResultView<OrderDTO>
+            {
+                IsSuccess = false,
+                msg = "Order not found"
+            };
+        }
 
 		public async Task<ResultView<OrderDTO>> ConfirmOrder(int orderId)
 		{

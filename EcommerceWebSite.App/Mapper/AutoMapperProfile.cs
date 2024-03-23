@@ -10,20 +10,20 @@ namespace EcommerceWebSite.App.Mapper
         public AutoMapperProfile()
         {
             CreateMap<CreateOrUpdateProductDTO, Product>().ReverseMap();
-            CreateMap<GetAllProductDTO, Product>().ReverseMap();
-
+            CreateMap<GetAllProductDTO, Product>().ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.imgURL)).ReverseMap();
 
             CreateMap<CreateOrUpdateCategoryDTO, Category>().ReverseMap();
             CreateMap<GetAllCategoryDTO, Category>().ReverseMap();
-
+            CreateMap<CreateOrUpdateSubCategoryDTO, SubCategory>().ReverseMap();
+            CreateMap<GetAllSubCategoryDTO, SubCategory>().ReverseMap();
             CreateMap<CreateOrUpdateCartItemDto, CartItem>().ReverseMap();
             CreateMap<GetCartItemDto, CartItem>().ReverseMap();
 
 
-            CreateMap<CreateOrUpdateSubCategoryDTO, SubCategory>().ReverseMap();
-            CreateMap<GetAllSubCategoryDTO, SubCategory>().ReverseMap();
+            CreateMap<OrderDetailsDTO, OrderDetails>().ReverseMap();
+            CreateMap<OrderDTO, Order>().ReverseMap();
+           
 
-          
         }
     }
     

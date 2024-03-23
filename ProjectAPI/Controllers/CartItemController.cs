@@ -58,9 +58,9 @@ namespace ProjectAPI.Controllers
             await CartItemService.Update(c1);
         }
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteAsync([FromBody] CreateOrUpdateCartItemDto c)
+        public async Task<ActionResult> DeleteAsync(int id)
         {
-            await CartItemService.Delete(c);
+            await CartItemService.Delete(id);
             return Ok();
         }
 
