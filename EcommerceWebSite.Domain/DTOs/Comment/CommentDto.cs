@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EcommerceWebSite.Domain.DTOs.Comment
 {
-    public class CreateCommentDto
+    public class CommentDto
     {
         public int Id { get; set; }
         public string review { get; set; }

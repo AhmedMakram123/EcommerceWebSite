@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using EcommerceWebSite.Domain.DTOs.Product;
+using EcommerceWebSite.Domain.DTOs;
 //using System.Linq;
 
 namespace ProjectAPI.Controllers
@@ -101,38 +102,26 @@ namespace ProjectAPI.Controllers
             return BadRequest(ModelState);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromBody] GetAllProductDTO product)
+        public async Task<IActionResult> Update(int id, [FromBody] GetAllProductDTO product)
         {
-            if (ModelState.IsValid)
+
+            var prd = await productService.GetOne(id);
+            
+            if (prd is null)
+                return NotFound("Product doesn't exist");
+            else
             {
-                var ele = await productService.Update(product);
-
-                if (ele is null) return NotFound("A weird error happened during update");
-
-                var location = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}/");
-                var uri = location.AbsoluteUri;
-                return Ok($"{uri + product.enName} is Updated");
+                await productService.Update(product);
+                return Ok($"Product {prd.id} is Updeted");
             }
-            return BadRequest(ModelState);
+
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromBody] int id)
+        public async Task<ActionResult> DeleteAsync(int id)
         {
-            if (id <= 0) return BadRequest("invalid id");
-            GetAllProductDTO prd = null;
-            try
-            {
-                prd = (await productService.Delete(id))?.Entity;
-            }
-            catch
-            {
-                return Ok(errdb);
-            }
-
-            if (prd is null) return BadRequest("ID doesn't exist");
-
-            return Ok($"{prd.id} is deleted");
+            await productService.Delete(id);
+            return Ok();
         }
     }
 }

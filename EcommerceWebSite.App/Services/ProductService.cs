@@ -61,8 +61,17 @@ namespace EcommerceWebSite.App.Services
 
         public async Task<CreateOrUpdateProductDTO> Update(GetAllProductDTO product)
         {
-            var prd = mapper.Map<Product>(product);
+            var prd = await productRepository.GetByIdAsync(product.id);
+
+            prd.ArName = product.arName;
+            prd.EnName = product.enName;
+            prd.Price = product.price;
+            prd.Image = product.imgURL;
+            prd.Description = product.description;
+            prd.Quantity = product.Quantity;
+            prd.SubCategoryId = product.SubCategoryId;
             var NewProd = await productRepository.UpdateAsync(prd);
+            await productRepository.SaveChangesAsync();
             return mapper.Map<CreateOrUpdateProductDTO>(NewProd);
         }
 
@@ -70,7 +79,7 @@ namespace EcommerceWebSite.App.Services
         {
             var prdDTO = await GetOne(id);
             var prd = mapper.Map<Product>(prdDTO);
-            var OldProd = productRepository.DeleteAsync(prd);
+            var OldProd = await productRepository.DeleteAsync(prd);
             await productRepository.SaveChangesAsync();
             var p = mapper.Map<GetAllProductDTO>(OldProd);
             return new ResultView<GetAllProductDTO> { Entity = p, IsSuccess = true, msg = "Deleted Successful" };
