@@ -14,10 +14,12 @@ namespace ProjectAPI.Controllers
     public class CategoryController : ControllerBase
     {
         private ICategoryService categoryService { get; }
+        
 
         public CategoryController(ICategoryService categoryService)
         {
             this.categoryService = categoryService;
+    
         }
         [HttpGet]
         public async Task<ActionResult> GetCategoryAsync()
@@ -57,8 +59,13 @@ namespace ProjectAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAsync(int id)
         {
-            await categoryService.Delete(id);
+            var result = await categoryService.Delete(id);
+            if (!result.IsSuccess)
+            {
+                return StatusCode(500, new { Message = result.msg });
+            }
             return Ok();
         }
+
     }
 }

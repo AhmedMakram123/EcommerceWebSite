@@ -13,11 +13,13 @@ namespace EcommerceWebSite.App.Services
     public class SubCategoryService : ISubCategoryService
     {
         private readonly ISubCategoryRepository subCategoryRepository;
+        private readonly IProductRepository productRepository;
         private readonly IMapper mapper;
 
-        public SubCategoryService(ISubCategoryRepository _SubCategory, IMapper _mapper)
+        public SubCategoryService(ISubCategoryRepository _SubCategory,IProductRepository product, IMapper _mapper)
         {
             this.subCategoryRepository = _SubCategory;
+            this.productRepository = product;
             this.mapper = _mapper;
         }
         public async Task<List<CreateOrUpdateSubCategoryDTO>> GetAll()
@@ -86,17 +88,27 @@ namespace EcommerceWebSite.App.Services
         public async Task<ResultView<CreateOrUpdateSubCategoryDTO>> Delete(int SubcategoryId)
         {
 
-            var category = await subCategoryRepository.GetByIdAsync(SubcategoryId);
+            var Subcategory = await subCategoryRepository.GetByIdAsync(SubcategoryId);
 
-            if (category == null)
+            if (Subcategory == null)
             {
                 return new ResultView<CreateOrUpdateSubCategoryDTO>
                 {
                     IsSuccess = false,
-                    msg = "Category not found"
+                    msg = "SubCategory not found"
                 };
             }
-            var deletedCategory = await subCategoryRepository.DeleteAsync(category);
+            var query = await productRepository.GetAllAsync();
+            var Product = query.Where(p => p.SubCategoryId== Subcategory.Id).FirstOrDefault();
+            if (Product != null)
+            {
+                return new ResultView<CreateOrUpdateSubCategoryDTO>
+                {
+                    IsSuccess = false,
+                    msg = "Cannot delete SubCategory. Product exist."
+                };
+            }
+            var deletedCategory = await subCategoryRepository.DeleteAsync(Subcategory);
             await subCategoryRepository.SaveChangesAsync();
 
             var deletedCategoryDTO = mapper.Map<CreateOrUpdateSubCategoryDTO>(deletedCategory);

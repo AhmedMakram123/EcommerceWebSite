@@ -13,11 +13,13 @@ namespace EcommerceWebSite.App.Services
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository CategoryRepository;
+        private readonly ISubCategoryRepository SubCategoryRepository;
         private readonly IMapper mapper;
 
-        public CategoryService(ICategoryRepository _Category, IMapper _mapper)
+        public CategoryService(ICategoryRepository _Category, ISubCategoryRepository SubCategory, IMapper _mapper)
         {
             this.CategoryRepository = _Category;
+            this.SubCategoryRepository = SubCategory;
             this.mapper = _mapper;
         }
         public async Task<List<CreateOrUpdateCategoryDTO>> GetAll()
@@ -75,14 +77,7 @@ namespace EcommerceWebSite.App.Services
                 return new ResultView<CreateOrUpdateCategoryDTO> { Entity = p, IsSuccess = true, msg = "Created Successful" };
             }
         }
-        //public async Task<ResultView<CreateOrUpdateCategoryDTO>> Delete(CreateOrUpdateCategoryDTO category)
-        //{
-        //    var cat = mapper.Map<Category>(category);
-        //    var OldCat = CategoryRepository.DeleteAsync(cat);
-        //    await CategoryRepository.SaveChangesAsync();
-        //    var p = mapper.Map<CreateOrUpdateCategoryDTO>(OldCat);
-        //    return new ResultView<CreateOrUpdateCategoryDTO> { Entity = p, IsSuccess = true, msg = "Deleted Successful" };
-        //}
+       
         public async Task<ResultView<CreateOrUpdateCategoryDTO>> Delete(int categoryId)
         {
             
@@ -94,6 +89,17 @@ namespace EcommerceWebSite.App.Services
                 {
                     IsSuccess = false,
                     msg = "Category not found"
+                };
+            }
+            var query = await SubCategoryRepository.GetAllAsync();
+            var SubCat = query.Where(p => p.CategoryId==category.Id).FirstOrDefault();
+           // var subcategories = await SubCategoryRepository.GetByIdAsync(categoryId);
+            if (SubCat != null)
+            {
+                return new ResultView<CreateOrUpdateCategoryDTO>
+                {
+                    IsSuccess = false,
+                    msg = "Cannot delete category. Subcategories exist."
                 };
             }
             var deletedCategory = await CategoryRepository.DeleteAsync(category);

@@ -75,12 +75,16 @@ namespace ProjectAPI.Controllers
         //    return Ok();
 
         //}
-
+       
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAsync(int id)
         {
-            await subcategoryService.Delete(id);
+            var result  =  await subcategoryService.Delete(id);
+            if (!result.IsSuccess)
+            {
+                return StatusCode(500, new { Message = result.msg });
+            }
             return Ok();
         }
     }
