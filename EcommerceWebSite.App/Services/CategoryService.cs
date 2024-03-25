@@ -2,6 +2,7 @@
 using EcommerceWebSite.App.Contract;
 using EcommerceWebSite.Domain.DTOs;
 using EcommerceWebSite.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +52,6 @@ namespace EcommerceWebSite.App.Services
             var existingCategory = await CategoryRepository.GetByIdAsync(id);
             if (existingCategory == null)
             {
-               
                 return null;
             }
             existingCategory.Name = category.Name;
@@ -113,6 +113,11 @@ namespace EcommerceWebSite.App.Services
                 IsSuccess = true,
                 msg = "Deleted Successfully"
             };
+        }
+
+        public async Task<List<GetAllCategoryDTO>> GetCategoryWithSubCategory()
+        {
+            return await (await CategoryRepository.getallCategoryWithSubCategory()).ToListAsync();
         }
     }
 }

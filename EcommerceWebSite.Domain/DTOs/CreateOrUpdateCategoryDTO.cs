@@ -10,6 +10,5 @@ namespace EcommerceWebSite.Domain.DTOs
     {
        public int Id { get; set; }
        public string? Name { get; set; }
-       public List<CreateOrUpdateSubCategoryDTO> SubCategories { get; set; }
     }
 }

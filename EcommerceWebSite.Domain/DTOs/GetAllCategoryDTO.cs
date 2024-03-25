@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EcommerceWebSite.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,6 @@ namespace EcommerceWebSite.Domain.DTOs
     {
         public int Id { get; set; }
         public string? Name { get; set; }
-    }
+        public List<SubCategory>? subCategories { get; set; }
+}
 }
