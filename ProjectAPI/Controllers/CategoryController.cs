@@ -53,6 +53,7 @@ namespace ProjectAPI.Controllers
             CreateOrUpdateCategoryDTO category1 = await categoryService.GetOne(id);
             
             category1.Name = category.Name;
+            
            
             await categoryService.Update(id,category1);
         }
