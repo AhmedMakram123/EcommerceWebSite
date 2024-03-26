@@ -10,7 +10,7 @@ namespace EcommerceWebSite.App.Contract
 {
     public interface ICategoryRepository: IBaseRepository<Category,int>
     {
-        public Task<IQueryable<GetAllCategoryDTO>> getallCategoryWithSubCategory();
+        public Task<IQueryable<GetAllCategoryDTO>> getallCategoryWithSubCategory(int id);
     }
    
 }

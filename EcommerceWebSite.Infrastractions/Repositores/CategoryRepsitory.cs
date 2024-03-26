@@ -20,12 +20,12 @@ namespace EcommerceWebSite.Infrastractions.Repositores
             context = _context;
         }
 
-        public async Task<IQueryable<GetAllCategoryDTO>> getallCategoryWithSubCategory()
+        public async Task<IQueryable<GetAllCategoryDTO>> getallCategoryWithSubCategory(int categoryId)
         {
-            return  context.categories.Include(c => c.SubCategories).Select(c => new GetAllCategoryDTO() { Id = c.Id, Name = c.Name, subCategories = c.SubCategories.ToList() });
+            return  context.categories.Where(c => c.Id == categoryId).Include(c => c.SubCategories).Select(c => new GetAllCategoryDTO() { Id = c.Id, Name = c.Name, subCategories = c.SubCategories.ToList() });
         }
 
 
-
+       
     }
 }

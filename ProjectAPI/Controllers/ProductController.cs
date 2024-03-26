@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
-using EcommerceWebSite.Domain.DTOs.Product;
+using EcommerceWebSite.Domain.DTOs.Products;
 using EcommerceWebSite.Domain.DTOs;
 //using System.Linq;
 

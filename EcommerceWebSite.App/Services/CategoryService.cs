@@ -115,9 +115,9 @@ namespace EcommerceWebSite.App.Services
             };
         }
 
-        public async Task<List<GetAllCategoryDTO>> GetCategoryWithSubCategory()
+        public async Task<List<GetAllCategoryDTO>> GetCategoryWithSubCategory(int id)
         {
-            return await (await CategoryRepository.getallCategoryWithSubCategory()).ToListAsync();
+            return await (await CategoryRepository.getallCategoryWithSubCategory(id)).ToListAsync();
         }
     }
 }

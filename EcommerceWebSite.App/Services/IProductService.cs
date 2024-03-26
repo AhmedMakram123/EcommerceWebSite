@@ -1,5 +1,5 @@
 ﻿using EcommerceWebSite.Domain.DTOs;
-using EcommerceWebSite.Domain.DTOs.Product;
+using EcommerceWebSite.Domain.DTOs.Products;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

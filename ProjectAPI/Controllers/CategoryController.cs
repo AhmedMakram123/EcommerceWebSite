@@ -28,9 +28,9 @@ namespace ProjectAPI.Controllers
             return Ok(category);
         }
         [HttpGet("GetAllCategoryAndSubAsync")]
-        public async Task<ActionResult> GetAllCategoryAndSubAsync()
+        public async Task<ActionResult> GetAllCategoryAndSubAsync(int id)
         {
-            List<GetAllCategoryDTO> category = await categoryService.GetCategoryWithSubCategory();
+            List<GetAllCategoryDTO> category = await categoryService.GetCategoryWithSubCategory(id);
             return Ok(category);
         }
         [HttpGet]

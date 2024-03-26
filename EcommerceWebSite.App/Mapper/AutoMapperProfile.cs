@@ -2,7 +2,7 @@
 using EcommerceWebSite.Domain.DTOs;
 using EcommerceWebSite.Domain.Models;
 using EcommerceWebSite.Domain.DTOs.CartItem;
-using EcommerceWebSite.Domain.DTOs.Product;
+using EcommerceWebSite.Domain.DTOs.Products;
 using EcommerceWebSite.Domain.DTOs.Comment;
 namespace EcommerceWebSite.App.Mapper
 {

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using EcommerceWebSite.App.Contract;
 using EcommerceWebSite.Domain.DTOs;
-using EcommerceWebSite.Domain.DTOs.Product;
+using EcommerceWebSite.Domain.DTOs.Products;
 using EcommerceWebSite.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;

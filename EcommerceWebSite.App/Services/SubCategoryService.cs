@@ -2,6 +2,7 @@
 using EcommerceWebSite.App.Contract;
 using EcommerceWebSite.Domain.DTOs;
 using EcommerceWebSite.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,8 @@ namespace EcommerceWebSite.App.Services
 
                 return null;
             }
-            existingCategory.Name = category.Name;
+            existingCategory.EnName = category.EnName;
+            existingCategory.ArName = category.ArName;
             var updatedCategory = await subCategoryRepository.UpdateAsync(existingCategory);
             await subCategoryRepository.SaveChangesAsync();
             return mapper.Map<CreateOrUpdateSubCategoryDTO>(updatedCategory);
@@ -62,7 +64,7 @@ namespace EcommerceWebSite.App.Services
         public async Task<ResultView<CreateOrUpdateSubCategoryDTO>> Create(CreateOrUpdateSubCategoryDTO Subcategory)
         {
             var query = await subCategoryRepository.GetAllAsync();
-            var OldSubCat = query.Where(p => p.Name == Subcategory.Name).FirstOrDefault();
+            var OldSubCat = query.Where(p => p.EnName == Subcategory.EnName).FirstOrDefault();
             if (OldSubCat != null)
             {
                 return new ResultView<CreateOrUpdateSubCategoryDTO> { Entity = null, IsSuccess = false, msg = "Already Exists" };
@@ -119,6 +121,11 @@ namespace EcommerceWebSite.App.Services
                 IsSuccess = true,
                 msg = "Deleted Successfully"
             };
+        }
+
+        public async Task<List<GetAllSubCategoryDTO>> getallSubCategoryWithProduct(int SubcategoryId)
+        {
+            return await (await subCategoryRepository.getallSubCategoryWithProduct(SubcategoryId)).ToListAsync();
         }
     }
 }
