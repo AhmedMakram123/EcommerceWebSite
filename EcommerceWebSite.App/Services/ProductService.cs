@@ -3,6 +3,7 @@ using EcommerceWebSite.App.Contract;
 using EcommerceWebSite.Domain.DTOs;
 using EcommerceWebSite.Domain.DTOs.Products;
 using EcommerceWebSite.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -89,6 +90,11 @@ namespace EcommerceWebSite.App.Services
         {
             var res = await productRepository.SaveChangesAsync();
             return res;
+        }
+
+        public async Task<List<Product>> getAllProductByCategory(int CategoryId)
+        {
+            return await (await productRepository.getAllProductByCategory(CategoryId)).ToListAsync();
         }
     }
 }

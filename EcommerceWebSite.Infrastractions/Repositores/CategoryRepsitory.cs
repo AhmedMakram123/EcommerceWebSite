@@ -20,12 +20,25 @@ namespace EcommerceWebSite.Infrastractions.Repositores
             context = _context;
         }
 
-        public async Task<IQueryable<GetAllCategoryDTO>> getallCategoryWithSubCategory(int categoryId)
+        //public async Task<IQueryable<GetAllCategoryDTO>> getallCategoryWithSubCategory(int categoryId)
+        //{
+        //    return  context.categories.Where(c => c.Id == categoryId).Include(c => c.SubCategories).Select(c => new GetAllCategoryDTO() { Id = c.Id, Name = c.Name, subCategories = c.SubCategories });
+        //}
+
+        public async Task<IQueryable<GetAllSubCategoryDTO>> getallCategoryWithSubCategory(int categoryId)
         {
-            return  context.categories.Where(c => c.Id == categoryId).Include(c => c.SubCategories).Select(c => new GetAllCategoryDTO() { Id = c.Id, Name = c.Name, subCategories = c.SubCategories.ToList() });
+            return context.categories
+                .Where(c => c.Id == categoryId)
+                .SelectMany(c => c.SubCategories)
+                .Select(sc => new GetAllSubCategoryDTO
+                {
+                    Id = sc.Id,
+                    CategoryId = sc.CategoryId,
+                    enName = sc.EnName,
+                    arName = sc.ArName
+                   
+                });
         }
 
-
-       
     }
 }

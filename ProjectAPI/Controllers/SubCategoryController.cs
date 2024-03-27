@@ -25,8 +25,8 @@ namespace ProjectAPI.Controllers
             List<CreateOrUpdateSubCategoryDTO> category = await subcategoryService.GetAll();
             return Ok(category);
         }
-        [HttpGet("getallSubCategoryWithProduct")]
-        public async Task<ActionResult> getallSubCategoryWithProduct(int id)
+        [HttpGet("{id}/getallSubCategoryWithProduct")]
+        public async Task<ActionResult> getallSubCategoryWithProduct([FromRoute] int id)
         {
             List<GetAllSubCategoryDTO> Subcategory = await subcategoryService.getallSubCategoryWithProduct(id);
             return Ok(Subcategory);

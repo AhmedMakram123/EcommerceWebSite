@@ -1,4 +1,5 @@
-﻿using EcommerceWebSite.Domain.Models;
+﻿using EcommerceWebSite.Domain.DTOs.Products;
+using EcommerceWebSite.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace EcommerceWebSite.Domain.DTOs
         public string? enName { get; set; }
         public string? arName { get; set; }
         public int CategoryId { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual List<GetAllProductDTO> Products { get; set; }
 
     }
 }

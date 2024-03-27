@@ -22,9 +22,38 @@ namespace EcommerceWebSite.Infrastractions.Repositores
         {
             context = _context;
         }
+        //public async Task<IQueryable<GetAllSubCategoryDTO>> getallSubCategoryWithProduct(int SubcategoryId)
+        //{
+        //    return context.SubCategores.Where(c => c.Id == SubcategoryId).Include(c => c.Products).Select(c => new GetAllSubCategoryDTO() { Id = c.Id, CategoryId = c.CategoryId, enName = c.EnName, arName = c.ArName, Products = c.Products });
+        //}
+
         public async Task<IQueryable<GetAllSubCategoryDTO>> getallSubCategoryWithProduct(int SubcategoryId)
         {
-            return context.SubCategores.Where(c => c.Id == SubcategoryId).Include(c => c.Products).Select(c => new GetAllSubCategoryDTO() { Id = c.Id, enName = c.EnName, arName=c.ArName, Products = c.Products.ToList() });
+            return context.SubCategores
+                .Where(c => c.Id == SubcategoryId)
+                .Include(c => c.Products)
+                .Select(c => new GetAllSubCategoryDTO()
+                {
+                    Id = c.Id,
+                    CategoryId = c.CategoryId,
+                    enName = c.EnName,
+                    arName = c.ArName,
+                    Products = c.Products.Select(p => new GetAllProductDTO()
+                    {
+                        // Select only the required fields from the product
+                        id = p.Id,
+                        arName=p.ArName,
+                        enName=p.EnName,
+                        Quantity = p.Quantity,
+                        description = p.Description,
+                        price = p.Price,
+                        imgURL = p.Image,
+                        SubCategoryId=p.SubCategoryId
+                        // Other properties you need from GetAllProductDTO
+                    }).ToList()
+                });
         }
+
+
     }
 }

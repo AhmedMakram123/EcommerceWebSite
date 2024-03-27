@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using EcommerceWebSite.Domain.DTOs.Products;
 using EcommerceWebSite.Domain.DTOs;
+using EcommerceWebSite.Domain.Models;
 //using System.Linq;
 
 namespace ProjectAPI.Controllers
@@ -60,6 +61,8 @@ namespace ProjectAPI.Controllers
 
             return ele is null ? Ok("product NotFound") : Ok(ele);
         }
+
+       
 
         /* no one asked for such a funtion */
         //[HttpGet, Route("{name:alpha}")]

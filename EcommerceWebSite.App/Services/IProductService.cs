@@ -1,6 +1,8 @@
 ﻿using EcommerceWebSite.Domain.DTOs;
 using EcommerceWebSite.Domain.DTOs.Products;
+using EcommerceWebSite.Domain.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EcommerceWebSite.App.Services
@@ -13,5 +15,6 @@ namespace EcommerceWebSite.App.Services
         public Task<CreateOrUpdateProductDTO> Update(GetAllProductDTO product);
         public Task<ResultView<GetAllProductDTO>> Delete(int id);
         public Task<int> Save();
+        public Task<List<Product>> getAllProductByCategory(int CategoryId);
     }
 }
