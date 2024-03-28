@@ -31,7 +31,7 @@ namespace ProjectAPI.Controllers
 
         //Create Account new User "Registration" "Post"
         [HttpPost("addAdmin")]//api/account/register
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> addAdmin(RegisterUserDto userDto)
         {
             if (ModelState.IsValid)
@@ -56,7 +56,7 @@ namespace ProjectAPI.Controllers
         }
 
         [HttpPost("addSeller")]//api/account/register
-        [Authorize(Roles = "Admin")]
+        //[Authorize]
         public async Task<IActionResult> addSeller(RegisterUserDto userDto)
         {
             if (ModelState.IsValid)
@@ -102,8 +102,8 @@ namespace ProjectAPI.Controllers
                 IdentityResult result = await usermanger.CreateAsync(user, userDto.password);
                 if (result.Succeeded)
                 {
-                    await usermanger.AddToRoleAsync(user, "Customer");
-                    return Ok("Customer Add Success");
+                    //await usermanger.AddToRoleAsync(user, "Customer");
+                    return Ok(new { message = "Customer Add Success" });
                 }
                 else
                 {
