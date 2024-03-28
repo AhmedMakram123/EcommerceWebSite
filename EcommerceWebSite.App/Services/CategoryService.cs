@@ -33,13 +33,7 @@ namespace EcommerceWebSite.App.Services
             var res = await CategoryRepository.SaveChangesAsync();
             return mapper.Map<CreateOrUpdateCategoryDTO>(res);
         }
-        //public async Task<CreateOrUpdateCategoryDTO> Update(CreateOrUpdateCategoryDTO Category)
-        //{
-        //    var cat = mapper.Map<Category>(Category);
-        //    var Newcat = await CategoryRepository.UpdateAsync(cat);
-        //    await CategoryRepository.SaveChangesAsync();
-        //    return mapper.Map<CreateOrUpdateCategoryDTO>(Newcat);
-        //}
+      
         public async Task<CreateOrUpdateCategoryDTO> GetOne(int id)
         {
             var cat = await CategoryRepository.GetByIdAsync(id);
@@ -54,7 +48,9 @@ namespace EcommerceWebSite.App.Services
             {
                 return null;
             }
-            existingCategory.Name = category.Name;
+            existingCategory.EnName = category.EnName;
+            existingCategory.ArName = category.ArName;
+            existingCategory.imgURL = category.imgURL;
             var updatedCategory = await CategoryRepository.UpdateAsync(existingCategory);
             await CategoryRepository.SaveChangesAsync(); 
             return mapper.Map<CreateOrUpdateCategoryDTO>(updatedCategory);
@@ -63,7 +59,7 @@ namespace EcommerceWebSite.App.Services
         public async Task<ResultView<CreateOrUpdateCategoryDTO>> Create(CreateOrUpdateCategoryDTO category)
         {
             var query = await CategoryRepository.GetAllAsync();
-            var OldCat = query.Where(p => p.Name == category.Name).FirstOrDefault();
+            var OldCat = query.Where(p => p.EnName == category.EnName).FirstOrDefault();
             if (OldCat != null)
             {
                 return new ResultView<CreateOrUpdateCategoryDTO> { Entity = null, IsSuccess = false, msg = "Already Exists" };

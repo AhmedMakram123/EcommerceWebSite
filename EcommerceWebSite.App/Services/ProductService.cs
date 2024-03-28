@@ -36,7 +36,7 @@ namespace EcommerceWebSite.App.Services
         public async Task<ResultView<GetAllProductDTO>> Create(CreateOrUpdateProductDTO product)
         {
             var query = await productRepository.GetAllAsync();
-            var OldProduct = query.Where(p => p.EnName == product.enName).FirstOrDefault();
+            var OldProduct = query.Where(p => p.EnName == product.EnName).FirstOrDefault();
             if (OldProduct != null)
             {
                 return new ResultView<GetAllProductDTO> { Entity = null, IsSuccess = false, msg = "Already Exists" };
@@ -45,7 +45,7 @@ namespace EcommerceWebSite.App.Services
             {
                 var prd = mapper.Map<Product>(product);
                 // Set ImgURL property
-                prd.Image = product.imgURL;
+                prd.imgURL = product.imgURL;
                 var NewProd = await productRepository.CreateAsync(prd);
                 try
                 {
@@ -64,11 +64,11 @@ namespace EcommerceWebSite.App.Services
         {
             var prd = await productRepository.GetByIdAsync(product.id);
 
-            prd.ArName = product.arName;
-            prd.EnName = product.enName;
-            prd.Price = product.price;
-            prd.Image = product.imgURL;
-            prd.Description = product.description;
+            prd.ArName = product.ArName;
+            prd.EnName = product.EnName;
+            prd.Price = product.Price;
+            prd.imgURL = product.imgURL;
+            prd.Description = product.Description;
             prd.Quantity = product.Quantity;
             prd.SubCategoryId = product.SubCategoryId;
             var NewProd = await productRepository.UpdateAsync(prd);

@@ -20,7 +20,7 @@ namespace EcommerceWebSite.Domain.Models
         public string EnName { get; set; }
         [Required(ErrorMessage = "description is required.")]
         public string? Description { get; set; }
-        public string? Image { get; set; }
+        public string? imgURL { get; set; }
 
         [Required(ErrorMessage = "Quantity is required.")]
         [Range(0, int.MaxValue, ErrorMessage = "Quantity must be a positive number.")]
