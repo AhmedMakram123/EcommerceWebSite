@@ -12,6 +12,6 @@ namespace EcommerceWebSite.Domain.Models
         [MaxLength(50)]
         [Required]
         public String? Name { get; set; }
-
+        public List<SubCategory> SubCategories { get; set;}
     }
 }

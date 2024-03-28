@@ -4,14 +4,16 @@ using EcommerceWebSite.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EcommerceWebSite.Context.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    partial class EcommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20240325144751_ubdatedCategory")]
+    partial class ubdatedCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -338,21 +340,16 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ArName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("EnName")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("createdAt")
                         .HasColumnType("datetime2");
@@ -521,8 +518,6 @@ namespace EcommerceWebSite.Context.Migrations
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Comment", b =>
                 {
                     b.HasOne("EcommerceWebSite.Domain.Models.Product", "Product")
-                        .WithMany("Comments")
-
                         .WithMany()
                         .HasForeignKey("ProductId1");
 
@@ -650,8 +645,6 @@ namespace EcommerceWebSite.Context.Migrations
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Product", b =>
                 {
                     b.Navigation("CartItem");
-
-                    b.Navigation("Comments");
 
                     b.Navigation("OrderDetails");
                 });

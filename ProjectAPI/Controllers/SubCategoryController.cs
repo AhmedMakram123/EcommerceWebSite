@@ -25,6 +25,13 @@ namespace ProjectAPI.Controllers
             List<CreateOrUpdateSubCategoryDTO> category = await subcategoryService.GetAll();
             return Ok(category);
         }
+        [HttpGet("{id}/getallSubCategoryWithProduct")]
+        public async Task<ActionResult> getallSubCategoryWithProduct([FromRoute] int id)
+        {
+            List<GetAllSubCategoryDTO> Subcategory = await subcategoryService.getallSubCategoryWithProduct(id);
+            return Ok(Subcategory);
+        }
+
         [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult> GetById([FromRoute] int id)
@@ -38,7 +45,8 @@ namespace ProjectAPI.Controllers
         public async Task PostAsync([FromBody] CreateOrUpdateSubCategoryDTO subcategory)
         {
             CreateOrUpdateSubCategoryDTO subcategory1 = new CreateOrUpdateSubCategoryDTO();
-            subcategory1.Name = subcategory.Name;
+            subcategory1.EnName = subcategory.EnName;
+            subcategory1.ArName = subcategory.ArName;
             subcategory1.CategoryId= subcategory.CategoryId;
             _ = await subcategoryService.Create(subcategory1);
         }
@@ -60,13 +68,14 @@ namespace ProjectAPI.Controllers
 
         [HttpPut("{id}")]
        // [Authorize(Roles = "Admin")]
-        public async Task Put(int id, [FromBody] CreateOrUpdateSubCategoryDTO category)
+        public async Task Put(int id, [FromBody] CreateOrUpdateSubCategoryDTO subcategory)
         {
-            CreateOrUpdateSubCategoryDTO category1 = await subcategoryService.GetOne(id);
+            CreateOrUpdateSubCategoryDTO subcategory1 = await subcategoryService.GetOne(id);
 
-            category1.Name = category.Name;
+            subcategory1.EnName = subcategory.EnName;
+            subcategory1.ArName = subcategory.ArName;
 
-            await subcategoryService.Update(id, category1);
+            await subcategoryService.Update(id, subcategory1);
         }
         //[HttpDelete("{id}")]
         //public async Task<ActionResult> DeleteAsync([FromBody] CreateOrUpdateSubCategoryDTO subcategory)

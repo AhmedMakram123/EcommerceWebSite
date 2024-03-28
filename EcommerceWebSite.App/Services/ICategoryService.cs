@@ -16,5 +16,7 @@ namespace EcommerceWebSite.App.Services
         public Task<CreateOrUpdateCategoryDTO> Update(int id, CreateOrUpdateCategoryDTO category);
         public Task<ResultView<CreateOrUpdateCategoryDTO>> Delete(int id);
         public Task<CreateOrUpdateCategoryDTO> Save();
+        //public Task<List<GetAllCategoryDTO>> GetCategoryWithSubCategory(int id);
+        public Task<List<GetAllSubCategoryDTO>> GetCategoryWithSubCategory(int id);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EcommerceWebSite.Domain.DTOs.Product
+namespace EcommerceWebSite.Domain.DTOs.Products
 {
     public class CreateOrUpdateProductDTO
     {

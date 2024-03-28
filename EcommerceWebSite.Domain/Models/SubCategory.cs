@@ -6,20 +6,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace EcommerceWebSite.Domain.Models
 {
     public class SubCategory : BaseEntity
     {
-        [MaxLength(50)]
-        [Required]
-        public String? Name { get; set; }
+      
+
+      
+
+        [Required(ErrorMessage = " Arabic name is required.")]
+        [MaxLength(50, ErrorMessage = "Product name cannot exceed 50 characters.")]
+        public string ArName { get; set; }
+
+        [Required(ErrorMessage = " English name is required.")]
+        [MaxLength(50, ErrorMessage = "Product name cannot exceed 50 characters.")]
+        public string EnName { get; set; }
 
         //Relations
+        public virtual ICollection<Product> Products { get; set; }
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
-
-        public virtual ICollection<Product> Products { get; set; }
-
     }
 }
