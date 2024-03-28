@@ -35,5 +35,7 @@ namespace EcommerceWebSite.Domain.Models
         public SubCategory? Category { get; set; }
         public List<OrderDetails>? OrderDetails { get; set; }
         public List<CartItem>? CartItem { get; set; }
+
+        public List<Comment>? Comments { get; set; }
     }
 }

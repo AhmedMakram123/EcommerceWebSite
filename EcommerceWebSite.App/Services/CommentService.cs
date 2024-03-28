@@ -51,20 +51,19 @@ namespace EcommerceWebSite.App.Services
             }
         }
 
-        public async Task<ResultDataList<CommentDto>> GetAll()
+        public async Task<List<CommentDto>> GetAll(int pId)
         {
-            var coms = await commentService.GetAll();
-            var com = coms.Entities.Select(e => new CommentDto()
+            var coms = await commentService.GetAll(pId);
+            var com = coms.Select(e => new CommentDto()
                 {
                     Id = e.Id,
                     quality = e.quality,
                     review= e.review,
                     ProductId= e.ProductId,
-                }).ToList();
-            ResultDataList<CommentDto> resultDataList = new ResultDataList<CommentDto>();
-            resultDataList.Entities = com.ToList();
-            resultDataList.Count = com.Count();
-            return resultDataList;
+                }).Where(e => e.ProductId ==pId).ToList();
+            List<CommentDto> result = new List<CommentDto>();
+            result= com.ToList();
+            return result;
 
 
 
@@ -86,8 +85,8 @@ namespace EcommerceWebSite.App.Services
 
         public async Task<ResultView<CommentDto>> Update(CommentDto CommentDto)
         {
-            var Query = (await commentService.GetAll());
-            var old = Query.Entities.Where(e => e.Id==CommentDto.Id).FirstOrDefault();
+            var Query = (await commentService.GetAll(CommentDto.ProductId));
+            var old = Query.Where(e => e.Id==CommentDto.Id).FirstOrDefault();
             if (old != null)
             {
                 var b = mapper.Map<Comment>(CommentDto);

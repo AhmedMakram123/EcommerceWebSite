@@ -4,6 +4,7 @@ using EcommerceWebSite.Domain.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using EcommerceWebSite.Domain.DTOs.Comment;
+using System.Collections.Generic;
 
 namespace ProjectAPI.Controllers
 {
@@ -21,10 +22,10 @@ namespace ProjectAPI.Controllers
                 this.CommentService = CommentService;
             }
             [HttpGet]
-            public async Task<ActionResult> GetCommentAsync()
+            public async Task<ActionResult> GetCommentAsync(int Id)
             {
-                ResultDataList<CommentDto> Comment = await CommentService.GetAll();
-                return Ok(Comment.Entities);
+                List<CommentDto> Comments = await CommentService.GetAll(Id);
+                return Ok(Comments);
             }
 
             [HttpGet]
