@@ -10,7 +10,6 @@ namespace EcommerceWebSite.App.Contract
 {
 	public interface IOrderDetailsRepository : IBaseRepository<OrderDetails, int>
     {
-        Task<List<OrderDetailsDTO>> GetOrderDetails(int OId);
 
 
     }

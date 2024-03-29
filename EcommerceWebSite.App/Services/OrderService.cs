@@ -13,12 +13,10 @@ namespace EcommerceWebSite.App.Services
 	{
         private readonly IOrderRepository _orderRepository;
 		private readonly IMapper _mapper;
-        private readonly IOrderDetailsService _orderDetailsRepository;
         public OrderService(IOrderRepository orderRepository, IMapper mapper,IOrderDetailsService _orderDetails)
 		{
 			_orderRepository = orderRepository;
 			_mapper = mapper;
-			_orderDetailsRepository = _orderDetails;
 		}
 
 		public async Task<List<OrderDTO>> GetAll()
@@ -67,13 +65,7 @@ namespace EcommerceWebSite.App.Services
 			if (oldOrder != null)
 			{
 				var deletedOrder = await _orderRepository.DeleteAsync(oldOrder);
-
-                List<OrderDetailsDTO> delOrderDetails =await _orderDetailsRepository.GetOrderDetails(deletedOrder.Id);
-				foreach(var details in delOrderDetails)
-				{
-					await _orderDetailsRepository.Delete(details.Id);
-				}
-                  await _orderRepository.SaveChangesAsync();
+                await _orderRepository.SaveChangesAsync();
 				return new ResultView<OrderDTO> { Entity = _mapper.Map<OrderDTO>(deletedOrder), IsSuccess = true, msg = "Deleted Successful" };
 			}
             return new ResultView<OrderDTO>
