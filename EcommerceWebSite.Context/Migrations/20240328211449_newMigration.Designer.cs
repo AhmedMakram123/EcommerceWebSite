@@ -4,14 +4,16 @@ using EcommerceWebSite.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EcommerceWebSite.Context.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    partial class EcommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20240328211449_newMigration")]
+    partial class newMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -527,8 +529,9 @@ namespace EcommerceWebSite.Context.Migrations
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Comment", b =>
                 {
                     b.HasOne("EcommerceWebSite.Domain.Models.Product", "Product")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("ProductId1");
+
                     b.Navigation("Product");
                 });
 
@@ -653,8 +656,6 @@ namespace EcommerceWebSite.Context.Migrations
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Product", b =>
                 {
                     b.Navigation("CartItem");
-
-                    b.Navigation("Comments");
 
                     b.Navigation("OrderDetails");
                 });

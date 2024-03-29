@@ -42,12 +42,12 @@ namespace EcommerceWebSite.Infrastractions.Repositores
                     {
                         // Select only the required fields from the product
                         id = p.Id,
-                        arName=p.ArName,
-                        enName=p.EnName,
+                        ArName=p.ArName,
+                        EnName=p.EnName,
                         Quantity = p.Quantity,
-                        description = p.Description,
-                        price = p.Price,
-                        imgURL = p.Image,
+                        Description = p.Description,
+                        Price = p.Price,
+                        imgURL = p.imgURL,
                         SubCategoryId=p.SubCategoryId
                         // Other properties you need from GetAllProductDTO
                     }).ToList()

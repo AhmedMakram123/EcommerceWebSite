@@ -45,6 +45,7 @@ namespace EcommerceWebSite.App.Services
             }
             existingCategory.EnName = category.EnName;
             existingCategory.ArName = category.ArName;
+            existingCategory.CategoryId= category.CategoryId;
             var updatedCategory = await subCategoryRepository.UpdateAsync(existingCategory);
             await subCategoryRepository.SaveChangesAsync();
             return mapper.Map<CreateOrUpdateSubCategoryDTO>(updatedCategory);

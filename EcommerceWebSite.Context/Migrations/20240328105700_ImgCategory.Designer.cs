@@ -4,14 +4,16 @@ using EcommerceWebSite.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EcommerceWebSite.Context.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    partial class EcommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20240328105700_ImgCategory")]
+    partial class ImgCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,10 +143,15 @@ namespace EcommerceWebSite.Context.Migrations
 
                     b.Property<string>("ArName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("EnName")
                         .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -155,9 +162,6 @@ namespace EcommerceWebSite.Context.Migrations
 
                     b.Property<DateTime>("deletedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("imgURL")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("updatedAt")
                         .HasColumnType("datetime2");
@@ -306,6 +310,9 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -323,9 +330,6 @@ namespace EcommerceWebSite.Context.Migrations
 
                     b.Property<DateTime>("deletedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("imgURL")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("updatedAt")
                         .HasColumnType("datetime2");
@@ -527,8 +531,9 @@ namespace EcommerceWebSite.Context.Migrations
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Comment", b =>
                 {
                     b.HasOne("EcommerceWebSite.Domain.Models.Product", "Product")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("ProductId1");
+
                     b.Navigation("Product");
                 });
 
@@ -653,8 +658,6 @@ namespace EcommerceWebSite.Context.Migrations
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Product", b =>
                 {
                     b.Navigation("CartItem");
-
-                    b.Navigation("Comments");
 
                     b.Navigation("OrderDetails");
                 });

@@ -9,9 +9,13 @@ namespace EcommerceWebSite.Domain.Models
 {
     public class Category : BaseEntity
     {
-        [MaxLength(50)]
-        [Required]
-        public String? Name { get; set; }
+        
+        [Required(ErrorMessage = " Arabic name is required.")]
+       
+        public string ArName { get; set; }
+        [Required(ErrorMessage = " English name is required.")]
+        public string EnName { get; set; }
+        public string? imgURL { get; set; }
         public List<SubCategory> SubCategories { get; set;}
     }
 }

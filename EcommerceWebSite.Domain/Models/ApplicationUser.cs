@@ -16,7 +16,6 @@ namespace EcommerceWebSite.Domain.Models
         //public string Paypal { get; set; }
         public CartItem Cart { get; set; }
 
-
         public List<Order> Orders { get; set; } = new List<Order>();
     }
    

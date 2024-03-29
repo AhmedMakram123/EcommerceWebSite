@@ -11,10 +11,6 @@ namespace EcommerceWebSite.Domain.Models
 {
     public class SubCategory : BaseEntity
     {
-      
-
-      
-
         [Required(ErrorMessage = " Arabic name is required.")]
         [MaxLength(50, ErrorMessage = "Product name cannot exceed 50 characters.")]
         public string ArName { get; set; }

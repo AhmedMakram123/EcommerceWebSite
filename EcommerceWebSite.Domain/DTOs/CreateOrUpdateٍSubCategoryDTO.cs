@@ -12,7 +12,7 @@ namespace EcommerceWebSite.Domain.DTOs
     public class CreateOrUpdateSubCategoryDTO
     {
       
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public int CategoryId { get; set; }
         [Required(ErrorMessage = " Arabic name is required.")]
         [MaxLength(50, ErrorMessage = "Product name cannot exceed 50 characters.")]
@@ -20,7 +20,8 @@ namespace EcommerceWebSite.Domain.DTOs
         [Required(ErrorMessage = " English name is required.")]
         [MaxLength(50, ErrorMessage = "Product name cannot exceed 50 characters.")]
         public string EnName { get; set; }
+       
 
-      
+
     }
 }

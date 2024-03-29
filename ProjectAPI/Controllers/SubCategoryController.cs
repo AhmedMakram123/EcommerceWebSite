@@ -74,6 +74,7 @@ namespace ProjectAPI.Controllers
 
             subcategory1.EnName = subcategory.EnName;
             subcategory1.ArName = subcategory.ArName;
+            subcategory1.CategoryId= subcategory.CategoryId;
 
             await subcategoryService.Update(id, subcategory1);
         }

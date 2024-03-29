@@ -4,6 +4,7 @@ using EcommerceWebSite.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -28,14 +29,14 @@ namespace ProjectAPI.Controllers
             return Ok(category);
         }
 
-        [HttpGet("GetAllCategoryAndSubAsync/{id}")]
+        [HttpGet("{id}/GetAllCategoryAndSubAsync")]
         //[HttpGet("GetAllCategoryAndSubAsync")]
         public async Task<ActionResult> GetAllCategoryAndSubAsync([FromRoute] int id)
         {
             List<GetAllSubCategoryDTO> category = await categoryService.GetCategoryWithSubCategory(id);
             return Ok(category);
         }
-        [HttpGet("getAllProductByCategory/{id}")]
+        [HttpGet("{id}/getAllProductByCategory")]
         //[HttpGet("GetAllCategoryAndSubAsync")]
         public async Task<ActionResult> getAllProductByCategory([FromRoute] int id)
         {
@@ -55,9 +56,11 @@ namespace ProjectAPI.Controllers
         public async Task PostAsync([FromBody] CreateOrUpdateCategoryDTO category)
         {
             CreateOrUpdateCategoryDTO category1 = new CreateOrUpdateCategoryDTO();
-            category1.Name = category.Name;
+            category1.EnName = category.EnName;
+            category1.ArName = category.ArName;
+            category1.imgURL= category.imgURL;
             
-            _ = await categoryService.Create(category1);
+            await categoryService.Create(category1);
         }
 
         
@@ -67,7 +70,10 @@ namespace ProjectAPI.Controllers
         {
             CreateOrUpdateCategoryDTO category1 = await categoryService.GetOne(id);
             
-            category1.Name = category.Name;
+            category1.EnName = category.EnName;
+            category1.ArName = category.ArName;
+            category1.imgURL = category.imgURL;
+            
             
            
             await categoryService.Update(id,category1);
