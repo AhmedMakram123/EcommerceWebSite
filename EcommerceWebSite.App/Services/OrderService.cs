@@ -11,7 +11,7 @@ namespace EcommerceWebSite.App.Services
 {
 	public class OrderService : IOrderService
 	{
-		private readonly IOrderRepository _orderRepository;
+        private readonly IOrderRepository _orderRepository;
 		private readonly IMapper _mapper;
 
 		public OrderService(IOrderRepository orderRepository, IMapper mapper)
@@ -35,6 +35,7 @@ namespace EcommerceWebSite.App.Services
 		public async Task<ResultView<OrderDTO>> Create(OrderDTO orderDto)
 		{
 			var order = _mapper.Map<Order>(orderDto);
+			order.FinalPrice = 0;
 			var createdOrder = await _orderRepository.CreateAsync(order);
 			await _orderRepository.SaveChangesAsync();
 			return new ResultView<OrderDTO> { Entity = _mapper.Map<OrderDTO>(createdOrder), IsSuccess = true, msg = "Created Successful" };
@@ -47,9 +48,7 @@ namespace EcommerceWebSite.App.Services
 			{
                 var newOrder = _mapper.Map<Order>(orderDto);
                 oldOrder.State = newOrder.State;
-                oldOrder.FinalPrice = newOrder.FinalPrice;
                 oldOrder.Date = newOrder.Date;
-                oldOrder.UserID = newOrder.UserID;
                 var updatedOrder = await _orderRepository.UpdateAsync(oldOrder);
                 await _orderRepository.SaveChangesAsync();
                 return _mapper.Map<OrderDTO>(updatedOrder);
@@ -67,6 +66,7 @@ namespace EcommerceWebSite.App.Services
 			if (oldOrder != null)
 			{
 				var deletedOrder = await _orderRepository.DeleteAsync(oldOrder);
+
                 await _orderRepository.SaveChangesAsync();
 				return new ResultView<OrderDTO> { Entity = _mapper.Map<OrderDTO>(deletedOrder), IsSuccess = true, msg = "Deleted Successful" };
 			}
