@@ -529,7 +529,7 @@ namespace EcommerceWebSite.Context.Migrations
                     b.HasOne("EcommerceWebSite.Domain.Models.Product", "Product")
                         .WithMany("Comments")
 
-                        .WithMany()
+                      
                         .HasForeignKey("ProductId1");
 
                     b.Navigation("Product");
