@@ -123,5 +123,12 @@ namespace EcommerceWebSite.App.Services
 			var result = await _orderRepository.SaveChangesAsync();
 			return result;
 		}
-	}
+
+        public async Task<List<OrderDTO>> GetUserOrdars(string Id)
+        {
+            var orders = await _orderRepository.GetAllAsync();
+            var orders2 = orders.Where(e=>e.UserID==Id);
+            return _mapper.Map<List<OrderDTO>>(orders2);
+        }
+    }
 }

@@ -27,7 +27,14 @@ namespace ProjectAPI.Controllers
 			return Ok(orders);
 		}
 
-		[HttpGet("{id}")]
+        [HttpGet("{UId}/GetUseOrders")]
+        public async Task<ActionResult> GetUseOrders(string UId)
+        {
+            List<OrderDTO> orders = await _orderService.GetUserOrdars(UId);
+            return Ok(orders);
+        }
+
+        [HttpGet("{id}")]
 		public async Task<ActionResult> GetOrderById(int id)
 		{
 			OrderDTO order = await _orderService.GetOne(id);
@@ -43,7 +50,6 @@ namespace ProjectAPI.Controllers
 			orderDto1.FinalPrice=orderDTO.FinalPrice;
 			orderDto1.Date=orderDTO.Date;
 			orderDto1.UserID=orderDTO.UserID;
-			
 			_ = await _orderService.Create(orderDto1);
 			
 		}
