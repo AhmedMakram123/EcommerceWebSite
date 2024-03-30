@@ -12,6 +12,8 @@ namespace EcommerceWebSite.App.Contract
     {
         // public Task<IQueryable<GetAllCategoryDTO>> getallCategoryWithSubCategory(int id);
         public Task<IQueryable<GetAllSubCategoryDTO>> getallCategoryWithSubCategory(int categoryId);
+        public Task<IQueryable<GetAllCategoryDTO>> getallCategoryAndSubCategoryOFit();
+
     }
    
 }

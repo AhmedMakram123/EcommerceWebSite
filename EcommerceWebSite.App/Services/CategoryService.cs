@@ -115,5 +115,10 @@ namespace EcommerceWebSite.App.Services
         {
             return await (await CategoryRepository.getallCategoryWithSubCategory(id)).ToListAsync();
         }
+
+        public async Task<List<GetAllCategoryDTO>> getallCategoryAndSubCategoryOFit()
+        {
+          return await(await CategoryRepository.getallCategoryAndSubCategoryOFit()).ToListAsync();
+        }
     }
 }

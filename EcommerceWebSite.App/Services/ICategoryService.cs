@@ -18,5 +18,6 @@ namespace EcommerceWebSite.App.Services
         public Task<CreateOrUpdateCategoryDTO> Save();
         //public Task<List<GetAllCategoryDTO>> GetCategoryWithSubCategory(int id);
         public Task<List<GetAllSubCategoryDTO>> GetCategoryWithSubCategory(int id);
+        public Task<List<GetAllCategoryDTO>> getallCategoryAndSubCategoryOFit();
     }
 }

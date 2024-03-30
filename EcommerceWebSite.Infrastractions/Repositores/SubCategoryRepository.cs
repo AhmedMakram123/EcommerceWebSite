@@ -54,6 +54,23 @@ namespace EcommerceWebSite.Infrastractions.Repositores
                 });
         }
 
+        public async Task<IQueryable<GetAllProductDTO>> getProductonlyfromSubCategory(int SubcategoryId)
+        {
+            return context.SubCategores
+               .Where(c => c.Id == SubcategoryId)
+                .SelectMany(c => c.Products)
+                .Select(c => new GetAllProductDTO()
+                {
+                   id =c.Id,
+                   EnName =c.EnName,
+                   ArName =c.ArName,
+                   Description =c.Description,
+                   imgURL =c.imgURL,
+                   Quantity =c.Quantity,
+                   Price=c.Price, 
+                   SubCategoryId =c.SubCategoryId
 
+                 });
+        }
     }
 }

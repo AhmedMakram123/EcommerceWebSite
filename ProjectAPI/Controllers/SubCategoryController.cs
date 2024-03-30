@@ -1,5 +1,6 @@
 ﻿using EcommerceWebSite.App.Services;
 using EcommerceWebSite.Domain.DTOs;
+using EcommerceWebSite.Domain.DTOs.Products;
 using EcommerceWebSite.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -29,6 +30,13 @@ namespace ProjectAPI.Controllers
         public async Task<ActionResult> getallSubCategoryWithProduct([FromRoute] int id)
         {
             List<GetAllSubCategoryDTO> Subcategory = await subcategoryService.getallSubCategoryWithProduct(id);
+            return Ok(Subcategory);
+        }
+
+        [HttpGet("{id}/getProductonlyfromSubCategory")]
+        public async Task<ActionResult> getProductonlyfromSubCategory([FromRoute] int id)
+        {
+            List<GetAllProductDTO> Subcategory = await subcategoryService.getProductonlyfromSubCategory(id);
             return Ok(Subcategory);
         }
 

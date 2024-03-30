@@ -1,4 +1,5 @@
 ﻿using EcommerceWebSite.Domain.DTOs;
+using EcommerceWebSite.Domain.DTOs.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace EcommerceWebSite.App.Services
         public Task<ResultView<CreateOrUpdateSubCategoryDTO>> Delete(int id);
         public Task<CreateOrUpdateSubCategoryDTO> Save();
         public Task<List<GetAllSubCategoryDTO>> getallSubCategoryWithProduct(int SubcategoryId);
+        public Task<List<GetAllProductDTO>> getProductonlyfromSubCategory(int SubcategoryId);
     }
 }
