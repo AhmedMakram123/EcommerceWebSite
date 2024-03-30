@@ -22,6 +22,7 @@ namespace ProjectAPI.Controllers
                 this.CommentService = CommentService;
             }
             [HttpGet]
+            [Route("{Id}")]
             public async Task<ActionResult> GetCommentAsync(int Id)
             {
                 List<CommentDto> Comments = await CommentService.GetAll(Id);

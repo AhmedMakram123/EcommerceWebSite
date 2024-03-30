@@ -7,7 +7,8 @@ namespace EcommerceWebSite.App.Services
 	public interface IOrderService
 	{
 		public Task<List<OrderDTO>> GetAll();
-		public Task<OrderDTO> GetOne(int id);
+		public Task<List<OrderDTO>> GetUserOrdars(string Id);
+        public Task<OrderDTO> GetOne(int id);
 		public Task<ResultView<OrderDTO>> Create(OrderDTO order);
 		public Task<OrderDTO> Update(int id, OrderDTO order);
 		public Task<ResultView<OrderDTO>> Delete(int Id);

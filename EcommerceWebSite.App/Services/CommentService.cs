@@ -53,7 +53,7 @@ namespace EcommerceWebSite.App.Services
 
         public async Task<List<CommentDto>> GetAll(int pId)
         {
-            var coms = await commentService.GetAll(pId);
+            var coms = await commentService.GetAll();
             var com = coms.Select(e => new CommentDto()
                 {
                     Id = e.Id,
@@ -64,10 +64,22 @@ namespace EcommerceWebSite.App.Services
             List<CommentDto> result = new List<CommentDto>();
             result= com.ToList();
             return result;
-
-
-
         }
+        public async Task<List<CommentDto>> GetAll()
+        {
+            var coms = await commentService.GetAll();
+            var com = coms.Select(e => new CommentDto()
+            {
+                Id = e.Id,
+                quality = e.quality,
+                review = e.review,
+                ProductId = e.ProductId,
+            }).ToList();
+            List<CommentDto> result = new List<CommentDto>();
+            result = com.ToList();
+            return result;
+        }
+
 
         public async Task<CommentDto> GetOne(int id)
         {

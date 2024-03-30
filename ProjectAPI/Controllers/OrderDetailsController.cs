@@ -23,8 +23,14 @@ namespace ProjectAPI.Controllers
 			var orderDetails = await _orderDetailsService.GetAll();
 			return Ok(orderDetails);
 		}
+        [HttpGet("{OId}/GetAllOrderDetails")]
+        public async Task<ActionResult> GetAllOrderDetails(int OId)
+        {
+            var orderDetails = await _orderDetailsService.GetOrderDetails(OId);
+            return Ok(orderDetails);
+        }
 
-		[HttpGet("{id}")]
+        [HttpGet("{id}")]
 		public async Task<ActionResult> GetOrderDetailsById(int id)
 		{
 			var orderDetail = await _orderDetailsService.GetOne(id);
