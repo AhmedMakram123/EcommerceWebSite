@@ -78,13 +78,27 @@ namespace EcommerceWebSite.App.Services
 
         public async Task<ResultView<GetAllProductDTO>> Delete(int id)
         {
-            var prdDTO = await GetOne(id);
-            var prd = mapper.Map<Product>(prdDTO);
+            var prd = await productRepository.GetByIdAsync(id); // Assuming GetByIdAsync retrieves the entity without attaching it to the DbContext
+            if (prd == null)
+            {
+                return new ResultView<GetAllProductDTO> { IsSuccess = false, msg = "Product not found" };
+            }
+
             var OldProd = await productRepository.DeleteAsync(prd);
             await productRepository.SaveChangesAsync();
             var p = mapper.Map<GetAllProductDTO>(OldProd);
             return new ResultView<GetAllProductDTO> { Entity = p, IsSuccess = true, msg = "Deleted Successful" };
         }
+
+        //public async Task<ResultView<GetAllProductDTO>> Delete(int id)
+        //{
+        //    var prdDTO = await GetOne(id);
+        //    var prd = mapper.Map<Product>(prdDTO);
+        //    var OldProd = await productRepository.DeleteAsync(prd);
+        //    await productRepository.SaveChangesAsync();
+        //    var p = mapper.Map<GetAllProductDTO>(OldProd);
+        //    return new ResultView<GetAllProductDTO> { Entity = p, IsSuccess = true, msg = "Deleted Successful" };
+        //}
 
         public async Task<int> Save()
         {
