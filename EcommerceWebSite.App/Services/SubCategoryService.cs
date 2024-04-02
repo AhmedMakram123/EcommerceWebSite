@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EcommerceWebSite.App.Contract;
 using EcommerceWebSite.Domain.DTOs;
+using EcommerceWebSite.Domain.DTOs.Products;
 using EcommerceWebSite.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -127,6 +128,11 @@ namespace EcommerceWebSite.App.Services
         public async Task<List<GetAllSubCategoryDTO>> getallSubCategoryWithProduct(int SubcategoryId)
         {
             return await (await subCategoryRepository.getallSubCategoryWithProduct(SubcategoryId)).ToListAsync();
+        }
+
+        public async Task<List<GetAllProductDTO>> getProductonlyfromSubCategory(int SubcategoryId)
+        {
+            return await (await subCategoryRepository.getProductonlyfromSubCategory(SubcategoryId)).ToListAsync();
         }
     }
 }

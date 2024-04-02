@@ -43,6 +43,14 @@ namespace ProjectAPI.Controllers
             List<Product> category = await productService.getAllProductByCategory(id);
             return Ok(category);
         }
+
+        [HttpGet("getallCategoryAndSubCategoryOFit")]
+        //[HttpGet("GetAllCategoryAndSubAsync")]
+        public async Task<ActionResult> getallCategoryAndSubCategoryOFit()
+        {
+            List<GetAllCategoryDTO> category = await categoryService.getallCategoryAndSubCategoryOFit();
+            return Ok(category);
+        }
         [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult> GetById([FromRoute] int id)

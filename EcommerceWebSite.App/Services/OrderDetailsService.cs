@@ -12,14 +12,16 @@ namespace EcommerceWebSite.App.Services
 	public class OrderDetailsService : IOrderDetailsService
 	{
 		private readonly IOrderDetailsRepository _orderDetailsRepository;
+        private readonly IOrderRepository _orderRepository;
         private readonly IProductRepository productRepository;
         private readonly IMapper _mapper;
 
-		public OrderDetailsService(IProductRepository _product, IOrderDetailsRepository orderDetailsRepository, IMapper mapper)
+		public OrderDetailsService(IProductRepository _product, IOrderRepository orderRepository, IOrderDetailsRepository orderDetailsRepository, IMapper mapper)
 		{
 			_orderDetailsRepository = orderDetailsRepository;
 			_mapper = mapper;
 			productRepository = _product; 
+            _orderRepository = orderRepository;
 
 		}
 
@@ -50,7 +52,10 @@ namespace EcommerceWebSite.App.Services
                 var New = await _orderDetailsRepository.CreateAsync(o);
                 var prd = await productRepository.GetByIdAsync(New.ProductId);
 				prd.Quantity -= New.Quantity;
-				New.TotalPrice = (prd.Price * New.Quantity);
+                New.TotalPrice = (prd.Price * New.Quantity);
+                var order = await _orderRepository.GetByIdAsync(New.OrderId);
+                order.FinalPrice += New.TotalPrice;
+
                 await _orderDetailsRepository.SaveChangesAsync();
                 var p = _mapper.Map<OrderDetailsDTO>(New);
                 return new ResultView<OrderDetailsDTO> { Entity = p, IsSuccess = true, msg = "Created Successful" };
@@ -70,17 +75,18 @@ namespace EcommerceWebSite.App.Services
 			var newOrderDetails = _mapper.Map<OrderDetails>(orderDetailsDto);
             var prd = await productRepository.GetByIdAsync(oldOrderDetails.ProductId);
             prd.Quantity += oldOrderDetails.Quantity;
+            var order = await _orderRepository.GetByIdAsync(orderDetailsDto.OrderId);
+            order.FinalPrice -= orderDetailsDto.TotalPrice;
             var prd2 = await productRepository.GetByIdAsync(newOrderDetails.ProductId);
             prd2.Quantity -= newOrderDetails.Quantity;
             oldOrderDetails.Quantity=newOrderDetails.Quantity;
 			oldOrderDetails.TotalPrice= (newOrderDetails.Quantity*prd2.Price);
-			oldOrderDetails.ProductId=newOrderDetails.ProductId;
+            order.FinalPrice += orderDetailsDto.TotalPrice;
+            oldOrderDetails.ProductId=newOrderDetails.ProductId;
             var updatedOrderDetails = await _orderDetailsRepository.UpdateAsync(oldOrderDetails);
 			await _orderDetailsRepository.SaveChangesAsync();
 			return _mapper.Map<OrderDetailsDTO>(updatedOrderDetails);
             }
-
-
         }
 
 		public async Task<ResultView<OrderDetailsDTO>> Delete(int Id)
@@ -89,13 +95,17 @@ namespace EcommerceWebSite.App.Services
             if (oldOrder != null)
             {
                 var deletedOrder = await _orderDetailsRepository.DeleteAsync(oldOrder);
+                var order = await _orderRepository.GetByIdAsync(deletedOrder.OrderId);
+                order.FinalPrice -= deletedOrder.TotalPrice;
+                var prd = await productRepository.GetByIdAsync(deletedOrder.ProductId);
+                prd.Quantity += deletedOrder.Quantity;
                 await _orderDetailsRepository.SaveChangesAsync();
                 return new ResultView<OrderDetailsDTO> { Entity = _mapper.Map<OrderDetailsDTO>(deletedOrder), IsSuccess = true, msg = "Deleted Successful" };
             }
             return new ResultView<OrderDetailsDTO>
             {
                 IsSuccess = false,
-                msg = "Order not found"
+                msg = "Order Details  not found"
             };
             
 		}
