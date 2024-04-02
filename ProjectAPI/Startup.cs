@@ -72,8 +72,8 @@ namespace ProjectAPI
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IProductRepository, ProductRepository>();
             ////regester Comment
-            //services.AddScoped<ICommentService, CommentService>();
-            //services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
             //[Authoriz] used JWT Token in Chck Authantiaction
             services.AddAuthentication(options =>
             {

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceWebSite.Context.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    [Migration("20240328191145_m15")]
-    partial class m15
+    [Migration("20240402200933_mig2")]
+    partial class mig2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -141,19 +141,25 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ArName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EnName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("createdAt")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("deletedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("imgURL")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("updatedAt")
                         .HasColumnType("datetime2");
@@ -173,10 +179,7 @@ namespace EcommerceWebSite.Context.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("ProductId1")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("createdAt")
@@ -198,7 +201,7 @@ namespace EcommerceWebSite.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId1");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Comments");
                 });
@@ -302,9 +305,6 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -323,6 +323,9 @@ namespace EcommerceWebSite.Context.Migrations
                     b.Property<DateTime>("deletedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("imgURL")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("updatedAt")
                         .HasColumnType("datetime2");
 
@@ -340,16 +343,21 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("ArName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EnName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("createdAt")
                         .HasColumnType("datetime2");
@@ -519,7 +527,9 @@ namespace EcommerceWebSite.Context.Migrations
                 {
                     b.HasOne("EcommerceWebSite.Domain.Models.Product", "Product")
                         .WithMany("Comments")
-                        .HasForeignKey("ProductId1");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
                 });
@@ -566,7 +576,7 @@ namespace EcommerceWebSite.Context.Migrations
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.SubCategory", b =>
                 {
                     b.HasOne("EcommerceWebSite.Domain.Models.Category", "Category")
-                        .WithMany()
+                        .WithMany("SubCategories")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -630,6 +640,11 @@ namespace EcommerceWebSite.Context.Migrations
                     b.Navigation("Cart");
 
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("EcommerceWebSite.Domain.Models.Category", b =>
+                {
+                    b.Navigation("SubCategories");
                 });
 
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Order", b =>
