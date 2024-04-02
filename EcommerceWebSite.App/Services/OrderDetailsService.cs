@@ -25,11 +25,21 @@ namespace EcommerceWebSite.App.Services
 
 		}
 
-		public async Task<List<OrderDetailsDTO>> GetAll()
+		public async Task<List<GetOrderDetailsDTO>> GetAll()
 		{
 			var orderDetails = await _orderDetailsRepository.GetAllAsync();
-			return _mapper.Map<List<OrderDetailsDTO>>(orderDetails);
-		}
+            //return _mapper.Map<List<OrderDetailsDTO>>(orderDetails);
+            List < GetOrderDetailsDTO > getDetailsDTOs= orderDetails.Select
+               ( e => new GetOrderDetailsDTO()
+                {
+                    Id = e.Id,
+                    ProductId = e.ProductId,
+                    Quantity = e.Quantity,
+                    TotalPrice = e.TotalPrice,
+                    ProductName= e.Product.EnName
+                }).ToList();
+            return getDetailsDTOs;
+        }
 
 		public async Task<OrderDetailsDTO> GetOne(int id)
 		{
@@ -76,12 +86,12 @@ namespace EcommerceWebSite.App.Services
             var prd = await productRepository.GetByIdAsync(oldOrderDetails.ProductId);
             prd.Quantity += oldOrderDetails.Quantity;
             var order = await _orderRepository.GetByIdAsync(orderDetailsDto.OrderId);
-            order.FinalPrice -= orderDetailsDto.TotalPrice;
+            order.FinalPrice -= oldOrderDetails.TotalPrice;
             var prd2 = await productRepository.GetByIdAsync(newOrderDetails.ProductId);
             prd2.Quantity -= newOrderDetails.Quantity;
             oldOrderDetails.Quantity=newOrderDetails.Quantity;
-			oldOrderDetails.TotalPrice= (newOrderDetails.Quantity*prd2.Price);
-            order.FinalPrice += orderDetailsDto.TotalPrice;
+			oldOrderDetails.TotalPrice= (oldOrderDetails.Quantity*prd2.Price);
+            order.FinalPrice += oldOrderDetails.TotalPrice;
             oldOrderDetails.ProductId=newOrderDetails.ProductId;
             var updatedOrderDetails = await _orderDetailsRepository.UpdateAsync(oldOrderDetails);
 			await _orderDetailsRepository.SaveChangesAsync();
@@ -116,11 +126,20 @@ namespace EcommerceWebSite.App.Services
 			return result;
 		}
 
-        public async Task<List<OrderDetailsDTO>> GetOrderDetails(int OId)
+        public async Task<List<GetOrderDetailsDTO>> GetOrderDetails(int OId)
         {
             var orderDetails = await _orderDetailsRepository.GetAllAsync();
-            var orderDetails2 = orderDetails.Where(e=> e.OrderId == OId);	
-            return _mapper.Map<List<OrderDetailsDTO>>(orderDetails2);
+            var orderDetails2 = orderDetails.Where(e=> e.OrderId == OId);
+            List<GetOrderDetailsDTO> getDetailsDTOs = orderDetails2.Select
+              (e => new GetOrderDetailsDTO()
+              {
+                  Id = e.Id,
+                  ProductId = e.ProductId,
+                  Quantity = e.Quantity,
+                  TotalPrice = e.TotalPrice,
+                  ProductName = e.Product.EnName
+              }).ToList();
+            return getDetailsDTOs;
         }
     }
 }

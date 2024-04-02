@@ -54,7 +54,9 @@ namespace EcommerceWebSite.Context.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ArName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EnName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    imgURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     createdAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     updatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -203,7 +205,8 @@ namespace EcommerceWebSite.Context.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ArName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    EnName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     createdAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -230,7 +233,7 @@ namespace EcommerceWebSite.Context.Migrations
                     ArName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     EnName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    imgURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     SubCategoryId = table.Column<int>(type: "int", nullable: false),
@@ -280,6 +283,32 @@ namespace EcommerceWebSite.Context.Migrations
                         principalTable: "products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    review = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    quality = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId1 = table.Column<int>(type: "int", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    createdAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    updatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    deletedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_products_ProductId1",
+                        column: x => x.ProductId1,
+                        principalTable: "products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -365,6 +394,11 @@ namespace EcommerceWebSite.Context.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_ProductId1",
+                table: "Comments",
+                column: "ProductId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_orderDetails_OrderId",
                 table: "orderDetails",
                 column: "OrderId");
@@ -409,6 +443,9 @@ namespace EcommerceWebSite.Context.Migrations
 
             migrationBuilder.DropTable(
                 name: "carts");
+
+            migrationBuilder.DropTable(
+                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "orderDetails");

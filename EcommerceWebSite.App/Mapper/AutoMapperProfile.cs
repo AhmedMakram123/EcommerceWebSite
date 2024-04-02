@@ -19,7 +19,7 @@ namespace EcommerceWebSite.App.Mapper
             CreateMap<CreateOrUpdateCartItemDto,CartItem>().ReverseMap();
             CreateMap<GetCartItemDto,CartItem>().ReverseMap();
             CreateMap<CommentDto,Comment> ().ReverseMap();
-            CreateMap<OrderDetailsDTO, OrderDetails>().ReverseMap();
+            CreateMap<OrderDetailsDTO,OrderDetails>().ReverseMap();
             CreateMap<OrderDTO,Order>().ReverseMap();
            
 
