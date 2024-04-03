@@ -159,6 +159,9 @@ namespace EcommerceWebSite.Context.Migrations
                     b.Property<string>("imgURL")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("imgURLAr")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("updatedAt")
                         .HasColumnType("datetime2");
 

@@ -57,6 +57,7 @@ namespace EcommerceWebSite.Context.Migrations
                     ArName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EnName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     imgURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    imgURLAr = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     createdAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     updatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),

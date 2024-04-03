@@ -51,6 +51,7 @@ namespace EcommerceWebSite.App.Services
             existingCategory.EnName = category.EnName;
             existingCategory.ArName = category.ArName;
             existingCategory.imgURL = category.imgURL;
+            existingCategory.imgURLAr = category.imgURLAr;
             var updatedCategory = await CategoryRepository.UpdateAsync(existingCategory);
             await CategoryRepository.SaveChangesAsync(); 
             return mapper.Map<CreateOrUpdateCategoryDTO>(updatedCategory);

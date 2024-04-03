@@ -15,5 +15,6 @@ namespace EcommerceWebSite.Domain.DTOs
         [Required(ErrorMessage = " English name is required.")]
         public string EnName { get; set; }
         public string imgURL { get; set; }
+        public string? imgURLAr { get; set; }
     }
 }
