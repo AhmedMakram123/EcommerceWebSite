@@ -34,6 +34,7 @@ namespace EcommerceWebSite.Infrastractions.Repositores
                      ArName =c.ArName,
                      EnName =c.EnName,
                      imgURL =c.imgURL,
+                     imgURLAr=c.imgURLAr,
                      subCategories  = c.SubCategories.Select(p => new GetAllSubCategoryDTO()
                     {
                        Id=p.Id,

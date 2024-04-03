@@ -4,14 +4,16 @@ using EcommerceWebSite.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EcommerceWebSite.Context.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    partial class EcommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20240401112604_AddImgArToCat")]
+    partial class AddImgArToCat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,7 +182,10 @@ namespace EcommerceWebSite.Context.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ProductId")
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("ProductId1")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("createdAt")
@@ -202,7 +207,7 @@ namespace EcommerceWebSite.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId1");
 
                     b.ToTable("Comments");
                 });
@@ -532,6 +537,7 @@ namespace EcommerceWebSite.Context.Migrations
                     b.HasOne("EcommerceWebSite.Domain.Models.Product", "Product")
                         .WithMany("Comments")
                         .HasForeignKey("ProductId1");
+
                     b.Navigation("Product");
                 });
 
