@@ -4,14 +4,16 @@ using EcommerceWebSite.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EcommerceWebSite.Context.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    partial class EcommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20240401112107_AddImgAr")]
+    partial class AddImgAr
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,9 +159,6 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("imgURL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("imgURLAr")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("updatedAt")

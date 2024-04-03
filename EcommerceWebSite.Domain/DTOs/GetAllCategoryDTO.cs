@@ -14,6 +14,7 @@ namespace EcommerceWebSite.Domain.DTOs
         public string ArName { get; set; }
         public string EnName { get; set; }
         public string imgURL { get; set; }
+        public string? imgURLAr { get; set; }
         public List<GetAllSubCategoryDTO>? subCategories { get; set; }
 }
 }

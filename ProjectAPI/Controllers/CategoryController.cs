@@ -67,6 +67,7 @@ namespace ProjectAPI.Controllers
             category1.EnName = category.EnName;
             category1.ArName = category.ArName;
             category1.imgURL= category.imgURL;
+            category1.imgURLAr = category.imgURLAr;
             
             await categoryService.Create(category1);
         }
@@ -81,7 +82,7 @@ namespace ProjectAPI.Controllers
             category1.EnName = category.EnName;
             category1.ArName = category.ArName;
             category1.imgURL = category.imgURL;
-            
+            category1.imgURLAr= category.imgURLAr;
             
            
             await categoryService.Update(id,category1);
