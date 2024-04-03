@@ -6,8 +6,8 @@ namespace EcommerceWebSite.App.Services
 {
 	public interface IOrderDetailsService
 	{
-		public Task<List<OrderDetailsDTO>> GetAll();
-        public Task<List<OrderDetailsDTO>> GetOrderDetails(int OId);
+		public Task<List<GetOrderDetailsDTO>> GetAll();
+        public Task<List<GetOrderDetailsDTO>> GetOrderDetails(int OId);
         public Task<OrderDetailsDTO> GetOne(int id);
 		public Task<ResultView<OrderDetailsDTO>> Create(OrderDetailsDTO orderDetails);
 		public Task<OrderDetailsDTO> Update(int id ,OrderDetailsDTO orderDetails);

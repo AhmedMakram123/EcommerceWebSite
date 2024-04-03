@@ -180,10 +180,7 @@ namespace EcommerceWebSite.Context.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("ProductId1")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("createdAt")
@@ -205,7 +202,7 @@ namespace EcommerceWebSite.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId1");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Comments");
                 });
@@ -535,7 +532,6 @@ namespace EcommerceWebSite.Context.Migrations
                     b.HasOne("EcommerceWebSite.Domain.Models.Product", "Product")
                         .WithMany("Comments")
                         .HasForeignKey("ProductId1");
-
                     b.Navigation("Product");
                 });
 

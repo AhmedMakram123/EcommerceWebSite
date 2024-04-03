@@ -10,6 +10,7 @@ namespace EcommerceWebSite.Domain.Enum
     {
         Pending = 1,
         Confirmed,
-        Canceled
+        Canceled,
+        Paid
     }
 }

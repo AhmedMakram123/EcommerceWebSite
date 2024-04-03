@@ -54,7 +54,12 @@ namespace ProjectAPI.Controllers
 		public async Task UpdateOrderDetails(int id, [FromBody] OrderDetailsDTO orderDetailsDTO)
 		{
 			OrderDetailsDTO orderDetails = await _orderDetailsService.GetOne(id);
-			orderDetails.Quantity = orderDetailsDTO.Quantity;
+            if (orderDetailsDTO == null)
+            {
+                 BadRequest("OrderDetailsDTO cannot be null.");
+            }
+
+            orderDetails.Quantity = orderDetailsDTO.Quantity;
 			orderDetails.TotalPrice = orderDetailsDTO.TotalPrice;
 			orderDetails.ProductId = orderDetailsDTO.ProductId;
             orderDetails.OrderId = orderDetailsDTO.OrderId;

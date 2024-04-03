@@ -1,6 +1,7 @@
 ﻿using EcommerceWebSite.App.Contract;
 using EcommerceWebSite.Context;
 using EcommerceWebSite.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,10 @@ namespace EcommerceWebSite.Infrastractions.Repositores
         {
 
         }
-    }
+
+		public async Task<IQueryable<Comment>> GetAllCommentsForProductAsync(int productId)
+		{
+			return await Task.FromResult(_Dbset.Where(comment => comment.ProductId == productId));
+		}
+	}
 }
