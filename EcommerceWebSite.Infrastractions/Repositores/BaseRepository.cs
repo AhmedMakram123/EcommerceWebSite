@@ -10,7 +10,7 @@ namespace EcommerceWebSite.Infrastractions.Repositores
     public class BaseRepository<TEntity, Tid> : IBaseRepository<TEntity, Tid> where TEntity : BaseEntity
     {
         private readonly EcommerceContext _EcommerceContext;
-        private readonly DbSet<TEntity> _Dbset;
+        public readonly DbSet<TEntity> _Dbset;
         public BaseRepository(EcommerceContext EcommerceContext)
         {
             _EcommerceContext = EcommerceContext;

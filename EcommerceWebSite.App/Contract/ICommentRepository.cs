@@ -10,5 +10,7 @@ namespace EcommerceWebSite.App.Contract
    
     public interface ICommentRepository : IBaseRepository<Comment, int>
     {
-    }
+		 Task<IQueryable<Comment>> GetAllCommentsForProductAsync(int productId);
+
+	}
 }

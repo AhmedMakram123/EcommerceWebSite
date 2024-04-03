@@ -14,25 +14,27 @@ namespace EcommerceWebSite.App.Services
 {
     public class CommentService:ICommentService
     {
-        private readonly ICommentService commentService;
+       
+        private readonly ICommentRepository commentRepository;
         private readonly IMapper mapper;
-        public CommentService(ICommentService _Comment, IMapper _mapper)
+        public CommentService(ICommentRepository _Comment, IMapper _mapper)
         {
-            this.commentService = _Comment;
+            this.commentRepository = _Comment;
             this.mapper = _mapper;
         }
 
         public async Task<ResultView<CommentDto>> Create(CommentDto CommentDto)
         {
-            var NewCom = await commentService.Create(CommentDto);
-            await commentService.Save();
-            var p = mapper.Map<CommentDto>(NewCom);
-            return new ResultView<CommentDto> { Entity = p, IsSuccess = true, msg = "Created Successful" };
+			var comment = mapper.Map<Comment>(CommentDto);
+			var createdComment = await commentRepository.CreateAsync(comment);
+            await commentRepository.SaveChangesAsync();
+           
+            return new ResultView<CommentDto> { Entity = mapper.Map<CommentDto>(createdComment), IsSuccess = true, msg = "Created Successful" };
         }
 
         public async Task<ResultView<CommentDto>> Delete(int Id)
         {
-            var com = await commentService.GetOne(Id);
+            var com = await commentRepository.GetByIdAsync(Id);
             if (com == null)
             {
                 return new ResultView<CommentDto>
@@ -44,76 +46,61 @@ namespace EcommerceWebSite.App.Services
             }
             else
             {
-                var OldCom = commentService.Delete(Id);
-                await commentService.Save();
+                var OldCom = commentRepository.DeleteAsync(com);
+                await commentRepository.SaveChangesAsync();
                 var p = mapper.Map<CommentDto>(OldCom);
                 return new ResultView<CommentDto> { Entity = p, IsSuccess = true, msg = "Deleted Successful" };
             }
         }
 
-        public async Task<List<CommentDto>> GetAll(int pId)
+        public async Task<List<CommentDto>> GetAllCommentsForProduct(int pId)
         {
-            var coms = await commentService.GetAll();
-            var com = coms.Select(e => new CommentDto()
-                {
-                    Id = e.Id,
-                    quality = e.quality,
-                    review= e.review,
-                    ProductId= e.ProductId,
-                }).Where(e => e.ProductId ==pId).ToList();
-            List<CommentDto> result = new List<CommentDto>();
-            result= com.ToList();
-            return result;
-        }
+            var coms = await commentRepository.GetAllCommentsForProductAsync(pId);
+			return mapper.Map<List<CommentDto>>(coms);
+		}
+
         public async Task<List<CommentDto>> GetAll()
         {
-            var coms = await commentService.GetAll();
-            var com = coms.Select(e => new CommentDto()
-            {
-                Id = e.Id,
-                quality = e.quality,
-                review = e.review,
-                ProductId = e.ProductId,
-            }).ToList();
-            List<CommentDto> result = new List<CommentDto>();
-            result = com.ToList();
-            return result;
-        }
+            var coms = await commentRepository.GetAllAsync();
+			return mapper.Map<List<CommentDto>>(coms);
+
+
+		}
 
 
         public async Task<CommentDto> GetOne(int id)
         {
-            var cat = await commentService.GetOne(id);
-            return mapper.Map<CommentDto>(cat);
+            var comment = await commentRepository.GetByIdAsync(id);
+            return mapper.Map<CommentDto>(comment);
 
         }
 
         public async Task<int> Save()
         {
-            var res = await commentService.Save();
+            var res = await commentRepository.SaveChangesAsync();
             return res;
 
         }
 
         public async Task<ResultView<CommentDto>> Update(CommentDto CommentDto)
         {
-            var Query = (await commentService.GetAll(CommentDto.ProductId));
-            var old = Query.Where(e => e.Id==CommentDto.Id).FirstOrDefault();
+            var Query = (await commentRepository.GetAllAsync());
+            var old = Query.Where(e => e.Id == CommentDto.Id).FirstOrDefault();
             if (old != null)
             {
                 var b = mapper.Map<Comment>(CommentDto);
                 old.review = CommentDto.review;
                 old.quality = CommentDto.quality;
                 old.ProductId = CommentDto.ProductId;
-                var NewCom = await commentService.Update(old);
-                await commentService.Save();
+                var NewCom = await commentRepository.UpdateAsync(old);
+                await commentRepository.SaveChangesAsync();
                 var bDto = mapper.Map<CommentDto>(NewCom);
 
                 return new ResultView<CommentDto> { Entity = bDto, IsSuccess = true, msg = "updated successfully" };
             }
             else
             {
-                return new ResultView<CommentDto> { Entity = null, IsSuccess = false, msg = "Already Exist" };
+                return new ResultView<CommentDto> { Entity = null, IsSuccess = false, msg = "not Exist" };
 
             }
 

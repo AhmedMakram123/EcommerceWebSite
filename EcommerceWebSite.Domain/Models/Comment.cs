@@ -18,6 +18,7 @@ namespace EcommerceWebSite.Domain.Models
         [Range(0, 5, ErrorMessage = "Quality must be between 0 and 5.")]
         public decimal quality { get; set; }
         public int ProductId { get; set; }
-        public Product Product { get; set; }
+
+        public  Product Product { get; set; }
     }
 }

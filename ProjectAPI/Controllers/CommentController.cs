@@ -21,11 +21,12 @@ namespace ProjectAPI.Controllers
             {
                 this.CommentService = CommentService;
             }
-            [HttpGet]
-            [Route("{Id}")]
-            public async Task<ActionResult> GetCommentAsync(int Id)
+
+	    	[HttpGet("product/{productId}")]
+	    
+            public async Task<ActionResult> GetCommentAsync(int productId)
             {
-                List<CommentDto> Comments = await CommentService.GetAll(Id);
+                List<CommentDto> Comments = await CommentService.GetAllCommentsForProduct(productId);
                 return Ok(Comments);
             }
 
