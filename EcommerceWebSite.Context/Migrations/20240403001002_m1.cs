@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EcommerceWebSite.Context.Migrations
 {
-    public partial class mig2 : Migration
+    public partial class m1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -293,12 +293,7 @@ namespace EcommerceWebSite.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     review = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     quality = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-<<<<<<<< HEAD:EcommerceWebSite.Context/Migrations/20240331143956_m1.cs
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductId1 = table.Column<int>(type: "int", nullable: true),
-========
                     ProductId = table.Column<int>(type: "int", nullable: false),
->>>>>>>> 09080e714c5b9b23327a5901c568b50db4dde095:EcommerceWebSite.Context/Migrations/20240402200933_mig2.cs
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     createdAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     updatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -308,19 +303,11 @@ namespace EcommerceWebSite.Context.Migrations
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
-<<<<<<<< HEAD:EcommerceWebSite.Context/Migrations/20240331143956_m1.cs
-                        name: "FK_Comments_products_ProductId1",
-                        column: x => x.ProductId1,
-                        principalTable: "products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-========
                         name: "FK_Comments_products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
->>>>>>>> 09080e714c5b9b23327a5901c568b50db4dde095:EcommerceWebSite.Context/Migrations/20240402200933_mig2.cs
                 });
 
             migrationBuilder.CreateTable(
@@ -406,15 +393,9 @@ namespace EcommerceWebSite.Context.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-<<<<<<<< HEAD:EcommerceWebSite.Context/Migrations/20240331143956_m1.cs
-                name: "IX_Comments_ProductId1",
-                table: "Comments",
-                column: "ProductId1");
-========
                 name: "IX_Comments_ProductId",
                 table: "Comments",
                 column: "ProductId");
->>>>>>>> 09080e714c5b9b23327a5901c568b50db4dde095:EcommerceWebSite.Context/Migrations/20240402200933_mig2.cs
 
             migrationBuilder.CreateIndex(
                 name: "IX_orderDetails_OrderId",

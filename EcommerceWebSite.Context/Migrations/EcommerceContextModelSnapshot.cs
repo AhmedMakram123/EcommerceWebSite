@@ -525,11 +525,10 @@ namespace EcommerceWebSite.Context.Migrations
                 {
                     b.HasOne("EcommerceWebSite.Domain.Models.Product", "Product")
                         .WithMany("Comments")
-                        .HasForeignKey("ProductId1");
-
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
                     b.Navigation("Product");
                 });
 

@@ -10,13 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceWebSite.Context.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-<<<<<<<< HEAD:EcommerceWebSite.Context/Migrations/20240331143956_m1.Designer.cs
-    [Migration("20240331143956_m1")]
+    [Migration("20240403001002_m1")]
     partial class m1
-========
-    [Migration("20240402200933_mig2")]
-    partial class mig2
->>>>>>>> 09080e714c5b9b23327a5901c568b50db4dde095:EcommerceWebSite.Context/Migrations/20240402200933_mig2.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -532,13 +527,9 @@ namespace EcommerceWebSite.Context.Migrations
                 {
                     b.HasOne("EcommerceWebSite.Domain.Models.Product", "Product")
                         .WithMany("Comments")
-<<<<<<<< HEAD:EcommerceWebSite.Context/Migrations/20240331143956_m1.Designer.cs
-                        .HasForeignKey("ProductId1");
-========
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
->>>>>>>> 09080e714c5b9b23327a5901c568b50db4dde095:EcommerceWebSite.Context/Migrations/20240402200933_mig2.Designer.cs
 
                     b.Navigation("Product");
                 });
