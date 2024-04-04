@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceWebSite.Context.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    [Migration("20240403001002_m1")]
+    [Migration("20240403144322_m1")]
     partial class m1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -159,6 +159,9 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("imgURL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("imgURLAr")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("updatedAt")

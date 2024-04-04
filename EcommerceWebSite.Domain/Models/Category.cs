@@ -11,12 +11,11 @@ namespace EcommerceWebSite.Domain.Models
     {
         
         [Required(ErrorMessage = " Arabic name is required.")]
-       
-        public string ArName { get; set; }
+        public string ArName { get; set;}
         [Required(ErrorMessage = " English name is required.")]
-        public string EnName { get; set; }
-        public string? imgURL { get; set; }
-        public string? imgURLAr { get; set; }
+        public string EnName { get; set;}
+        public string? imgURL { get; set;}
+        public string? imgURLAr { get; set;}
         public List<SubCategory> SubCategories { get; set;}
     }
 }
