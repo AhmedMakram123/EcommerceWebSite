@@ -20,7 +20,12 @@ namespace EcommerceWebSite.App.Services
             this.productRepository = _product;
             this.mapper = _mapper;
         }
-
+        public async Task<List<GetAllProductDTO>> GetAllPaginationOfProduct(int num, int pageNum)
+        {
+            var products = await productRepository.GetAllAsync();
+            var query = products.Skip(num * (pageNum - 1)).Take(num).ToList();
+            return mapper.Map<List<GetAllProductDTO>>(query);
+        }
         public async Task<List<GetAllProductDTO>> GetAll()
         {
             var prd = await productRepository.GetAllAsync();
