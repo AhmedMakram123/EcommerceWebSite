@@ -124,8 +124,7 @@ namespace EcommerceWebSite.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustId")
-                        .IsUnique();
+                    b.HasIndex("CustId");
 
                     b.HasIndex("ProductId");
 
@@ -327,9 +326,6 @@ namespace EcommerceWebSite.Context.Migrations
                     b.Property<string>("imgURL")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("imgURLAr")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("updatedAt")
                         .HasColumnType("datetime2");
 
@@ -513,8 +509,8 @@ namespace EcommerceWebSite.Context.Migrations
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.CartItem", b =>
                 {
                     b.HasOne("EcommerceWebSite.Domain.Models.ApplicationUser", "Customer")
-                        .WithOne("Cart")
-                        .HasForeignKey("EcommerceWebSite.Domain.Models.CartItem", "CustId")
+                        .WithMany("Cart")
+                        .HasForeignKey("CustId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -531,7 +527,10 @@ namespace EcommerceWebSite.Context.Migrations
                 {
                     b.HasOne("EcommerceWebSite.Domain.Models.Product", "Product")
                         .WithMany("Comments")
-                        .HasForeignKey("ProductId1");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Product");
                 });
 

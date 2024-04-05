@@ -50,7 +50,7 @@ namespace EcommerceWebSite.App.Services
 		public async Task<ResultView<OrderDetailsDTO>> Create(OrderDetailsDTO orderDetailsDto)
 		{
             var query = await _orderDetailsRepository.GetAllAsync();
-            var Old = query.Where(p => p.OrderId == orderDetailsDto.OrderId)
+            var Old = query.Where(p => p.OrderId == orderDetailsDto.OrderId&&(p.ProductId==orderDetailsDto.ProductId))
 				.FirstOrDefault();
             if (Old != null)
             {

@@ -46,7 +46,6 @@ namespace EcommerceWebSite.App.Services
                 var prd = mapper.Map<Product>(product);
                 // Set ImgURL property
                 prd.imgURL = product.imgURL;
-                prd.imgURLAr= product.imgURLAr;
                 var NewProd = await productRepository.CreateAsync(prd);
                 try
                 {
@@ -69,7 +68,6 @@ namespace EcommerceWebSite.App.Services
             prd.EnName = product.EnName;
             prd.Price = product.Price;
             prd.imgURL = product.imgURL;
-            prd.imgURLAr = product.imgURLAr;
             prd.Description = product.Description;
             prd.Quantity = product.Quantity;
             prd.SubCategoryId = product.SubCategoryId;

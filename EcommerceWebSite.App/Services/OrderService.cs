@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EcommerceWebSite.App.Contract;
 using EcommerceWebSite.Domain.DTOs;
+using EcommerceWebSite.Domain.DTOs.CartItem;
 using EcommerceWebSite.Domain.Enum;
 using EcommerceWebSite.Domain.Models;
 using System.Collections.Generic;
@@ -11,11 +12,15 @@ namespace EcommerceWebSite.App.Services
 {
 	public class OrderService : IOrderService
 	{
-        private readonly IOrderRepository _orderRepository;
-		private readonly IMapper _mapper;
-        public OrderService(IOrderRepository orderRepository, IMapper mapper,IOrderDetailsService _orderDetails)
+        private readonly IOrderRepository _orderRepository; 
+		private readonly IOrderDetailsRepository _orderDetailsRepository;
+        private readonly ICartItemRepository _cartItemService;
+        private readonly IMapper _mapper;
+        public OrderService(IOrderRepository orderRepository,IMapper mapper, IOrderDetailsRepository orderDetails,ICartItemRepository cartItem)
 		{
 			_orderRepository = orderRepository;
+			_cartItemService = cartItem;
+			_orderDetailsRepository = orderDetails;
 			_mapper = mapper;
 		}
 
@@ -36,6 +41,29 @@ namespace EcommerceWebSite.App.Services
 			var order = _mapper.Map<Order>(orderDto);
 			order.FinalPrice = 0;
 			var createdOrder = await _orderRepository.CreateAsync(order);
+			/*var cart = await _cartItemService.GetAllAsync();
+			var cartItems = cart.Select(b => new CreateOrUpdateCartItemDto()
+			{
+				Id = b.Id,
+				CustId = b.CustId,
+				ProductId = b.ProductId,
+				Quantity = b.Quantity,
+				TotalPrice = b.TotalPrice
+			}).ToList().Where(p => p.CustId == orderDto.UserID);
+			foreach (var item in cartItems)
+			{
+				OrderDetailsDTO orderDetailsDto = new OrderDetailsDTO();
+				orderDetailsDto.OrderId = createdOrder.Id;
+				orderDetailsDto.TotalPrice = item.TotalPrice;
+				orderDetailsDto.Quantity = item.Quantity;
+				orderDetailsDto.ProductId = item.ProductId;
+                var cart1 = _mapper.Map<CartItem>(item);
+				var orderDetail = _mapper.Map<OrderDetails>(orderDetailsDto);
+                await _orderDetailsRepository.CreateAsync(orderDetail);
+				await _cartItemService.DeleteAsync(cart1);
+				await _cartItemService.SaveChangesAsync();
+			}
+			  */  
 			await _orderRepository.SaveChangesAsync();
 			return new ResultView<OrderDTO> { Entity = _mapper.Map<OrderDTO>(createdOrder), IsSuccess = true, msg = "Created Successful" };
 		}

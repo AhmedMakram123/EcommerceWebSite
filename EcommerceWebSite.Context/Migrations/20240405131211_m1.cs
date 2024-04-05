@@ -385,8 +385,7 @@ namespace EcommerceWebSite.Context.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_carts_CustId",
                 table: "carts",
-                column: "CustId",
-                unique: true);
+                column: "CustId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_carts_ProductId",
