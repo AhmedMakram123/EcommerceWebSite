@@ -113,9 +113,9 @@ namespace EcommerceWebSite.App.Services
             return res;
         }
 
-        public async Task<List<Product>> getAllProductByCategory(int CategoryId)
+        public async Task<List<Product>> getAllProductByCategory(int CategoryId, int num, int pageNum)
         {
-            return await (await productRepository.getAllProductByCategory(CategoryId)).ToListAsync();
+            return await (await productRepository.getAllProductByCategory(CategoryId, num, pageNum)).ToListAsync();
         }
     }
 }

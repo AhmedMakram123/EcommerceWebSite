@@ -15,7 +15,7 @@ namespace EcommerceWebSite.App.Services
         public Task<CreateOrUpdateProductDTO> Update(GetAllProductDTO product);
         public Task<ResultView<GetAllProductDTO>> Delete(int id);
         public Task<int> Save();
-        public Task<List<Product>> getAllProductByCategory(int CategoryId);
+        public Task<List<Product>> getAllProductByCategory(int CategoryId, int num, int pageNum);
         public Task<List<GetAllProductDTO>> GetAllPaginationOfProduct(int num, int pageNum);
     }
 }
