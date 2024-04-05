@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using EcommerceWebSite.Domain.DTOs.Products;
 using EcommerceWebSite.Domain.DTOs;
 using EcommerceWebSite.Domain.Models;
+using AutoMapper;
+using EcommerceWebSite.Infrastractions.Repositores;
 //using System.Linq;
 
 namespace ProjectAPI.Controllers
@@ -45,7 +47,20 @@ namespace ProjectAPI.Controllers
             return ele is null ? Ok("Records NotFound") : Ok(ele);
 
         }
-
+        [HttpGet("{numPerPage:int}/{pageNum:int}")]
+        public async Task<ActionResult<List<GetAllProductDTO>>> GetAllProducts(int numPerPage, int pageNum)
+        {
+            try
+            {
+                var products = await productService.GetAllPaginationOfProduct(numPerPage, pageNum);
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                
+                return StatusCode(500, "Internal server error");
+            }
+        }
         [HttpGet, Route("{id:long}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {

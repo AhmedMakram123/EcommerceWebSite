@@ -38,9 +38,9 @@ namespace ProjectAPI.Controllers
         }
         [HttpGet("{id}/getAllProductByCategory")]
         //[HttpGet("GetAllCategoryAndSubAsync")]
-        public async Task<ActionResult> getAllProductByCategory([FromRoute] int id)
+        public async Task<ActionResult> getAllProductByCategory([FromRoute] int id, int num, int pageNum)
         {
-            List<Product> category = await productService.getAllProductByCategory(id);
+            List<Product> category = await productService.getAllProductByCategory(id, num, pageNum);
             return Ok(category);
         }
 

@@ -1,5 +1,7 @@
-﻿using EcommerceWebSite.App.Contract;
+﻿using AutoMapper;
+using EcommerceWebSite.App.Contract;
 using EcommerceWebSite.Context;
+using EcommerceWebSite.Domain.DTOs.Products;
 using EcommerceWebSite.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +18,7 @@ namespace EcommerceWebSite.Infrastractions.Repositores
             context = _context;
         }
 
-        public async  Task<IQueryable<Product>> getAllProductByCategory(int CategoryId)
+        public async  Task<IQueryable<Product>> getAllProductByCategory(int CategoryId, int num, int pageNum)
         {
             var query = from prod in context.products
                         join sub in context.SubCategores
@@ -26,10 +28,17 @@ namespace EcommerceWebSite.Infrastractions.Repositores
                         where cat.Id == CategoryId
                         select prod;
 
-            return  query;
+            //return  query;
+            return query.Skip(num*(pageNum-1)).Take(num);
 
            
         }
+        //public async Task<List<GetAllProductDTO>> GetAllPaginationOfProduct(int num, int pageNum)
+        //{
+        //    var products = await productRepository.GetAllAsync();
+        //    var query = products.Skip(num * (pageNum - 1)).Take(num).ToList();
+        //    return mapper.Map<List<GetAllProductDTO>>(query);
+        //}
     }
 }
 
