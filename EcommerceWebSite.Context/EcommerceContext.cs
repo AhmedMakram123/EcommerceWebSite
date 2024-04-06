@@ -17,6 +17,7 @@ namespace EcommerceWebSite.Context
         public DbSet<Comment> Comments { get; set; }
         public EcommerceContext()
         {
+
         }
         public EcommerceContext(DbContextOptions options) : base(options)
         {

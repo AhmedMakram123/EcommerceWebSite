@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceWebSite.Context.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    [Migration("20240401112604_AddImgArToCat")]
-    partial class AddImgArToCat
+    [Migration("20240405131211_m1")]
+    partial class m1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -126,8 +126,7 @@ namespace EcommerceWebSite.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustId")
-                        .IsUnique();
+                    b.HasIndex("CustId");
 
                     b.HasIndex("ProductId");
 
@@ -182,10 +181,7 @@ namespace EcommerceWebSite.Context.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("ProductId1")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("createdAt")
@@ -207,7 +203,7 @@ namespace EcommerceWebSite.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId1");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Comments");
                 });
@@ -330,9 +326,6 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("imgURL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("imgURLAr")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("updatedAt")
@@ -518,8 +511,8 @@ namespace EcommerceWebSite.Context.Migrations
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.CartItem", b =>
                 {
                     b.HasOne("EcommerceWebSite.Domain.Models.ApplicationUser", "Customer")
-                        .WithOne("Cart")
-                        .HasForeignKey("EcommerceWebSite.Domain.Models.CartItem", "CustId")
+                        .WithMany("Cart")
+                        .HasForeignKey("CustId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -536,7 +529,9 @@ namespace EcommerceWebSite.Context.Migrations
                 {
                     b.HasOne("EcommerceWebSite.Domain.Models.Product", "Product")
                         .WithMany("Comments")
-                        .HasForeignKey("ProductId1");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
                 });
