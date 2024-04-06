@@ -34,9 +34,9 @@ namespace ProjectAPI.Controllers
         }
 
         [HttpGet("{id}/getProductonlyfromSubCategory")]
-        public async Task<ActionResult> getProductonlyfromSubCategory([FromRoute] int id)
+        public async Task<ActionResult> getProductonlyfromSubCategory([FromRoute] int id, int num, int pageNum)
         {
-            List<GetAllProductDTO> Subcategory = await subcategoryService.getProductonlyfromSubCategory(id);
+            List<GetAllProductDTO> Subcategory = await subcategoryService.getProductonlyfromSubCategory(id, num, pageNum);
             return Ok(Subcategory);
         }
 
