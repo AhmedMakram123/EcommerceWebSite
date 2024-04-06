@@ -30,8 +30,7 @@ namespace EcommerceWebSite.Infrastractions.Repositores
 
             //return  query;
             return query.Skip(num*(pageNum-1)).Take(num);
-
-           
+ 
         }
         //public async Task<List<GetAllProductDTO>> GetAllPaginationOfProduct(int num, int pageNum)
         //{

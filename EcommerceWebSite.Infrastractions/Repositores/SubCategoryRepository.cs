@@ -54,9 +54,9 @@ namespace EcommerceWebSite.Infrastractions.Repositores
                 });
         }
 
-        public async Task<IQueryable<GetAllProductDTO>> getProductonlyfromSubCategory(int SubcategoryId)
+        public async Task<IQueryable<GetAllProductDTO>> getProductonlyfromSubCategory(int SubcategoryId, int num, int pageNum)
         {
-            return context.SubCategores
+            var query= context.SubCategores
                .Where(c => c.Id == SubcategoryId)
                 .SelectMany(c => c.Products)
                 .Select(c => new GetAllProductDTO()
@@ -71,6 +71,7 @@ namespace EcommerceWebSite.Infrastractions.Repositores
                    SubCategoryId =c.SubCategoryId
 
                  });
+            return query.Skip(num * (pageNum - 1)).Take(num);
         }
     }
 }

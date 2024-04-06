@@ -17,6 +17,6 @@ namespace EcommerceWebSite.App.Services
         public Task<ResultView<CreateOrUpdateSubCategoryDTO>> Delete(int id);
         public Task<CreateOrUpdateSubCategoryDTO> Save();
         public Task<List<GetAllSubCategoryDTO>> getallSubCategoryWithProduct(int SubcategoryId);
-        public Task<List<GetAllProductDTO>> getProductonlyfromSubCategory(int SubcategoryId);
+        public Task<List<GetAllProductDTO>> getProductonlyfromSubCategory(int SubcategoryId, int num, int pageNum);
     }
 }

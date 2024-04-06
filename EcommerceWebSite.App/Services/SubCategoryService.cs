@@ -130,9 +130,9 @@ namespace EcommerceWebSite.App.Services
             return await (await subCategoryRepository.getallSubCategoryWithProduct(SubcategoryId)).ToListAsync();
         }
 
-        public async Task<List<GetAllProductDTO>> getProductonlyfromSubCategory(int SubcategoryId)
+        public async Task<List<GetAllProductDTO>> getProductonlyfromSubCategory(int SubcategoryId, int num, int pageNum)
         {
-            return await (await subCategoryRepository.getProductonlyfromSubCategory(SubcategoryId)).ToListAsync();
+            return await (await subCategoryRepository.getProductonlyfromSubCategory(SubcategoryId, num, pageNum)).ToListAsync();
         }
     }
 }
