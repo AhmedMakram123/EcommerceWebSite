@@ -36,8 +36,9 @@ namespace EcommerceWebSite.App.Services
                     ProductId = e.ProductId,
                     Quantity = e.Quantity,
                     TotalPrice = e.TotalPrice,
-                    ProductName= e.Product.EnName
-                }).ToList();
+                    ProductName= e.Product.EnName,
+                    orderId=e.OrderId
+               }).ToList();
             return getDetailsDTOs;
         }
 
@@ -137,7 +138,8 @@ namespace EcommerceWebSite.App.Services
                   ProductId = e.ProductId,
                   Quantity = e.Quantity,
                   TotalPrice = e.TotalPrice,
-                  ProductName = e.Product.EnName
+                  ProductName = e.Product.EnName,
+                  orderId = e.OrderId
               }).ToList();
             return getDetailsDTOs;
         }

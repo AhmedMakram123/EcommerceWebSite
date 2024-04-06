@@ -14,28 +14,34 @@ namespace EcommerceWebSite.App.Services
     {
 
         private readonly ICartItemRepository cartItemService;
+        private readonly IProductRepository productRepository;
         private readonly IMapper mapper;
-        public CartItemService(ICartItemRepository _CartItem, IMapper _mapper )
+        public CartItemService(ICartItemRepository _CartItem, IMapper _mapper , IProductRepository _product)
         {
             this.cartItemService = _CartItem;
             this.mapper = _mapper;
+            this.productRepository=_product;
         }
 
         public async Task<ResultView<CreateOrUpdateCartItemDto>> Create(CreateOrUpdateCartItemDto CartItemDto)
         {
             var query = await cartItemService.GetAllAsync();
             var OldCat = query.Where(p => p.CustId == CartItemDto.CustId && p.ProductId== CartItemDto.ProductId).FirstOrDefault();
+            var Cat = mapper.Map<CartItem>(CartItemDto);
+            var p = await productRepository.GetByIdAsync(CartItemDto.ProductId);
+            Cat.TotalPrice = p.Price * Cat.Quantity;
+
             if (OldCat != null)
             {
+                await cartItemService.UpdateAsync(Cat);
                 return new ResultView<CreateOrUpdateCartItemDto> { Entity = null, IsSuccess = false, msg = "Already Exists" };
             }
             else
             {
-                var Cat = mapper.Map<CartItem>(CartItemDto);
                 var NewCat = await cartItemService.CreateAsync(Cat);
                 await cartItemService.SaveChangesAsync();
-                var p = mapper.Map<CreateOrUpdateCartItemDto>(NewCat);
-                return new ResultView<CreateOrUpdateCartItemDto> { Entity = p, IsSuccess = true, msg = "Created Successful" };
+                var c = mapper.Map<CreateOrUpdateCartItemDto>(NewCat);
+                return new ResultView<CreateOrUpdateCartItemDto> { Entity = c, IsSuccess = true, msg = "Created Successful" };
             }
         }
 
@@ -102,7 +108,8 @@ namespace EcommerceWebSite.App.Services
             {
                 var b = mapper.Map<CartItem>(CartItemDto);
                 old.Quantity= b.Quantity;
-                old.TotalPrice = b.TotalPrice;
+                var p = await productRepository.GetByIdAsync(CartItemDto.ProductId);
+                old.TotalPrice = p.Price * old.Quantity;
                 var NewBook = await cartItemService.UpdateAsync(old);
                 await cartItemService.SaveChangesAsync();
                 var bDto = mapper.Map<CreateOrUpdateCartItemDto>(NewBook);
