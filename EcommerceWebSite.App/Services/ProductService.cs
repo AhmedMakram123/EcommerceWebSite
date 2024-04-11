@@ -73,7 +73,8 @@ namespace EcommerceWebSite.App.Services
             prd.EnName = product.EnName;
             prd.Price = product.Price;
             prd.imgURL = product.imgURL;
-            prd.Description = product.Description;
+            prd.ArDescription = product.ArDescription;
+            prd.EnDescription = product.EnDescription;
             prd.Quantity = product.Quantity;
             prd.SubCategoryId = product.SubCategoryId;
             var NewProd = await productRepository.UpdateAsync(prd);
@@ -114,6 +115,13 @@ namespace EcommerceWebSite.App.Services
         public async Task<List<Product>> getAllProductByCategory(int CategoryId, int num, int pageNum)
         {
             return await (await productRepository.getAllProductByCategory(CategoryId, num, pageNum)).ToListAsync();
+        }
+
+        public async Task<List<GetAllProductDTO>> SearchByName(string name)
+        {
+            var prd = await productRepository.GetAllAsync();
+            var prd2=mapper.Map<List<GetAllProductDTO>>(prd).Where(e => e.EnName.ToLower().Contains(name.ToLower()) || e.ArName.Contains(name)).ToList();
+            return prd2;
         }
     }
 }

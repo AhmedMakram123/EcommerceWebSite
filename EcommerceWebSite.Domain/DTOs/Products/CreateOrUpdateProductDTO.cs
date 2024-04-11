@@ -10,7 +10,9 @@ namespace EcommerceWebSite.Domain.DTOs.Products
         [Required(ErrorMessage = " Arabic name is required."), MaxLength(100, ErrorMessage = "Product name cannot exceed 50 characters.")]
         public string EnName { get; set; }
         [Required(ErrorMessage = "description is required.")]
-        public string Description { get; set; }
+
+        public string EnDescription { get; set; }
+        public string ArDescription { get; set; }
         public string imgURL { get; set; }
         [Required(ErrorMessage = "Quantity is required."), Range(0, int.MaxValue, ErrorMessage = "Quantity must be a positive number.")]
         public int Quantity { get; set; }

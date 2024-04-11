@@ -5,6 +5,7 @@ using EcommerceWebSite.Domain.Enum;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProjectAPI.Controllers
@@ -30,6 +31,7 @@ namespace ProjectAPI.Controllers
         [HttpGet("{UId}/GetUseOrders")]
         public async Task<ActionResult> GetUseOrders(string UId)
         {
+            //UId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "sid").Value;
             List<OrderDTO> orders = await _orderService.GetUserOrdars(UId);
             return Ok(orders);
         }
@@ -44,12 +46,15 @@ namespace ProjectAPI.Controllers
 		[HttpPost]
 		public async Task CreateOrder([FromBody] OrderDTO orderDTO)
 		{
-			OrderDTO orderDto1 = new OrderDTO();
+			orderDTO.UserID = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "sid").Value;
+
+            OrderDTO orderDto1 = new OrderDTO();
 			// Set initial state for a new order
 			orderDto1.State = OrderState.Pending;
 			orderDto1.FinalPrice=orderDTO.FinalPrice;
 			orderDto1.Date=orderDTO.Date;
 			orderDto1.UserID=orderDTO.UserID;
+			orderDto1.Address=orderDTO.Address;
 			_ = await _orderService.Create(orderDto1);
 			
 		}
@@ -63,6 +68,7 @@ namespace ProjectAPI.Controllers
 			order.FinalPrice = orderDTO.FinalPrice;
 			order.Date = orderDTO.Date;
 			order.UserID = orderDTO.UserID;
+			order.Address=orderDTO.Address;
 		
 
 			 await _orderService.Update(id,order);

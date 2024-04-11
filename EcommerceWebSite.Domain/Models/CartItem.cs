@@ -12,9 +12,6 @@ namespace EcommerceWebSite.Domain.Models
     public class CartItem : BaseEntity
     {
        
-        [ForeignKey("Product")]
-        [Required(ErrorMessage = "Product Id Required")]
-        public int ProductId { get; set; }
         [Required(ErrorMessage = "Customer Id Required")]
         [ForeignKey("Customer")]
         public string CustId { get; set; }
@@ -24,10 +21,11 @@ namespace EcommerceWebSite.Domain.Models
 
         public decimal TotalPrice { get; set; }
         //relation 
-        
-        [NotMapped]
+        [ForeignKey("Product")]
+        [Required(ErrorMessage = "Product Id Required")]
+        public int ProductId { get; set; }
         public Product Product { get; set; }
-        
+        [NotMapped] 
         public ApplicationUser Customer { get; set; } 
 
     }

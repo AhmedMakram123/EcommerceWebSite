@@ -23,10 +23,18 @@ namespace ProjectAPI.Controllers
         [HttpGet]
         public async Task<ActionResult> GetCartItemAsync()
         {
-            ResultDataList<CreateOrUpdateCartItemDto> category = await CartItemService.GetAll();
-            return Ok(category.Entities);
+            ResultDataList<CreateOrUpdateCartItemDto> CartItems = await CartItemService.GetAll();
+            return Ok(CartItems.Entities);
         }
-       
+        [HttpGet("{Id}/GetUserCartItems")]
+        public async Task<ActionResult> GetUserCartItems(string Id)
+        {
+            List<GetCartItemDto> CartItems = await CartItemService.GetUserCartItems(Id);
+            return Ok(CartItems);
+        }
+
+
+
         [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult> GetById([FromRoute] int id)

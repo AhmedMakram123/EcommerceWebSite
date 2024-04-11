@@ -18,8 +18,11 @@ namespace EcommerceWebSite.Domain.Models
         [Required(ErrorMessage = " English name is required.")]
         [MaxLength(50, ErrorMessage = "Product name cannot exceed 50 characters.")]
         public string EnName { get; set; }
-        [Required(ErrorMessage = "description is required.")]
-        public string? Description { get; set; }
+        [Required(ErrorMessage = "EnDescription is required.")]
+        public string? EnDescription { get; set; }
+
+        [Required(ErrorMessage = "ArDescription is required.")]
+        public string ArDescription { get; set; }
         public string? imgURL { get; set; }
 
         [Required(ErrorMessage = "Quantity is required.")]

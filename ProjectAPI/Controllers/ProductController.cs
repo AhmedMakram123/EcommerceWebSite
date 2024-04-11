@@ -10,6 +10,7 @@ using EcommerceWebSite.Domain.DTOs;
 using EcommerceWebSite.Domain.Models;
 using AutoMapper;
 using EcommerceWebSite.Infrastractions.Repositores;
+using EcommerceWebSite.App.Contract;
 //using System.Linq;
 
 namespace ProjectAPI.Controllers
@@ -141,5 +142,15 @@ namespace ProjectAPI.Controllers
             await productService.Delete(id);
             return Ok();
         }
+
+        [HttpGet("{name}/SearchByName")]
+        public async Task<ActionResult> SearchByName(string name)
+        {
+            var prd = await productService.SearchByName(name);
+            return Ok(prd);
+        }
+        
+
+
     }
 }

@@ -11,6 +11,7 @@ namespace EcommerceWebSite.App.Services
     {
         public Task<List<GetAllProductDTO>> GetAll();
         public Task<GetAllProductDTO> GetOne(int id);
+        public Task<List<GetAllProductDTO>> SearchByName(string name);
         public Task<ResultView<GetAllProductDTO>> Create(CreateOrUpdateProductDTO product);
         public Task<CreateOrUpdateProductDTO> Update(GetAllProductDTO product);
         public Task<ResultView<GetAllProductDTO>> Delete(int id);

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EcommerceWebSite.Context.Migrations
 {
-    public partial class m1 : Migration
+    public partial class M1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -183,6 +183,7 @@ namespace EcommerceWebSite.Context.Migrations
                     FinalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     State = table.Column<int>(type: "int", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     createdAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -233,7 +234,8 @@ namespace EcommerceWebSite.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ArName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     EnName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EnDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ArDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     imgURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -260,10 +262,11 @@ namespace EcommerceWebSite.Context.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    CustId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CustId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     createdAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     updatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -273,11 +276,11 @@ namespace EcommerceWebSite.Context.Migrations
                 {
                     table.PrimaryKey("PK_carts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_carts_AspNetUsers_CustId",
-                        column: x => x.CustId,
+                        name: "FK_carts_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_carts_products_ProductId",
                         column: x => x.ProductId,
@@ -383,9 +386,9 @@ namespace EcommerceWebSite.Context.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_carts_CustId",
+                name: "IX_carts_ApplicationUserId",
                 table: "carts",
-                column: "CustId");
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_carts_ProductId",

@@ -97,9 +97,12 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("CustId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -124,7 +127,7 @@ namespace EcommerceWebSite.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("ProductId");
 
@@ -213,6 +216,9 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -291,12 +297,16 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ArDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ArName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("EnDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -508,19 +518,17 @@ namespace EcommerceWebSite.Context.Migrations
 
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.CartItem", b =>
                 {
-                    b.HasOne("EcommerceWebSite.Domain.Models.ApplicationUser", "Customer")
+                    b.HasOne("EcommerceWebSite.Domain.Models.ApplicationUser", null)
                         .WithMany("Cart")
-                        .HasForeignKey("CustId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ApplicationUserId");
 
-                    b.HasOne("EcommerceWebSite.Domain.Models.Product", null)
+                    b.HasOne("EcommerceWebSite.Domain.Models.Product", "Product")
                         .WithMany("CartItem")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Comment", b =>

@@ -41,7 +41,7 @@ namespace EcommerceWebSite.App.Services
 			var order = _mapper.Map<Order>(orderDto);
 			order.FinalPrice = 0;
 			var createdOrder = await _orderRepository.CreateAsync(order);
-			/*var cart = await _cartItemService.GetAllAsync();
+			var cart = await _cartItemService.GetAllAsync();
 			var cartItems = cart.Select(b => new CreateOrUpdateCartItemDto()
 			{
 				Id = b.Id,
@@ -50,20 +50,20 @@ namespace EcommerceWebSite.App.Services
 				Quantity = b.Quantity,
 				TotalPrice = b.TotalPrice
 			}).ToList().Where(p => p.CustId == orderDto.UserID);
-			foreach (var item in cartItems)
+            order.OrderDetails = new List<OrderDetails>();
+            foreach (var item in cartItems)
 			{
 				OrderDetailsDTO orderDetailsDto = new OrderDetailsDTO();
-				orderDetailsDto.OrderId = createdOrder.Id;
-				orderDetailsDto.TotalPrice = item.TotalPrice;
-				orderDetailsDto.Quantity = item.Quantity;
+			    orderDetailsDto.TotalPrice = item.TotalPrice;
+				order.FinalPrice += orderDetailsDto.TotalPrice;
+                orderDetailsDto.Quantity = item.Quantity;
 				orderDetailsDto.ProductId = item.ProductId;
                 var cart1 = _mapper.Map<CartItem>(item);
-				var orderDetail = _mapper.Map<OrderDetails>(orderDetailsDto);
-                await _orderDetailsRepository.CreateAsync(orderDetail);
-				await _cartItemService.DeleteAsync(cart1);
-				await _cartItemService.SaveChangesAsync();
-			}
-			  */  
+                await _cartItemService.DeleteAsync(cart1);
+                await _cartItemService.SaveChangesAsync();
+                var orderDetail = _mapper.Map<OrderDetails>(orderDetailsDto);
+				order.OrderDetails.Add(orderDetail);
+			}  
 			await _orderRepository.SaveChangesAsync();
 			return new ResultView<OrderDTO> { Entity = _mapper.Map<OrderDTO>(createdOrder), IsSuccess = true, msg = "Created Successful" };
 		}
@@ -76,6 +76,7 @@ namespace EcommerceWebSite.App.Services
                 var newOrder = _mapper.Map<Order>(orderDto);
                 oldOrder.State = newOrder.State;
                 oldOrder.Date = newOrder.Date;
+				oldOrder.Address = newOrder.Address;
                 var updatedOrder = await _orderRepository.UpdateAsync(oldOrder);
                 await _orderRepository.SaveChangesAsync();
                 return _mapper.Map<OrderDTO>(updatedOrder);

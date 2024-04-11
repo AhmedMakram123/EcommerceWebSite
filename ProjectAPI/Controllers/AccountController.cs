@@ -132,7 +132,8 @@ namespace ProjectAPI.Controllers
                         //Claims Token
                         var claims = new List<Claim>();
                         claims.Add(new Claim(ClaimTypes.Name, user.UserName));
-                        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
+                        //claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
+                        claims.Add(new Claim("sid", user.Id));
                         claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
 
                         //get role

@@ -14,7 +14,7 @@ namespace EcommerceWebSite.Domain.Models
         public decimal FinalPrice { get; set; }
         public DateTime Date { get; set; }
         public OrderState State { get; set; }
-
+        public string Address { get; set; }
 
         //Relation
         [ForeignKey("User")]

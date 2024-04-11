@@ -86,6 +86,22 @@ namespace EcommerceWebSite.App.Services
             
         }
 
+        public async Task<List<GetCartItemDto>> GetUserCartItems(string Id)
+        {
+            var cats = await cartItemService.GetAllAsync();
+            var result = cats.Select(b => new GetCartItemDto()
+                {
+                    Id = b.Id,
+                    CustId = b.CustId,
+                    ProductId = b.ProductId,
+                    ArName= b.Product.ArName,
+                    EnName = b.Product.EnName,
+                    imgURL = b.Product.imgURL,
+                    Quantity = b.Quantity,
+                    TotalPrice = b.TotalPrice
+                }).Where(e=> e.CustId==Id).ToList();
+            return result;
+        }
         public async Task<CreateOrUpdateCartItemDto> GetOne(int id)
         {
             var cat = await cartItemService.GetByIdAsync(id);
