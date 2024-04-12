@@ -11,15 +11,11 @@ namespace EcommerceWebSite.Domain.DTOs.CartItem
         public int Id { get; set; }
         public int ProductId { get; set; }
         public string CustId { get; set; }
-
         public string  EnName { get; set; }
-
         public string ArName { get; set; }
-
         public string imgURL { get; set; }
-
         public int Quantity { get; set; }
-
         public decimal TotalPrice { get; set; }
+        public decimal Price { get; set; }
     }
 }

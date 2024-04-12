@@ -4,6 +4,7 @@ using EcommerceWebSite.Domain.Models;
 using EcommerceWebSite.Domain.DTOs.CartItem;
 using EcommerceWebSite.Domain.DTOs.Products;
 using EcommerceWebSite.Domain.DTOs.Comment;
+using System.Threading.Tasks;
 namespace EcommerceWebSite.App.Mapper
 {
     public class AutoMapperProfile : Profile
@@ -21,7 +22,12 @@ namespace EcommerceWebSite.App.Mapper
             CreateMap<CommentDto,Comment> ().ReverseMap();
             CreateMap<OrderDetailsDTO,OrderDetails>().ReverseMap();
             CreateMap<OrderDTO,Order>().ReverseMap();
-           
+            CreateMap<Task<CartItem>, CreateOrUpdateCartItemDto>()
+                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Result.ProductId))
+                .ForMember(dest => dest.CustId, opt => opt.MapFrom(src => src.Result.CustId))
+                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Result.Quantity))
+                .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.Result.TotalPrice));
+
 
         }
     }

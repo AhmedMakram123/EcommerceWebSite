@@ -83,8 +83,7 @@ namespace ProjectAPI.Controllers
 			{
 				return NotFound();
 			}
-
-			 await _orderService.Delete(id);
+            await _orderService.Delete(id);
 			return Ok();
 		}
 

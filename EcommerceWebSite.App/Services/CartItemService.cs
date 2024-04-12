@@ -48,20 +48,22 @@ namespace EcommerceWebSite.App.Services
         public async Task<ResultView<CreateOrUpdateCartItemDto>> Delete(int Id)
         {
             var cat = await cartItemService.GetByIdAsync(Id);
-            if (cat == null)
+            if (cat != null)
             {
-                return new ResultView<CreateOrUpdateCartItemDto> 
+                var OldCat = cartItemService.DeleteAsync(cat);
+                await cartItemService.SaveChangesAsync();
+                var p = mapper.Map<CreateOrUpdateCartItemDto>(OldCat);
+                return new ResultView<CreateOrUpdateCartItemDto> { Entity = p, IsSuccess = true, msg = "Deleted Successful" };
+            }
+            else
+            {
+                return new ResultView<CreateOrUpdateCartItemDto>
 
                 {
                     IsSuccess = false,
                     msg = "CartItem not found"
                 };
-            }
-            else { 
-            var OldCat = cartItemService.DeleteAsync(cat);
-            await cartItemService.SaveChangesAsync();
-            var p = mapper.Map<CreateOrUpdateCartItemDto>(OldCat);
-            return new ResultView<CreateOrUpdateCartItemDto> { Entity = p, IsSuccess = true, msg = "Deleted Successful" };
+
             }
         }
 
@@ -98,7 +100,8 @@ namespace EcommerceWebSite.App.Services
                     EnName = b.Product.EnName,
                     imgURL = b.Product.imgURL,
                     Quantity = b.Quantity,
-                    TotalPrice = b.TotalPrice
+                    TotalPrice = b.TotalPrice,
+                    Price= b.Product.Price
                 }).Where(e=> e.CustId==Id).ToList();
             return result;
         }
