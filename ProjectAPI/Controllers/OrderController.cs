@@ -46,7 +46,7 @@ namespace ProjectAPI.Controllers
 		[HttpPost]
 		public async Task CreateOrder([FromBody] OrderDTO orderDTO)
 		{
-			orderDTO.UserID = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "sid").Value;
+			//orderDTO.UserID = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "sid").Value;
 
             OrderDTO orderDto1 = new OrderDTO();
 			// Set initial state for a new order
