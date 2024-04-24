@@ -73,23 +73,17 @@ namespace EcommerceWebSite.App.Services
         {
             var coms = await commentRepository.GetAllAsync();
 			return mapper.Map<List<CommentDto>>(coms);
-
-
 		}
-
-
         public async Task<CommentDto> GetOne(int id)
         {
             var comment = await commentRepository.GetByIdAsync(id);
             return mapper.Map<CommentDto>(comment);
-
         }
 
         public async Task<int> Save()
         {
             var res = await commentRepository.SaveChangesAsync();
             return res;
-
         }
 
         public async Task<ResultView<CommentDto>> Update(CommentDto CommentDto)

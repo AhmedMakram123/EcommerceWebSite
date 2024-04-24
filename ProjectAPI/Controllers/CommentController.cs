@@ -46,6 +46,9 @@ namespace ProjectAPI.Controllers
                 Dto1.review=Dto.review;
                 Dto1.ProductId=Dto.ProductId;
                 Dto1.quality=Dto.quality;
+                Dto1.UserID = Dto.UserID;
+                Dto1.Date = Dto.Date; 
+           
                 _ = await CommentService.Create(Dto1);
             }
 
@@ -56,6 +59,8 @@ namespace ProjectAPI.Controllers
                 c1.review=c.review;
                 c1.ProductId=c.ProductId;
                 c1.quality=c.quality;
+                c1.Date=c.Date;
+                c1.UserID=c.UserID;
                 await CommentService.Update(c1);
             }
             [HttpDelete("{id}")]
