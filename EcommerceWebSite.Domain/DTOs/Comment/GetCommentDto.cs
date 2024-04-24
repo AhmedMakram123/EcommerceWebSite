@@ -1,21 +1,18 @@
-﻿using EcommerceWebSite.Domain.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EcommerceWebSite.Domain.DTOs.Comment
 {
-    public class CommentDto
+    public class GetCommentDto
     {
         public int Id { get; set; }
         public string review { get; set; }
         public decimal quality { get; set; }
         public int ProductId { get; set; }
         public DateTime Date { get; set; }
-        public string UserID { get; set; }
+        public string UserName { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace ProjectAPI.Controllers
 		[HttpGet]
 		public async Task<ActionResult> GetAllOrders()
 		{
-			List<OrderDTO> orders = await _orderService.GetAll();
+			List<GetOrderDto> orders = await _orderService.GetAll();
 			return Ok(orders);
 		}
 

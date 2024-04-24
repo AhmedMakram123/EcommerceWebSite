@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EcommerceWebSite.Context.Migrations
 {
-    public partial class M1 : Migration
+    public partial class m1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -239,6 +239,7 @@ namespace EcommerceWebSite.Context.Migrations
                     imgURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PriceBeforeDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     SubCategoryId = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     createdAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -298,6 +299,8 @@ namespace EcommerceWebSite.Context.Migrations
                     review = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     quality = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     createdAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     updatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -306,6 +309,12 @@ namespace EcommerceWebSite.Context.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Comments_products_ProductId",
                         column: x => x.ProductId,
@@ -399,6 +408,11 @@ namespace EcommerceWebSite.Context.Migrations
                 name: "IX_Comments_ProductId",
                 table: "Comments",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_UserID",
+                table: "Comments",
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_orderDetails_OrderId",

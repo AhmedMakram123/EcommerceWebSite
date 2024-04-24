@@ -53,11 +53,21 @@ namespace EcommerceWebSite.App.Services
             }
         }
 
-        public async Task<List<CommentDto>> GetAllCommentsForProduct(int pId)
+        public async Task<List<GetCommentDto>> GetAllCommentsForProduct(int pId)
         {
             var coms = await commentRepository.GetAllCommentsForProductAsync(pId);
-			return mapper.Map<List<CommentDto>>(coms);
-		}
+            var com = coms
+                .Select(b => new GetCommentDto()
+                {
+                    Id = b.Id,
+                    Date = b.Date,
+                    ProductId = b.ProductId,
+                    review = b.review,
+                    quality = b.quality,
+                    UserName = b.User.fName+b.User.lName
+                }).ToList();
+            return com;
+        }
 
         public async Task<List<CommentDto>> GetAll()
         {

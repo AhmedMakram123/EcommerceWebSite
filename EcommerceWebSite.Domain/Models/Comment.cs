@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,13 @@ namespace EcommerceWebSite.Domain.Models
         public decimal quality { get; set; }
         public int ProductId { get; set; }
 
+        public DateTime Date { get; set; }
+
         public  Product Product { get; set; }
+
+        [ForeignKey("User")]
+        public string UserID { get; set; }
+
+        public ApplicationUser User { get; set; }
     }
 }

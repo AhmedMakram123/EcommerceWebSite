@@ -24,10 +24,20 @@ namespace EcommerceWebSite.App.Services
 			_mapper = mapper;
 		}
 
-		public async Task<List<OrderDTO>> GetAll()
+		public async Task<List<GetOrderDto>> GetAll()
 		{
 			var orders = await _orderRepository.GetAllAsync();
-			return _mapper.Map<List<OrderDTO>>(orders);
+			var order=orders.Select(b => new GetOrderDto()
+            {
+                Id = b.Id,
+                UserID = b.UserID,
+                UserName = b.User.fName+b.User.lName,
+				FinalPrice = b.FinalPrice,
+				Date= b.Date,
+				Address = b.Address,
+				State=b.State,
+               }).ToList();
+            return order;
 		}
 
 		public async Task<OrderDTO> GetOne(int id)

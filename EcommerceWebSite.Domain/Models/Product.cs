@@ -31,7 +31,7 @@ namespace EcommerceWebSite.Domain.Models
         [Required(ErrorMessage = "Price is required.")]
         [Range(0, double.MaxValue, ErrorMessage = "Price must be a positive number.")]
         public decimal Price { get; set; }
-
+        public decimal PriceBeforeDiscount { get; set; }
         // relation 
         [ForeignKey("SubCategory")]
         public int SubCategoryId { get; set; }

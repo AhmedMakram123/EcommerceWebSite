@@ -11,6 +11,7 @@ namespace EcommerceWebSite.Domain.DTOs
 		public DateTime Date { get; set; }
 		public OrderState State { get; set; }
 		public string UserID { get; set; }
+		public string UserName { get; set;}
         public string Address { get; set; }	
 
     }

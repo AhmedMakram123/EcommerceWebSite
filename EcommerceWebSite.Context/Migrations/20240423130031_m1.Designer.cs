@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceWebSite.Context.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    [Migration("20240407101046_M1")]
-    partial class M1
+    [Migration("20240423130031_m1")]
+    partial class m1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -181,11 +181,17 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
+
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("createdAt")
                         .HasColumnType("datetime2");
@@ -207,6 +213,8 @@ namespace EcommerceWebSite.Context.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("Comments");
                 });
@@ -321,6 +329,9 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PriceBeforeDiscount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantity")
@@ -541,7 +552,13 @@ namespace EcommerceWebSite.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("EcommerceWebSite.Domain.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID");
+
                     b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Order", b =>

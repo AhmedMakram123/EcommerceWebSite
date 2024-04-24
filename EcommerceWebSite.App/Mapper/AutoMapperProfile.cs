@@ -22,6 +22,7 @@ namespace EcommerceWebSite.App.Mapper
             CreateMap<CommentDto,Comment> ().ReverseMap();
             CreateMap<OrderDetailsDTO,OrderDetails>().ReverseMap();
             CreateMap<OrderDTO,Order>().ReverseMap();
+            CreateMap<GetOrderDto,Order>().ReverseMap();
             CreateMap<Task<CartItem>, CreateOrUpdateCartItemDto>()
                 .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Result.ProductId))
                 .ForMember(dest => dest.CustId, opt => opt.MapFrom(src => src.Result.CustId))

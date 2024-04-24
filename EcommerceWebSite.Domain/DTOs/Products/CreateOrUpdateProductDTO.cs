@@ -18,6 +18,8 @@ namespace EcommerceWebSite.Domain.DTOs.Products
         public int Quantity { get; set; }
         [Required(ErrorMessage = "Price is required."), Range(0, double.MaxValue, ErrorMessage = "Price must be a positive number.")]
         public decimal Price { get; set; }
+
+        public decimal PriceBeforeDiscount { get; set; }
         public int SubCategoryId { get; set; }
     }
 }

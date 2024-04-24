@@ -77,6 +77,7 @@ namespace EcommerceWebSite.App.Services
             prd.EnDescription = product.EnDescription;
             prd.Quantity = product.Quantity;
             prd.SubCategoryId = product.SubCategoryId;
+            prd.PriceBeforeDiscount = product.PriceBeforeDiscount;
             var NewProd = await productRepository.UpdateAsync(prd);
             await productRepository.SaveChangesAsync();
             return mapper.Map<CreateOrUpdateProductDTO>(NewProd);

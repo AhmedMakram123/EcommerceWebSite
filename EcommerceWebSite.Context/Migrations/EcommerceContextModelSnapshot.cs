@@ -179,11 +179,17 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
+
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("createdAt")
                         .HasColumnType("datetime2");
@@ -205,6 +211,8 @@ namespace EcommerceWebSite.Context.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("Comments");
                 });
@@ -319,6 +327,9 @@ namespace EcommerceWebSite.Context.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PriceBeforeDiscount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantity")
@@ -539,7 +550,13 @@ namespace EcommerceWebSite.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("EcommerceWebSite.Domain.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID");
+
                     b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EcommerceWebSite.Domain.Models.Order", b =>

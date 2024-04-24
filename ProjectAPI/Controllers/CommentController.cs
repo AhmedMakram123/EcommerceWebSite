@@ -26,7 +26,7 @@ namespace ProjectAPI.Controllers
 	    
             public async Task<ActionResult> GetCommentAsync(int productId)
             {
-                List<CommentDto> Comments = await CommentService.GetAllCommentsForProduct(productId);
+                List<GetCommentDto> Comments = await CommentService.GetAllCommentsForProduct(productId);
                 return Ok(Comments);
             }
 
