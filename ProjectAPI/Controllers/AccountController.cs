@@ -59,6 +59,7 @@ namespace ProjectAPI.Controllers
                 }
                 catch
                 {
+                    await usermanger.DeleteAsync(user);
                     return StatusCode(500, "Admin Role doesn't exists");
                 }
                 return BadRequest(result.Errors.FirstOrDefault());
@@ -102,6 +103,7 @@ namespace ProjectAPI.Controllers
                 }
                 catch
                 {
+                    await usermanger.DeleteAsync(user);
                     return StatusCode(500, "Seller Role doesn't exists");
                 }
             }
@@ -144,6 +146,7 @@ namespace ProjectAPI.Controllers
                 }
                 catch
                 {
+                    await usermanger.DeleteAsync(user);
                     return StatusCode(500, "Customer Role doesn't exists");
                 }
             }
