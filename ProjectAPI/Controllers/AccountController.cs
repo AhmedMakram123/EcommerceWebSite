@@ -244,5 +244,38 @@ namespace ProjectAPI.Controllers
 
             return Ok(roles);
         }
+
+
+        // Get User by Id
+        [HttpGet("getUser/{id}")]
+        public async Task<IActionResult> GetUserById(string id)
+        {
+            var user = await usermanger.FindByIdAsync(id);
+            if (user == null)
+                return NotFound("User not found");
+            return Ok(user);
+        }
+
+        // Update User
+        [HttpPut("updateUser/{id}")]
+        public async Task<IActionResult> UpdateUser(string id, RegisterUserDto userDto)
+        {
+            var user = await usermanger.FindByIdAsync(id);
+            if (user == null)
+                return NotFound("User not found");
+            if (ModelState.IsValid)
+            {
+                user.fName = userDto.fName;
+                user.lName = userDto.lName;
+                user.PhoneNumber = userDto.PhoneNumber;
+                user.Email = userDto.email;
+                user.PasswordHash = userDto.password;
+                var result = await usermanger.UpdateAsync(user);
+                if (result.Succeeded)
+                    return Ok("User updated successfully");
+                return BadRequest(result.Errors.FirstOrDefault());
+            }
+            return BadRequest(ModelState);
+        }
     }
 }
