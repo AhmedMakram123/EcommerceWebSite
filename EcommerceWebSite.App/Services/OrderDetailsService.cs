@@ -63,7 +63,15 @@ namespace EcommerceWebSite.App.Services
                 var New = await _orderDetailsRepository.CreateAsync(o);
                 var prd = await productRepository.GetByIdAsync(New.ProductId);
 				prd.Quantity -= New.Quantity;
-                New.TotalPrice = (prd.Price * New.Quantity);
+                if (prd.PriceBeforeDiscount > 0)
+                {
+                    New.TotalPrice = prd.Price * New.Quantity * (100 - prd.PriceBeforeDiscount) / 100;
+                }
+                else
+                {
+                    New.TotalPrice = prd.Price * New.Quantity;
+                }
+
                 var order = await _orderRepository.GetByIdAsync(New.OrderId);
                 order.FinalPrice += New.TotalPrice;
 
@@ -91,7 +99,18 @@ namespace EcommerceWebSite.App.Services
             var prd2 = await productRepository.GetByIdAsync(newOrderDetails.ProductId);
             prd2.Quantity -= newOrderDetails.Quantity;
             oldOrderDetails.Quantity=newOrderDetails.Quantity;
-			oldOrderDetails.TotalPrice= (oldOrderDetails.Quantity*prd2.Price);
+                if (prd2.PriceBeforeDiscount > 0)
+                {
+
+                    oldOrderDetails.TotalPrice = (oldOrderDetails.Quantity * prd2.Price)* (100 - prd2.PriceBeforeDiscount) / 100;
+                }
+                else
+                {
+                    oldOrderDetails.TotalPrice = (oldOrderDetails.Quantity * prd2.Price);
+                }
+
+            
+
             order.FinalPrice += oldOrderDetails.TotalPrice;
             oldOrderDetails.ProductId=newOrderDetails.ProductId;
             var updatedOrderDetails = await _orderDetailsRepository.UpdateAsync(oldOrderDetails);

@@ -263,6 +263,14 @@ namespace ProjectAPI.Controllers
             var user = await usermanger.FindByIdAsync(id);
             if (user == null)
                 return NotFound("User not found");
+            try
+            {
+                user = await usermanger.FindByEmailAsync(userDto.email);
+            }
+            catch
+            {
+                return StatusCode(500, $"DUPLICATE EMAILS in DATABASE");
+            }
             if (ModelState.IsValid)
             {
                 user.fName = userDto.fName;

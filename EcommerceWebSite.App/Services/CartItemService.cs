@@ -29,7 +29,14 @@ namespace EcommerceWebSite.App.Services
             var OldCat = query.Where(p => p.CustId == CartItemDto.CustId && p.ProductId== CartItemDto.ProductId).FirstOrDefault();
             var Cat = mapper.Map<CartItem>(CartItemDto);
             var p = await productRepository.GetByIdAsync(CartItemDto.ProductId);
-            Cat.TotalPrice = p.Price * Cat.Quantity;
+            if (p.PriceBeforeDiscount > 0)
+            {
+                Cat.TotalPrice = p.Price * Cat.Quantity * (100 - p.PriceBeforeDiscount) / 100;
+            }
+            else
+            {
+                Cat.TotalPrice = p.Price * Cat.Quantity;
+            }
 
             if (OldCat != null)
             {
@@ -128,7 +135,14 @@ namespace EcommerceWebSite.App.Services
                 var b = mapper.Map<CartItem>(CartItemDto);
                 old.Quantity= b.Quantity;
                 var p = await productRepository.GetByIdAsync(CartItemDto.ProductId);
-                old.TotalPrice = p.Price * old.Quantity;
+                if (p.PriceBeforeDiscount > 0)
+                {
+                    old.TotalPrice = p.Price * old.Quantity * (100 - p.PriceBeforeDiscount) / 100;
+                }
+                else
+                {
+                    old.TotalPrice = p.Price * old.Quantity;
+                }
                 var NewBook = await cartItemService.UpdateAsync(old);
                 await cartItemService.SaveChangesAsync();
                 var bDto = mapper.Map<CreateOrUpdateCartItemDto>(NewBook);

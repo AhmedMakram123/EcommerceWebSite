@@ -61,7 +61,7 @@ namespace EcommerceWebSite.App.Services
 				CustId = b.CustId,
 				ProductId = b.ProductId,
 				Quantity = b.Quantity,
-				TotalPrice = b.TotalPrice
+				TotalPrice = b.TotalPrice,
 			}).ToList().Where(p => p.CustId == orderDto.UserID);
             order.OrderDetails = new List<OrderDetails>();
             foreach (var item in cartItems)
