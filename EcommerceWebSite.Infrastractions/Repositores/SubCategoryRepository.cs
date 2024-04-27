@@ -49,7 +49,8 @@ namespace EcommerceWebSite.Infrastractions.Repositores
                         ArDescription=p.ArDescription,
                         Price = p.Price,
                         imgURL = p.imgURL,
-                        SubCategoryId=p.SubCategoryId
+                        SubCategoryId=p.SubCategoryId,
+                        PriceBeforeDiscount=p.PriceBeforeDiscount
                         // Other properties you need from GetAllProductDTO
                     }).ToList()
                 });
@@ -70,9 +71,10 @@ namespace EcommerceWebSite.Infrastractions.Repositores
                    imgURL =c.imgURL,
                    Quantity =c.Quantity,
                    Price=c.Price, 
-                   SubCategoryId =c.SubCategoryId
+                   SubCategoryId =c.SubCategoryId,
+                   PriceBeforeDiscount = c.PriceBeforeDiscount
 
-                 });
+                });
             return query.Skip(num * (pageNum - 1)).Take(num);
         }
     }

@@ -108,8 +108,9 @@ namespace EcommerceWebSite.App.Services
                     imgURL = b.Product.imgURL,
                     Quantity = b.Quantity,
                     TotalPrice = b.TotalPrice,
-                    Price= b.Product.Price
-                }).Where(e=> e.CustId==Id).ToList();
+                    Price= b.Product.Price,
+                    Discount= b.Product.PriceBeforeDiscount
+            }).Where(e=> e.CustId==Id).ToList();
             return result;
         }
         public async Task<CreateOrUpdateCartItemDto> GetOne(int id)
