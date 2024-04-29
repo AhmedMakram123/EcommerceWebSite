@@ -34,7 +34,7 @@ namespace EcommerceWebSite.App.Services
             {
                 Id = b.Id,
                 UserID = b.UserID,
-                UserName = b.User.fName+b.User.lName,
+                UserName = b.User.fName+ " "+b.User.lName,
 				FinalPrice = b.FinalPrice,
 				Date= b.Date,
 				Address = b.Address,
