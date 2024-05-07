@@ -69,7 +69,9 @@ namespace EcommerceWebSite.App.Services
                 var p=await _productRepository.GetByIdAsync(item.ProductId);
 				if (p.Quantity >= item.Quantity)
 				{
-					OrderDetailsDTO orderDetailsDto = new OrderDetailsDTO();
+					p.Quantity -= item.Quantity;
+					await _productRepository.SaveChangesAsync();
+                    OrderDetailsDTO orderDetailsDto = new OrderDetailsDTO();
 					orderDetailsDto.TotalPrice = item.TotalPrice;
 					order.FinalPrice += orderDetailsDto.TotalPrice;
 					orderDetailsDto.Quantity = item.Quantity;
